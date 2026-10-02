@@ -7,7 +7,7 @@ import { Search, Menu, X, ArrowRight, LayoutDashboard } from "lucide-react";
 import { SearchModal } from "@/components/SearchModal";
 import { Wordmark } from "@/components/brand/Wordmark";
 import { BrandMark } from "@/components/brand/BrandMark";
-import { getCurrentUser, setCurrentUser, DEFAULT_USER, DEFAULT_DESIGNER_USER } from "@/lib/storage";
+import { getCurrentUser } from "@/lib/storage";
 import { User } from "@/types";
 
 export const Navbar: React.FC = () => {
@@ -37,19 +37,13 @@ export const Navbar: React.FC = () => {
   }, [pathname]);
 
   const navLinks = [
+    { label: "Find Talent", href: "/talent" },
+    { label: "AI Match", href: "/ai-match" },
     { label: "Designers", href: "/designers" },
     { label: "How It Works", href: "/how-it-works" },
     { label: "For Companies", href: "/companies" },
     { label: "For Creatives", href: "/creatives" },
   ];
-
-  const handleRoleToggle = () => {
-    if (currentUser?.role === "designer") {
-      setCurrentUser(DEFAULT_USER);
-    } else {
-      setCurrentUser(DEFAULT_DESIGNER_USER);
-    }
-  };
 
   return (
     <>
@@ -65,20 +59,6 @@ export const Navbar: React.FC = () => {
             {/* BRAND LOGO WITH 3D LETTER R MARK */}
             <div className="flex items-center gap-6">
               <Wordmark markSize={26} />
-
-              {/* DEMO ROLE SWITCHER PILL */}
-              <button
-                type="button"
-                onClick={handleRoleToggle}
-                className="hidden xl:inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-mono text-brand-secondary bg-surface border border-surface-border rounded-full hover:border-accent/40 transition-colors"
-                title="Click to toggle Demo Mode: Company vs Creative Director"
-              >
-                <span className="text-brand-muted">View as:</span>
-                <span className="font-semibold text-brand capitalize">
-                  {currentUser?.role === "designer" ? "Designer (Alex Morgan)" : "Enterprise (Vantage Robotics)"}
-                </span>
-                <span className="text-accent text-[9px] uppercase tracking-wider ml-1">switch</span>
-              </button>
             </div>
 
             {/* DESKTOP CENTER NAVIGATION */}
@@ -170,17 +150,6 @@ export const Navbar: React.FC = () => {
         {/* MOBILE NAVIGATION DRAWER */}
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-surface-border bg-background-secondary/95 backdrop-blur-xl px-5 pt-4 pb-6 space-y-4 shadow-surface animate-in slide-in-from-top-2 duration-200">
-            <div className="flex items-center justify-between pb-3 border-b border-surface-border">
-              <span className="text-xs text-brand-muted font-mono">Demo Role:</span>
-              <button
-                type="button"
-                onClick={handleRoleToggle}
-                className="text-xs font-semibold text-accent font-mono"
-              >
-                {currentUser?.role === "designer" ? "Switch to Company" : "Switch to Designer"}
-              </button>
-            </div>
-
             <div className="flex flex-col space-y-3">
               {navLinks.map((link) => (
                 <Link

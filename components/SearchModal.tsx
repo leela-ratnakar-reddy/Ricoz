@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Search, X, ArrowRight, Briefcase } from "lucide-react";
 import { getDesigners, getProjects } from "@/lib/storage";
 import { Designer, Project } from "@/types";
+import { TALENT_PROFILES } from "@/data/talentProfiles";
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -40,6 +41,16 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
 
   if (!isOpen) return null;
 
+  const filteredTalents = query.trim()
+    ? TALENT_PROFILES.filter(
+        (t) =>
+          t.name.toLowerCase().includes(query.toLowerCase()) ||
+          t.role.toLowerCase().includes(query.toLowerCase()) ||
+          t.skills.some((s) => s.toLowerCase().includes(query.toLowerCase())) ||
+          t.industries.some((i) => i.toLowerCase().includes(query.toLowerCase()))
+      ).slice(0, 5)
+    : TALENT_PROFILES.slice(0, 4);
+
   const filteredDesigners = query.trim()
     ? designers.filter(
         (d) =>
@@ -48,7 +59,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
           d.skills.some((s) => s.toLowerCase().includes(query.toLowerCase())) ||
           d.industries.some((i) => i.toLowerCase().includes(query.toLowerCase()))
       )
-    : designers.slice(0, 4);
+    : designers.slice(0, 3);
 
   const filteredProjects = query.trim()
     ? projects.filter(
@@ -102,10 +113,48 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
         </div>
 
         <div className="max-h-[60vh] overflow-y-auto p-4 space-y-6">
+          {/* 57 Talent Profiles */}
+          <div>
+            <div className="text-[10px] font-mono uppercase tracking-widest text-[#B8FF00] mb-2 px-2 flex items-center justify-between">
+              <span>Verified Creative Specialists ({filteredTalents.length})</span>
+              <span className="text-[9px] text-brand-muted">57 Profiles</span>
+            </div>
+            {filteredTalents.length === 0 ? (
+              <p className="text-xs text-brand-muted px-2 py-2">No matching creative specialists found.</p>
+            ) : (
+              <div className="space-y-1">
+                {filteredTalents.map((t) => (
+                  <Link
+                    key={t.id}
+                    href={`/talent/${t.id}`}
+                    onClick={onClose}
+                    className="flex items-center justify-between p-3 rounded-lg hover:bg-surface transition-colors group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-md bg-[#1C1C20] text-white font-mono text-xs flex items-center justify-center font-bold border border-white/10 group-hover:border-[#B8FF00]/40">
+                        {t.initials}
+                      </div>
+                      <div>
+                        <div className="text-sm font-semibold text-white group-hover:text-[#B8FF00] transition-colors flex items-center gap-2">
+                          <span>{t.name}</span>
+                          <span className="text-[10px] font-mono text-[#B8FF00]">{t.hourlyRate}</span>
+                        </div>
+                        <div className="text-xs text-brand-muted">
+                          {t.role} • {t.location}
+                        </div>
+                      </div>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-brand-muted group-hover:text-[#B8FF00] transform group-hover:translate-x-1 transition-all" />
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
           {/* Designers */}
           <div>
             <div className="text-[10px] font-mono uppercase tracking-widest text-brand-muted mb-2 px-2">
-              Creative Leadership ({filteredDesigners.length})
+              Featured Designers ({filteredDesigners.length})
             </div>
             {filteredDesigners.length === 0 ? (
               <p className="text-xs text-brand-muted px-2 py-3">No matching creative talent found.</p>
@@ -176,13 +225,13 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
         </div>
 
         <div className="p-3 bg-surface border-t border-surface-border flex items-center justify-between text-xs text-brand-muted">
-          <span>Navigate quick results</span>
+          <span>Explore full network</span>
           <Link
-            href="/designers"
+            href="/talent"
             onClick={onClose}
             className="text-brand hover:text-accent font-medium flex items-center gap-1"
           >
-            <span>View all talent</span>
+            <span>View all 57 talents</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
