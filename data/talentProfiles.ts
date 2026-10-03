@@ -82,7 +82,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Internal Rollout Deck"
         ],
         "impact": "Helped close $42M Series B and reduced sales cycle duration by 28% across North America.",
-        "image": "/images/portfolio/synthetix-ai-global-repositioning.jpg"
+        "image": "/images/talent/portfolio/synthetix-ai-global-repositioning.jpg"
       },
       {
         "id": "p-001-2",
@@ -107,7 +107,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Brand Decision Tree"
         ],
         "impact": "Eliminated brand cannibalization and lifted customer cross-sell conversion by 34%.",
-        "image": "/images/portfolio/nordic-pay-multi-entity-architecture.jpg"
+        "image": "/images/talent/portfolio/nordic-pay-multi-entity-architecture.jpg"
       },
       {
         "id": "p-001-3",
@@ -132,11 +132,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Sales Battlecards"
         ],
         "impact": "Featured in Fast Company and Bloomberg; onboarded 12 Fortune 500 pilots in 6 months.",
-        "image": "/images/portfolio/verdant-earth-category-genesis.jpg"
+        "image": "/images/talent/portfolio/verdant-earth-category-genesis.jpg"
       }
     ],
     "role": "Brand Strategist",
-    "profileImage": "/images/talent/elena-rostova.jpg"
+    "profileImage": "/images/talent/portraits/elena-rostova.jpg"
   },
   {
     "id": "talent-002",
@@ -218,7 +218,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Staff Experience Rituals"
         ],
         "impact": "94% occupancy in the opening quarter with ADR (Average Daily Rate) 45% above regional benchmark.",
-        "image": "/images/portfolio/the-bellwether-hotel-brand-transformation.jpg"
+        "image": "/images/talent/portfolio/the-bellwether-hotel-brand-transformation.jpg"
       },
       {
         "id": "p-002-2",
@@ -243,7 +243,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Pricing & Scarcity Framework"
         ],
         "impact": "Drove 118% increase in direct-to-consumer digital revenue within 12 months.",
-        "image": "/images/portfolio/maison-alix-heritage-rejuvenation.jpg"
+        "image": "/images/talent/portfolio/maison-alix-heritage-rejuvenation.jpg"
       },
       {
         "id": "p-002-3",
@@ -268,11 +268,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Retail Pitch Strategy"
         ],
         "impact": "Secured placement in 85 Michelin-starred dining rooms across the US and Europe.",
-        "image": "/images/portfolio/botanica-reserve-spirits-launch-strategy.jpg"
+        "image": "/images/talent/portfolio/botanica-reserve-spirits-launch-strategy.jpg"
       }
     ],
     "role": "Brand Strategist",
-    "profileImage": "/images/talent/marcus-vance.jpg"
+    "profileImage": "/images/talent/portraits/marcus-vance.jpg"
   },
   {
     "id": "talent-003",
@@ -352,7 +352,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Sales Pitch Script"
         ],
         "impact": "Helped founders raise $9.5M Series Seed led by Benchmark Capital.",
-        "image": "/images/portfolio/kore-infrastructure-seed-story-positioning.jpg"
+        "image": "/images/talent/portfolio/kore-infrastructure-seed-story-positioning.jpg"
       },
       {
         "id": "p-003-2",
@@ -377,7 +377,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Product Value Matrix"
         ],
         "impact": "Doubled demo request conversion rates within 60 days of launch.",
-        "image": "/images/portfolio/ledgeriq-fintech-repositioning.jpg"
+        "image": "/images/talent/portfolio/ledgeriq-fintech-repositioning.jpg"
       },
       {
         "id": "p-003-3",
@@ -401,11 +401,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Executive Pitch Storyline"
         ],
         "impact": "Approved by 3 major hospital networks for immediate pilot rollouts.",
-        "image": "/images/portfolio/neuralab-ai-safety-charter.jpg"
+        "image": "/images/talent/portfolio/neuralab-ai-safety-charter.jpg"
       }
     ],
     "role": "Brand Strategist",
-    "profileImage": "/images/talent/chloe-chen.jpg"
+    "profileImage": "/images/talent/portraits/chloe-chen.jpg"
   },
   {
     "id": "talent-004",
@@ -488,7 +488,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Packaging Design Matrix"
         ],
         "impact": "Red Dot Best of the Best 2024; 50,000 units pre-ordered in first 72 hours.",
-        "image": "/images/portfolio/aura-sound-holistic-brand-universe.jpg"
+        "image": "/images/talent/portfolio/aura-sound-holistic-brand-universe.jpg"
       },
       {
         "id": "p-004-2",
@@ -513,7 +513,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Physical Terminal Guidelines"
         ],
         "impact": "Unveiled at Paris Air Show to universal critical acclaim and $1.2B in conditional fleet orders.",
-        "image": "/images/portfolio/vanguard-mobility-brand-revolution.jpg"
+        "image": "/images/talent/portfolio/vanguard-mobility-brand-revolution.jpg"
       },
       {
         "id": "p-004-3",
@@ -538,11 +538,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Festival Merch Range"
         ],
         "impact": "Sold-out attendance of 35,000; featured in Eye Magazine and It's Nice That.",
-        "image": "/images/portfolio/klang-festival-visual-identity-stage-direction.jpg"
+        "image": "/images/talent/portfolio/klang-festival-visual-identity-stage-direction.jpg"
       }
     ],
     "role": "Creative Director",
-    "profileImage": "/images/talent/julian-mercer.jpg"
+    "profileImage": "/images/talent/portraits/julian-mercer.jpg"
   },
   {
     "id": "talent-005",
@@ -625,7 +625,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Retail Concept Book"
         ],
         "impact": "Launched nationwide across 600 Sephora doors; sold out initial batch in 9 days.",
-        "image": "/images/portfolio/solstice-botanicals-360-brand-genesis.jpg"
+        "image": "/images/talent/portfolio/solstice-botanicals-360-brand-genesis.jpg"
       },
       {
         "id": "p-005-2",
@@ -650,7 +650,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Stationery & Press Kit"
         ],
         "impact": "Premiered before Cannes Palme d'Or nominee; heralded as one of the best production logos of the decade.",
-        "image": "/images/portfolio/kinetic-cinema-identity-rebirth.jpg"
+        "image": "/images/talent/portfolio/kinetic-cinema-identity-rebirth.jpg"
       },
       {
         "id": "p-005-3",
@@ -675,11 +675,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "POS Retail Displays"
         ],
         "impact": "Attained $4.2M retail sell-through within the first 120 days post-launch.",
-        "image": "/images/portfolio/nectar-sparkling-elixirs-packaging-launch.jpg"
+        "image": "/images/talent/portfolio/nectar-sparkling-elixirs-packaging-launch.jpg"
       }
     ],
     "role": "Creative Director",
-    "profileImage": "/images/talent/sienna-rodriguez.jpg"
+    "profileImage": "/images/talent/portraits/sienna-rodriguez.jpg"
   },
   {
     "id": "talent-006",
@@ -763,7 +763,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Quarterly Journal Template"
         ],
         "impact": "Won European Design Gold; increased annual museum memberships by 41%.",
-        "image": "/images/portfolio/stedelijk-modern-spatial-brand-experience.jpg"
+        "image": "/images/talent/portfolio/stedelijk-modern-spatial-brand-experience.jpg"
       },
       {
         "id": "p-006-2",
@@ -788,7 +788,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Signage Program"
         ],
         "impact": "80% of penthouse units presold prior to structural ground-breaking.",
-        "image": "/images/portfolio/oculus-tower-real-estate-brand-sales-gallery.jpg"
+        "image": "/images/talent/portfolio/oculus-tower-real-estate-brand-sales-gallery.jpg"
       },
       {
         "id": "p-006-3",
@@ -813,11 +813,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Brand Governance Rules"
         ],
         "impact": "Decreased marketing asset production cycles by 65% across 4 global regional teams.",
-        "image": "/images/portfolio/prism-cloud-enterprise-identity-system.jpg"
+        "image": "/images/talent/portfolio/prism-cloud-enterprise-identity-system.jpg"
       }
     ],
     "role": "Creative Director",
-    "profileImage": "/images/talent/tariq-mansoor.jpg"
+    "profileImage": "/images/talent/portraits/tariq-mansoor.jpg"
   },
   {
     "id": "talent-007",
@@ -899,7 +899,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Digital Brand Guidelines"
         ],
         "impact": "App won 2024 Apple Design Award nominee and attracted €800M in AUM within 6 months.",
-        "image": "/images/portfolio/krona-wealth-digital-private-banking-identity.jpg"
+        "image": "/images/talent/portfolio/krona-wealth-digital-private-banking-identity.jpg"
       },
       {
         "id": "p-007-2",
@@ -924,7 +924,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Color Formulation Guide"
         ],
         "impact": "Expanded shelf distribution to 240 luxury department stores in Scandinavia and the UK.",
-        "image": "/images/portfolio/tallow-skincare-organic-brand-identity.jpg"
+        "image": "/images/talent/portfolio/tallow-skincare-organic-brand-identity.jpg"
       },
       {
         "id": "p-007-3",
@@ -949,11 +949,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Figma Design Library"
         ],
         "impact": "Over 1,200 stations installed with zero reported visibility compliance issues.",
-        "image": "/images/portfolio/aerovolt-smart-ev-charging-network.jpg"
+        "image": "/images/talent/portfolio/aerovolt-smart-ev-charging-network.jpg"
       }
     ],
     "role": "Brand Identity Designer",
-    "profileImage": "/images/talent/maya-lin-sundqvist.jpg"
+    "profileImage": "/images/talent/portraits/maya-lin-sundqvist.jpg"
   },
   {
     "id": "talent-008",
@@ -1032,7 +1032,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Retail Endcap Visuals"
         ],
         "impact": "300% increase in wholesale pre-orders; picked up by Whole Foods and Target nationwide.",
-        "image": "/images/portfolio/volt-energy-elixirs-high-impact-rebrand.jpg"
+        "image": "/images/talent/portfolio/volt-energy-elixirs-high-impact-rebrand.jpg"
       },
       {
         "id": "p-008-2",
@@ -1057,7 +1057,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Packaging Bags"
         ],
         "impact": "Featured in GQ and Runner's World; sold out inaugural run in 14 minutes.",
-        "image": "/images/portfolio/strata-athletics-technical-apparel-identity.jpg"
+        "image": "/images/talent/portfolio/strata-athletics-technical-apparel-identity.jpg"
       },
       {
         "id": "p-008-3",
@@ -1082,11 +1082,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Neon Wayfinding Signs"
         ],
         "impact": "Poster series awarded TDC Tokyo Annual Book selection.",
-        "image": "/images/portfolio/hyperloop-audio-club-brand-identity.jpg"
+        "image": "/images/talent/portfolio/hyperloop-audio-club-brand-identity.jpg"
       }
     ],
     "role": "Brand Identity Designer",
-    "profileImage": "/images/talent/darius-thorne.jpg"
+    "profileImage": "/images/talent/portraits/darius-thorne.jpg"
   },
   {
     "id": "talent-009",
@@ -1167,7 +1167,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Patient Welcome Box"
         ],
         "impact": "Clinics reported 92% patient trust score on onboarding surveys.",
-        "image": "/images/portfolio/kindred-health-collaborative-identity.jpg"
+        "image": "/images/talent/portfolio/kindred-health-collaborative-identity.jpg"
       },
       {
         "id": "p-009-2",
@@ -1192,7 +1192,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Certificate Templates"
         ],
         "impact": "Deployed across 1.4M active students across North America.",
-        "image": "/images/portfolio/lumina-learning-interactive-identity.jpg"
+        "image": "/images/talent/portfolio/lumina-learning-interactive-identity.jpg"
       },
       {
         "id": "p-009-3",
@@ -1217,11 +1217,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Digital Social Toolkit"
         ],
         "impact": "Engaged 45,000 volunteers across 12 metropolitan cities.",
-        "image": "/images/portfolio/echo-canopy-urban-forest-initiative.jpg"
+        "image": "/images/talent/portfolio/echo-canopy-urban-forest-initiative.jpg"
       }
     ],
     "role": "Brand Identity Designer",
-    "profileImage": "/images/talent/amara-osei.jpg"
+    "profileImage": "/images/talent/portraits/amara-osei.jpg"
   },
   {
     "id": "talent-010",
@@ -1302,7 +1302,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Pronunciation Guide"
         ],
         "impact": "Zero trademark objections across US, EU, and APAC; company secured $60M Series C.",
-        "image": "/images/portfolio/aetheria-quantum-computing-naming-system.jpg"
+        "image": "/images/talent/portfolio/aetheria-quantum-computing-naming-system.jpg"
       },
       {
         "id": "p-010-2",
@@ -1327,7 +1327,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Copywriter Swipe File"
         ],
         "impact": "Enabled marketing team to onboard 14 external copywriters with 100% voice consistency.",
-        "image": "/images/portfolio/solviva-consumer-biotech-verbal-system.jpg"
+        "image": "/images/talent/portfolio/solviva-consumer-biotech-verbal-system.jpg"
       },
       {
         "id": "p-010-3",
@@ -1351,11 +1351,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Sales Enablement Glossary"
         ],
         "impact": "Reduced customer portal confusion tickets by 52%.",
-        "image": "/images/portfolio/vela-cloud-multi-cloud-infrastructure-taxonomy.jpg"
+        "image": "/images/talent/portfolio/vela-cloud-multi-cloud-infrastructure-taxonomy.jpg"
       }
     ],
     "role": "Naming & Verbal Identity Specialist",
-    "profileImage": "/images/talent/beatrice-sterling.jpg"
+    "profileImage": "/images/talent/portraits/beatrice-sterling.jpg"
   },
   {
     "id": "talent-011",
@@ -1436,7 +1436,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Billboard Campaign Copy"
         ],
         "impact": "Billboards generated 4.8M organic social impressions on TikTok and Twitter within 2 weeks.",
-        "image": "/images/portfolio/mischief-soda-brand-manifesto-packaging-copy.jpg"
+        "image": "/images/talent/portfolio/mischief-soda-brand-manifesto-packaging-copy.jpg"
       },
       {
         "id": "p-011-2",
@@ -1461,7 +1461,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Customer Onboarding Guide"
         ],
         "impact": "Customer retention in subscription coffee club increased by 38%.",
-        "image": "/images/portfolio/outlier-craft-roasters-global-voice.jpg"
+        "image": "/images/talent/portfolio/outlier-craft-roasters-global-voice.jpg"
       },
       {
         "id": "p-011-3",
@@ -1485,11 +1485,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Hangtag Manifesto Cards"
         ],
         "impact": "Apparel line selected for Patagonia Action Works retail showcase.",
-        "image": "/images/portfolio/rogue-wave-clean-surf-apparel-naming.jpg"
+        "image": "/images/talent/portfolio/rogue-wave-clean-surf-apparel-naming.jpg"
       }
     ],
     "role": "Naming & Verbal Identity Specialist",
-    "profileImage": "/images/talent/cormac-hayes.jpg"
+    "profileImage": "/images/talent/portraits/cormac-hayes.jpg"
   },
   {
     "id": "talent-012",
@@ -1571,7 +1571,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Empathy Messaging Framework"
         ],
         "impact": "Payment completion drop-off plummeted by 31% after copy rewrite.",
-        "image": "/images/portfolio/kola-remit-cross-border-payment-naming-tone.jpg"
+        "image": "/images/talent/portfolio/kola-remit-cross-border-payment-naming-tone.jpg"
       },
       {
         "id": "p-012-2",
@@ -1596,7 +1596,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Legal Microcopy Playbook"
         ],
         "impact": "NPS climbed from +24 to +67 post-redesign.",
-        "image": "/images/portfolio/scribe-flow-ai-verbal-interface-system.jpg"
+        "image": "/images/talent/portfolio/scribe-flow-ai-verbal-interface-system.jpg"
       },
       {
         "id": "p-012-3",
@@ -1620,11 +1620,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Material Transparency Glossary"
         ],
         "impact": "E-commerce conversion rose by 22% with 40% higher email signups.",
-        "image": "/images/portfolio/tide-timber-sustainable-goods-nomenclature.jpg"
+        "image": "/images/talent/portfolio/tide-timber-sustainable-goods-nomenclature.jpg"
       }
     ],
     "role": "Naming & Verbal Identity Specialist",
-    "profileImage": "/images/talent/zuri-adebayo.jpg"
+    "profileImage": "/images/talent/portraits/zuri-adebayo.jpg"
   },
   {
     "id": "talent-013",
@@ -1704,7 +1704,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Construction Grid Manual"
         ],
         "impact": "Awarded Tokyo Type Directors Club Mark of Excellence 2024.",
-        "image": "/images/portfolio/shibuya-robotics-iconic-kinetic-mark.jpg"
+        "image": "/images/talent/portfolio/shibuya-robotics-iconic-kinetic-mark.jpg"
       },
       {
         "id": "p-013-2",
@@ -1729,7 +1729,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Foil Stamping Guidelines"
         ],
         "impact": "Bottles won Best Packaging at San Francisco World Spirits Competition.",
-        "image": "/images/portfolio/zenith-distillers-crest-wordmark.jpg"
+        "image": "/images/talent/portfolio/zenith-distillers-crest-wordmark.jpg"
       },
       {
         "id": "p-013-3",
@@ -1753,11 +1753,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Corporate Lockup Suite"
         ],
         "impact": "Integrated into over 10 million chip packages worldwide.",
-        "image": "/images/portfolio/nexus-quantum-chip-identity-mark.jpg"
+        "image": "/images/talent/portfolio/nexus-quantum-chip-identity-mark.jpg"
       }
     ],
     "role": "Logo Designer",
-    "profileImage": "/images/talent/kenji-takahashi.jpg"
+    "profileImage": "/images/talent/portraits/kenji-takahashi.jpg"
   },
   {
     "id": "talent-014",
@@ -1839,7 +1839,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Silk Ribbon Print Specs"
         ],
         "impact": "Featured in Vogue Italia and Paris Fashion Week showroom debuts.",
-        "image": "/images/portfolio/atelier-castiglione-high-fashion-logotype.jpg"
+        "image": "/images/talent/portfolio/atelier-castiglione-high-fashion-logotype.jpg"
       },
       {
         "id": "p-014-2",
@@ -1864,7 +1864,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Gold Leaf Print Guidelines"
         ],
         "impact": "Sold 120,000 bottles in Europe in inaugural 6 months.",
-        "image": "/images/portfolio/villa-d-este-botanical-gin-mark-seal.jpg"
+        "image": "/images/talent/portfolio/villa-d-este-botanical-gin-mark-seal.jpg"
       },
       {
         "id": "p-014-3",
@@ -1888,11 +1888,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Exhibition Poster Marks"
         ],
         "impact": "Recognized with ADI Design Index Italian Excellence nomination.",
-        "image": "/images/portfolio/galleria-sforza-contemporary-arts-monogram.jpg"
+        "image": "/images/talent/portfolio/galleria-sforza-contemporary-arts-monogram.jpg"
       }
     ],
     "role": "Logo Designer",
-    "profileImage": "/images/talent/valeria-rossi.jpg"
+    "profileImage": "/images/talent/portraits/valeria-rossi.jpg"
   },
   {
     "id": "talent-015",
@@ -1973,7 +1973,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Complete Identity Manual"
         ],
         "impact": "Featured in Wallpaper* Magazine and ArchDaily Best of 2024.",
-        "image": "/images/portfolio/archiform-architectural-studio-monolith-mark.jpg"
+        "image": "/images/talent/portfolio/archiform-architectural-studio-monolith-mark.jpg"
       },
       {
         "id": "p-015-2",
@@ -1998,7 +1998,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "VJ Visual Loop Package"
         ],
         "impact": "Over 50 vinyl releases issued under the visual system with instant collector recognition.",
-        "image": "/images/portfolio/subterra-sound-modular-dynamic-logo.jpg"
+        "image": "/images/talent/portfolio/subterra-sound-modular-dynamic-logo.jpg"
       },
       {
         "id": "p-015-3",
@@ -2022,11 +2022,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "SVG Responsive Icon Pack"
         ],
         "impact": "Zero loss of legibility across 5 industrial plastic resins.",
-        "image": "/images/portfolio/krypton-micro-sensors-hardware-mark.jpg"
+        "image": "/images/talent/portfolio/krypton-micro-sensors-hardware-mark.jpg"
       }
     ],
     "role": "Logo Designer",
-    "profileImage": "/images/talent/bram-de-vries.jpg"
+    "profileImage": "/images/talent/portraits/bram-de-vries.jpg"
   },
   {
     "id": "talent-016",
@@ -2108,7 +2108,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Developer Handoff Token System"
         ],
         "impact": "AOV (Average Order Value) climbed by 44% with a 3x increase in time-on-site.",
-        "image": "/images/portfolio/maison-neuve-digital-flagship-store.jpg"
+        "image": "/images/talent/portfolio/maison-neuve-digital-flagship-store.jpg"
       },
       {
         "id": "p-016-2",
@@ -2133,7 +2133,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Webflow Production Site"
         ],
         "impact": "Won Awwwards Site of the Month and FWA of the Day.",
-        "image": "/images/portfolio/revue-cin-ma-quarterly-digital-publication.jpg"
+        "image": "/images/talent/portfolio/revue-cin-ma-quarterly-digital-publication.jpg"
       },
       {
         "id": "p-016-3",
@@ -2157,11 +2157,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Interactive Token Styleguide"
         ],
         "impact": "Specified by top 50 global architecture firms, boosting quote requests by 85%.",
-        "image": "/images/portfolio/luminary-lighting-experience-studio-ui.jpg"
+        "image": "/images/talent/portfolio/luminary-lighting-experience-studio-ui.jpg"
       }
     ],
     "role": "Visual Designer",
-    "profileImage": "/images/talent/lea-fontaine.jpg"
+    "profileImage": "/images/talent/portraits/lea-fontaine.jpg"
   },
   {
     "id": "talent-017",
@@ -2242,7 +2242,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Design Token JSON Exports"
         ],
         "impact": "Selected by the United Nations Environment Programme for global corporate reporting.",
-        "image": "/images/portfolio/kvantum-climate-analytics-platform-ui.jpg"
+        "image": "/images/talent/portfolio/kvantum-climate-analytics-platform-ui.jpg"
       },
       {
         "id": "p-017-2",
@@ -2267,7 +2267,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Accessibility Audit"
         ],
         "impact": "Sped up front-end engineering delivery by 55% across 12 product teams.",
-        "image": "/images/portfolio/nordic-bank-universal-design-system.jpg"
+        "image": "/images/talent/portfolio/nordic-bank-universal-design-system.jpg"
       },
       {
         "id": "p-017-3",
@@ -2292,11 +2292,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Figma Design File"
         ],
         "impact": "Reduced user reported eye strain and increased weekly active modeling hours by 27%.",
-        "image": "/images/portfolio/vektor-cad-cloud-visual-interface.jpg"
+        "image": "/images/talent/portfolio/vektor-cad-cloud-visual-interface.jpg"
       }
     ],
     "role": "Visual Designer",
-    "profileImage": "/images/talent/soren-lindqvist.jpg"
+    "profileImage": "/images/talent/portraits/soren-lindqvist.jpg"
   },
   {
     "id": "talent-018",
@@ -2376,7 +2376,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Product Hunt Asset Suite"
         ],
         "impact": "#1 Product of the Day and Week on Product Hunt with 120,000 waitlist signups in 48 hours.",
-        "image": "/images/portfolio/hypergraph-ai-launch-visual-ecosystem.jpg"
+        "image": "/images/talent/portfolio/hypergraph-ai-launch-visual-ecosystem.jpg"
       },
       {
         "id": "p-018-2",
@@ -2401,7 +2401,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "E-Commerce Detail Modules"
         ],
         "impact": "Initial production batch of 15,000 units sold out in 3 hours.",
-        "image": "/images/portfolio/pulse-gaming-hardware-launch-visuals.jpg"
+        "image": "/images/talent/portfolio/pulse-gaming-hardware-launch-visuals.jpg"
       },
       {
         "id": "p-018-3",
@@ -2426,11 +2426,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Merchandise Artwork Files"
         ],
         "impact": "Tour grossed $18M across 24 arena dates worldwide.",
-        "image": "/images/portfolio/neon-horizon-music-tour-visual-identity.jpg"
+        "image": "/images/talent/portfolio/neon-horizon-music-tour-visual-identity.jpg"
       }
     ],
     "role": "Visual Designer",
-    "profileImage": "/images/talent/kai-sterling.jpg"
+    "profileImage": "/images/talent/portraits/kai-sterling.jpg"
   },
   {
     "id": "talent-019",
@@ -2512,7 +2512,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Retouching Standard Dossier"
         ],
         "impact": "Displayed across global flagships in Paris, London, and Tokyo; perfume won FiFi Fragrance of the Year.",
-        "image": "/images/portfolio/maison-d-iris-haute-parfumerie-global-campaign.jpg"
+        "image": "/images/talent/portfolio/maison-d-iris-haute-parfumerie-global-campaign.jpg"
       },
       {
         "id": "p-019-2",
@@ -2537,7 +2537,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Retail Sephora Displays"
         ],
         "impact": "Drove 64% increase in product landing page conversion.",
-        "image": "/images/portfolio/aura-skincare-macro-botanical-imagery.jpg"
+        "image": "/images/talent/portfolio/aura-skincare-macro-botanical-imagery.jpg"
       },
       {
         "id": "p-019-3",
@@ -2562,11 +2562,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Website Imagery Library"
         ],
         "impact": "Recognized in Architectural Digest and Conde Nast Traveler Gold List.",
-        "image": "/images/portfolio/l-etoile-provence-hotel-visual-identity-book.jpg"
+        "image": "/images/talent/portfolio/l-etoile-provence-hotel-visual-identity-book.jpg"
       }
     ],
     "role": "Art Director",
-    "profileImage": "/images/talent/camille-dupuis.jpg"
+    "profileImage": "/images/talent/portraits/camille-dupuis.jpg"
   },
   {
     "id": "talent-020",
@@ -2649,7 +2649,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Digital Lookbook Assets"
         ],
         "impact": "Drove 140,000 sunglasses pre-orders and secured feature coverage in Highsnobiety.",
-        "image": "/images/portfolio/sombra-eyewear-summer-odyssey-campaign.jpg"
+        "image": "/images/talent/portfolio/sombra-eyewear-summer-odyssey-campaign.jpg"
       },
       {
         "id": "p-020-2",
@@ -2674,7 +2674,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Retail Display Kit"
         ],
         "impact": "Expanded into 800 premium bars and grocery stockists in 90 days.",
-        "image": "/images/portfolio/sol-natural-organic-aperitivo-launch.jpg"
+        "image": "/images/talent/portfolio/sol-natural-organic-aperitivo-launch.jpg"
       },
       {
         "id": "p-020-3",
@@ -2699,11 +2699,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Artist Social Asset Templates"
         ],
         "impact": "Ticket sellout in record 48 hours with 2.1M digital impressions.",
-        "image": "/images/portfolio/sonar-experimental-sounds-visual-identity.jpg"
+        "image": "/images/talent/portfolio/sonar-experimental-sounds-visual-identity.jpg"
       }
     ],
     "role": "Art Director",
-    "profileImage": "/images/talent/mateo-silva.jpg"
+    "profileImage": "/images/talent/portraits/mateo-silva.jpg"
   },
   {
     "id": "talent-021",
@@ -2784,7 +2784,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Exhibition Gallery Prints"
         ],
         "impact": "Nominated for Best Boxed or Special Limited Edition Package at 2024 Grammys.",
-        "image": "/images/portfolio/roots-rhythm-vinyl-series-visual-art-direction.jpg"
+        "image": "/images/talent/portfolio/roots-rhythm-vinyl-series-visual-art-direction.jpg"
       },
       {
         "id": "p-021-2",
@@ -2809,7 +2809,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Pop-up Retail Installation Plan"
         ],
         "impact": "Sold out apparel collection and featured on Hypebeast.",
-        "image": "/images/portfolio/kinfolk-apparel-autumn-cultural-lookbook.jpg"
+        "image": "/images/talent/portfolio/kinfolk-apparel-autumn-cultural-lookbook.jpg"
       },
       {
         "id": "p-021-3",
@@ -2834,11 +2834,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Mural Blueprint Specs"
         ],
         "impact": "Secured regional Whole Foods distribution across the Southeast.",
-        "image": "/images/portfolio/soul-tonic-cold-brew-bottle-launch.jpg"
+        "image": "/images/talent/portfolio/soul-tonic-cold-brew-bottle-launch.jpg"
       }
     ],
     "role": "Art Director",
-    "profileImage": "/images/talent/nia-washington.jpg"
+    "profileImage": "/images/talent/portraits/nia-washington.jpg"
   },
   {
     "id": "talent-022",
@@ -2921,7 +2921,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Component Documentation"
         ],
         "impact": "Cut average order placement time from 4.2 seconds to 0.8 seconds; platform handled $12B monthly volume.",
-        "image": "/images/portfolio/aura-trading-autonomous-algo-platform-ui.jpg"
+        "image": "/images/talent/portfolio/aura-trading-autonomous-algo-platform-ui.jpg"
       },
       {
         "id": "p-022-2",
@@ -2946,7 +2946,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Design-to-Code Storybook Guide"
         ],
         "impact": "Decreased mean-time-to-detection (MTTD) for cyber threats by 43% in client security operations centers.",
-        "image": "/images/portfolio/strata-risk-engine-compliance-portal.jpg"
+        "image": "/images/talent/portfolio/strata-risk-engine-compliance-portal.jpg"
       },
       {
         "id": "p-022-3",
@@ -2971,11 +2971,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "PDF Export Engine UI"
         ],
         "impact": "Adopted by 85 global enterprises for CSRD compliance.",
-        "image": "/images/portfolio/polaris-esg-climate-tracking-suite.jpg"
+        "image": "/images/talent/portfolio/polaris-esg-climate-tracking-suite.jpg"
       }
     ],
     "role": "UI/UX Designer",
-    "profileImage": "/images/talent/henrik-lind.jpg"
+    "profileImage": "/images/talent/portraits/henrik-lind.jpg"
   },
   {
     "id": "talent-023",
@@ -3057,7 +3057,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Protopie Prototype with AI Simulator"
         ],
         "impact": "Grew from 0 to 450,000 active monthly creators in 6 months.",
-        "image": "/images/portfolio/nexus-canvas-generative-diagramming-tool.jpg"
+        "image": "/images/talent/portfolio/nexus-canvas-generative-diagramming-tool.jpg"
       },
       {
         "id": "p-023-2",
@@ -3082,7 +3082,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Spec Sheet for React Web"
         ],
         "impact": "Developers resolved pull requests 38% faster with 94% acceptance of AI recommendations.",
-        "image": "/images/portfolio/codalab-code-review-ai-co-pilot.jpg"
+        "image": "/images/talent/portfolio/codalab-code-review-ai-co-pilot.jpg"
       },
       {
         "id": "p-023-3",
@@ -3106,11 +3106,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Mobile & Web Responsive Prototype"
         ],
         "impact": "Course completion rates surged from 19% to 74% across 80,000 university students.",
-        "image": "/images/portfolio/synthlearn-adaptive-education-platform.jpg"
+        "image": "/images/talent/portfolio/synthlearn-adaptive-education-platform.jpg"
       }
     ],
     "role": "UI/UX Designer",
-    "profileImage": "/images/talent/priya-patel.jpg"
+    "profileImage": "/images/talent/portraits/priya-patel.jpg"
   },
   {
     "id": "talent-024",
@@ -3192,7 +3192,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Checkout Analytics Measurement Plan"
         ],
         "impact": "Boosted completed mobile checkout conversion by 28.4%, generating an additional $3.2M ARR.",
-        "image": "/images/portfolio/verve-d2c-one-tap-checkout-re-architecture.jpg"
+        "image": "/images/talent/portfolio/verve-d2c-one-tap-checkout-re-architecture.jpg"
       },
       {
         "id": "p-024-2",
@@ -3217,7 +3217,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Figma User Flow"
         ],
         "impact": "Free-to-paid trial conversion increased by 42% in Q1.",
-        "image": "/images/portfolio/oasis-mindfulness-subscription-onboarding.jpg"
+        "image": "/images/talent/portfolio/oasis-mindfulness-subscription-onboarding.jpg"
       },
       {
         "id": "p-024-3",
@@ -3241,11 +3241,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Offline Error Recovery Flows"
         ],
         "impact": "Reached 2 million active app users in Latin America with a 4.9 App Store rating.",
-        "image": "/images/portfolio/moneda-digital-wallet-mobile-experience.jpg"
+        "image": "/images/talent/portfolio/moneda-digital-wallet-mobile-experience.jpg"
       }
     ],
     "role": "UI/UX Designer",
-    "profileImage": "/images/talent/leo-gomez.jpg"
+    "profileImage": "/images/talent/portraits/leo-gomez.jpg"
   },
   {
     "id": "talent-025",
@@ -3328,7 +3328,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "CMS Architectural Schema"
         ],
         "impact": "Awarded Awwwards Site of the Month and Type Directors Club Digital Merit.",
-        "image": "/images/portfolio/basel-bauwerk-architecture-digital-archive.jpg"
+        "image": "/images/talent/portfolio/basel-bauwerk-architecture-digital-archive.jpg"
       },
       {
         "id": "p-025-2",
@@ -3353,7 +3353,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Lottie Interactive Visualizers"
         ],
         "impact": "Attracted 800,000 unique researchers within first 90 days; featured on Hacker News front page.",
-        "image": "/images/portfolio/veritas-ai-research-lab-digital-experience.jpg"
+        "image": "/images/talent/portfolio/veritas-ai-research-lab-digital-experience.jpg"
       },
       {
         "id": "p-025-3",
@@ -3378,11 +3378,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Mobile Concierge UI"
         ],
         "impact": "Direct private client inquiries surged by 180%.",
-        "image": "/images/portfolio/kanton-horology-luxury-watch-portfolio.jpg"
+        "image": "/images/talent/portfolio/kanton-horology-luxury-watch-portfolio.jpg"
       }
     ],
     "role": "Web Designer",
-    "profileImage": "/images/talent/astrid-lindholm.jpg"
+    "profileImage": "/images/talent/portraits/astrid-lindholm.jpg"
   },
   {
     "id": "talent-026",
@@ -3463,7 +3463,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Audio Asset Matrix"
         ],
         "impact": "Awwwards Site of the Year Nominee; average user session exceeded 4 minutes 20 seconds.",
-        "image": "/images/portfolio/orbit-spatial-audio-web-launch-experience.jpg"
+        "image": "/images/talent/portfolio/orbit-spatial-audio-web-launch-experience.jpg"
       },
       {
         "id": "p-026-2",
@@ -3488,7 +3488,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Light/Dark Theme Tokens"
         ],
         "impact": "Lifted developer signups from homepage traffic by 56%.",
-        "image": "/images/portfolio/cascade-distributed-database-marketing-site.jpg"
+        "image": "/images/talent/portfolio/cascade-distributed-database-marketing-site.jpg"
       },
       {
         "id": "p-026-3",
@@ -3512,11 +3512,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Interactive Project Case Studies"
         ],
         "impact": "Helped studio book $8M in episodic TV LED volume virtual production contracts.",
-        "image": "/images/portfolio/wildfire-virtual-production-studio-site.jpg"
+        "image": "/images/talent/portfolio/wildfire-virtual-production-studio-site.jpg"
       }
     ],
     "role": "Web Designer",
-    "profileImage": "/images/talent/noah-sterling.jpg"
+    "profileImage": "/images/talent/portraits/noah-sterling.jpg"
   },
   {
     "id": "talent-027",
@@ -3598,7 +3598,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Booking Flow Specs"
         ],
         "impact": "Secured over $14M in direct villa bookings within first 60 days of unveiling.",
-        "image": "/images/portfolio/al-mirage-desert-resort-oasis-digital-flagship.jpg"
+        "image": "/images/talent/portfolio/al-mirage-desert-resort-oasis-digital-flagship.jpg"
       },
       {
         "id": "p-027-2",
@@ -3623,7 +3623,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Lead Capture Automation"
         ],
         "impact": "All 18 ultra-luxury penthouses sold out prior to structural topping out.",
-        "image": "/images/portfolio/the-palm-residences-architectural-interactive-showcase.jpg"
+        "image": "/images/talent/portfolio/the-palm-residences-architectural-interactive-showcase.jpg"
       },
       {
         "id": "p-027-3",
@@ -3647,11 +3647,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Custom Quiz App UI"
         ],
         "impact": "Generated 3.4x higher conversion rate in regional GCC markets.",
-        "image": "/images/portfolio/noor-perfumery-heritage-e-commerce-flagship.jpg"
+        "image": "/images/talent/portfolio/noor-perfumery-heritage-e-commerce-flagship.jpg"
       }
     ],
     "role": "Web Designer",
-    "profileImage": "/images/talent/fatima-al-mansoor.jpg"
+    "profileImage": "/images/talent/portraits/fatima-al-mansoor.jpg"
   },
   {
     "id": "talent-028",
@@ -3733,7 +3733,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "4K Channel Idents Suite"
         ],
         "impact": "Broadcasted across 42 countries to an audience of 65 million daily viewers.",
-        "image": "/images/portfolio/pulse-media-global-kinetic-identity-broadcast-package.jpg"
+        "image": "/images/talent/portfolio/pulse-media-global-kinetic-identity-broadcast-package.jpg"
       },
       {
         "id": "p-028-2",
@@ -3758,7 +3758,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Haptic Sync Guide"
         ],
         "impact": "Transaction completion customer satisfaction ratings reached 98.7%.",
-        "image": "/images/portfolio/aura-pay-fluid-dynamic-transaction-motion.jpg"
+        "image": "/images/talent/portfolio/aura-pay-fluid-dynamic-transaction-motion.jpg"
       },
       {
         "id": "p-028-3",
@@ -3783,11 +3783,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Social Video Kit"
         ],
         "impact": "Campaign videos racked up 8.2M views across Instagram and TikTok.",
-        "image": "/images/portfolio/kinesis-audio-generative-typographic-sound-stems.jpg"
+        "image": "/images/talent/portfolio/kinesis-audio-generative-typographic-sound-stems.jpg"
       }
     ],
     "role": "Motion Designer",
-    "profileImage": "/images/talent/arthur-pendelton.jpg"
+    "profileImage": "/images/talent/portraits/arthur-pendelton.jpg"
   },
   {
     "id": "talent-029",
@@ -3868,7 +3868,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Player Intro Motion Rigs"
         ],
         "impact": "Viewed by over 14 million live concurrent viewers during the World Finals.",
-        "image": "/images/portfolio/apex-arena-global-esports-championship-title-sequence.jpg"
+        "image": "/images/talent/portfolio/apex-arena-global-esports-championship-title-sequence.jpg"
       },
       {
         "id": "p-029-2",
@@ -3893,7 +3893,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Typography Animation Library"
         ],
         "impact": "Won Silver Pencil at The One Show 2024 for Motion Craft.",
-        "image": "/images/portfolio/k-vibe-global-brand-manifesto-film.jpg"
+        "image": "/images/talent/portfolio/k-vibe-global-brand-manifesto-film.jpg"
       },
       {
         "id": "p-029-3",
@@ -3918,11 +3918,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Social Loop GIFs"
         ],
         "impact": "Teaser went viral on X with 3.5M views within 24 hours.",
-        "image": "/images/portfolio/synthetix-model-4-animated-teaser-launch.jpg"
+        "image": "/images/talent/portfolio/synthetix-model-4-animated-teaser-launch.jpg"
       }
     ],
     "role": "Motion Designer",
-    "profileImage": "/images/talent/jin-woo-park.jpg"
+    "profileImage": "/images/talent/portraits/jin-woo-park.jpg"
   },
   {
     "id": "talent-030",
@@ -4005,7 +4005,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "SwiftUI / Kotlin Integration Guide"
         ],
         "impact": "Daily user retention increased by 33% due to high emotional attachment to the mascot.",
-        "image": "/images/portfolio/nectar-health-habit-tracking-rive-interactive-avatars.jpg"
+        "image": "/images/talent/portfolio/nectar-health-habit-tracking-rive-interactive-avatars.jpg"
       },
       {
         "id": "p-030-2",
@@ -4030,7 +4030,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Developer Test Sandbox"
         ],
         "impact": "Zero drop in frame rates (60fps steady) across all low-end Android test devices.",
-        "image": "/images/portfolio/vault-bank-interactive-security-micro-interactions.jpg"
+        "image": "/images/talent/portfolio/vault-bank-interactive-security-micro-interactions.jpg"
       },
       {
         "id": "p-030-3",
@@ -4054,11 +4054,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Web React Wrapper Components"
         ],
         "impact": "Reduced user churn sentiment on error screens by 48%.",
-        "image": "/images/portfolio/saasify-empty-state-error-delight-suite.jpg"
+        "image": "/images/talent/portfolio/saasify-empty-state-error-delight-suite.jpg"
       }
     ],
     "role": "Motion Designer",
-    "profileImage": "/images/talent/clara-morales.jpg"
+    "profileImage": "/images/talent/portraits/clara-morales.jpg"
   },
   {
     "id": "talent-031",
@@ -4141,7 +4141,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Shader Library for Production"
         ],
         "impact": "Images formed the worldwide billboard campaign and were featured on the Apple Design showcase.",
-        "image": "/images/portfolio/aura-precision-headphone-3d-campaign-exploded-assembly.jpg"
+        "image": "/images/talent/portfolio/aura-precision-headphone-3d-campaign-exploded-assembly.jpg"
       },
       {
         "id": "p-031-2",
@@ -4165,7 +4165,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Packaging Front-of-Box 3D Assets"
         ],
         "impact": "Retail partner listings on Amazon and Best Buy recorded a 4.8/5 aesthetic score.",
-        "image": "/images/portfolio/verve-smart-thermostat-hardware-visual-suite.jpg"
+        "image": "/images/talent/portfolio/verve-smart-thermostat-hardware-visual-suite.jpg"
       },
       {
         "id": "p-031-3",
@@ -4189,11 +4189,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "8 Hero Advertising Renders"
         ],
         "impact": "Saved $80,000 in physical sample prototyping and photography studio costs.",
-        "image": "/images/portfolio/elixir-botanical-gin-heavy-glass-bottle-renders.jpg"
+        "image": "/images/talent/portfolio/elixir-botanical-gin-heavy-glass-bottle-renders.jpg"
       }
     ],
     "role": "3D & Spatial Designer",
-    "profileImage": "/images/talent/maxence-dubois.jpg"
+    "profileImage": "/images/talent/portraits/maxence-dubois.jpg"
   },
   {
     "id": "talent-032",
@@ -4275,7 +4275,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Physical Flagship Construction Blueprint"
         ],
         "impact": "Over 350,000 virtual visitors with average engagement time exceeding 6 minutes.",
-        "image": "/images/portfolio/maison-alix-virtual-marble-pavilion-showroom.jpg"
+        "image": "/images/talent/portfolio/maison-alix-virtual-marble-pavilion-showroom.jpg"
       },
       {
         "id": "p-032-2",
@@ -4300,7 +4300,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Motion Preview Renders"
         ],
         "impact": "Installation received international acclaim and was featured in Dezeen.",
-        "image": "/images/portfolio/klang-biennial-spatial-stage-installation.jpg"
+        "image": "/images/talent/portfolio/klang-biennial-spatial-stage-installation.jpg"
       },
       {
         "id": "p-032-3",
@@ -4325,11 +4325,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Contractor 3D File Package"
         ],
         "impact": "Helped secure prime retail lease on Mercer Street in New York City.",
-        "image": "/images/portfolio/solstice-sanctuary-wellness-concept-store.jpg"
+        "image": "/images/talent/portfolio/solstice-sanctuary-wellness-concept-store.jpg"
       }
     ],
     "role": "3D & Spatial Designer",
-    "profileImage": "/images/talent/anika-sharma.jpg"
+    "profileImage": "/images/talent/portraits/anika-sharma.jpg"
   },
   {
     "id": "talent-033",
@@ -4410,7 +4410,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "4K Dynamic Loop Videos"
         ],
         "impact": "Became the core visual metaphor for all brand communications and customer conference keynotes.",
-        "image": "/images/portfolio/cognitive-ai-dynamic-neural-topography.jpg"
+        "image": "/images/talent/portfolio/cognitive-ai-dynamic-neural-topography.jpg"
       },
       {
         "id": "p-033-2",
@@ -4434,7 +4434,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Scientific Marketing Film (60s)"
         ],
         "impact": "Helped company communicate complex mRNA delivery mechanisms to institutional investors, raising $75M.",
-        "image": "/images/portfolio/aura-bio-cellular-regenerative-simulation.jpg"
+        "image": "/images/talent/portfolio/aura-bio-cellular-regenerative-simulation.jpg"
       },
       {
         "id": "p-033-3",
@@ -4459,11 +4459,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Social Promo Render Suite"
         ],
         "impact": "Homepage video loop logged over 4 million impressions with strong user recall.",
-        "image": "/images/portfolio/kinesis-liquidity-pool-fluid-simulation.jpg"
+        "image": "/images/talent/portfolio/kinesis-liquidity-pool-fluid-simulation.jpg"
       }
     ],
     "role": "3D & Spatial Designer",
-    "profileImage": "/images/talent/lucas-becker.jpg"
+    "profileImage": "/images/talent/portraits/lucas-becker.jpg"
   },
   {
     "id": "talent-034",
@@ -4544,7 +4544,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Certificate of Authenticity Art"
         ],
         "impact": "Bottles designated as official commemorative gift for foreign cultural dignitaries; won Gold Pentaward.",
-        "image": "/images/portfolio/the-kyoto-botanist-heritage-gin-label-murals.jpg"
+        "image": "/images/talent/portfolio/the-kyoto-botanist-heritage-gin-label-murals.jpg"
       },
       {
         "id": "p-034-2",
@@ -4568,7 +4568,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "6 Interior Editorial Spots"
         ],
         "impact": "Selected for Society of Illustrators Gold Medal 2024.",
-        "image": "/images/portfolio/new-yorker-magazine-technology-solitude-essay-series.jpg"
+        "image": "/images/talent/portfolio/new-yorker-magazine-technology-solitude-essay-series.jpg"
       },
       {
         "id": "p-034-3",
@@ -4593,11 +4593,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Signage Iconography"
         ],
         "impact": "Guest souvenir purchases of the book generated $95,000 in ancillary hotel revenue.",
-        "image": "/images/portfolio/miyama-onsen-ryokan-wayfinding-storybook.jpg"
+        "image": "/images/talent/portfolio/miyama-onsen-ryokan-wayfinding-storybook.jpg"
       }
     ],
     "role": "Illustrator",
-    "profileImage": "/images/talent/saki-miyazono.jpg"
+    "profileImage": "/images/talent/portraits/saki-miyazono.jpg"
   },
   {
     "id": "talent-035",
@@ -4679,7 +4679,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Social Sticker Pack"
         ],
         "impact": "Retail listings secured in 1,200 supermarket locations across North America and Europe.",
-        "image": "/images/portfolio/samba-sol-organic-acai-guarana-brand-system.jpg"
+        "image": "/images/talent/portfolio/samba-sol-organic-acai-guarana-brand-system.jpg"
       },
       {
         "id": "p-035-2",
@@ -4703,7 +4703,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Collectible Origin Postcard Set"
         ],
         "impact": "Limited release coffee batches sold out in under 48 hours.",
-        "image": "/images/portfolio/selva-specialty-coffee-origins-packaging-series.jpg"
+        "image": "/images/talent/portfolio/selva-specialty-coffee-origins-packaging-series.jpg"
       },
       {
         "id": "p-035-3",
@@ -4728,11 +4728,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "T-shirt Screenprint Files"
         ],
         "impact": "Festival attended by 120,000 people; merchandise completely sold out on Day 1.",
-        "image": "/images/portfolio/carioca-festival-de-verao-visual-campaign.jpg"
+        "image": "/images/talent/portfolio/carioca-festival-de-verao-visual-campaign.jpg"
       }
     ],
     "role": "Illustrator",
-    "profileImage": "/images/talent/gabriel-santos.jpg"
+    "profileImage": "/images/talent/portraits/gabriel-santos.jpg"
   },
   {
     "id": "talent-036",
@@ -4813,7 +4813,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Illustration Styleguide (60 pages)"
         ],
         "impact": "Standardized brand artwork across 35 international marketing teams, cutting external illustration commissions by 70%.",
-        "image": "/images/portfolio/klarna-ecosystem-human-touch-illustration-system.jpg"
+        "image": "/images/talent/portfolio/klarna-ecosystem-human-touch-illustration-system.jpg"
       },
       {
         "id": "p-036-2",
@@ -4837,7 +4837,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "40 Custom Architectural Icons"
         ],
         "impact": "Visitor comprehension of product capabilities increased by 85% in customer usability testing.",
-        "image": "/images/portfolio/simpliflow-complex-cloud-infrastructure-infographics.jpg"
+        "image": "/images/talent/portfolio/simpliflow-complex-cloud-infrastructure-infographics.jpg"
       },
       {
         "id": "p-036-3",
@@ -4861,11 +4861,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "App Store Screenshot Layouts"
         ],
         "impact": "App received 'App of the Day' on the iOS App Store in 14 countries.",
-        "image": "/images/portfolio/nordic-mind-mental-health-journal-art.jpg"
+        "image": "/images/talent/portfolio/nordic-mind-mental-health-journal-art.jpg"
       }
     ],
     "role": "Illustrator",
-    "profileImage": "/images/talent/ingrid-vestergaard.jpg"
+    "profileImage": "/images/talent/portraits/ingrid-vestergaard.jpg"
   },
   {
     "id": "talent-037",
@@ -4947,7 +4947,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Production Factory Quality Protocol"
         ],
         "impact": "Limited edition of 500 numbered carafes sold out at €3,200 each prior to public release.",
-        "image": "/images/portfolio/chateau-grand-loup-100-year-heritage-cognac-decanter.jpg"
+        "image": "/images/talent/portfolio/chateau-grand-loup-100-year-heritage-cognac-decanter.jpg"
       },
       {
         "id": "p-037-2",
@@ -4972,7 +4972,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Finishing Swatch Library"
         ],
         "impact": "Awarded Diamond Trophy at Pentawards 2023 for Sustainable Luxury Packaging.",
-        "image": "/images/portfolio/l-heure-bleue-perfume-box-flacon-packaging.jpg"
+        "image": "/images/talent/portfolio/l-heure-bleue-perfume-box-flacon-packaging.jpg"
       },
       {
         "id": "p-037-3",
@@ -4996,11 +4996,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Food Safety Cert Specifications"
         ],
         "impact": "Holiday seasonal sales grew by 47% across European boutiques.",
-        "image": "/images/portfolio/maison-chocolat-artisanal-gift-collection.jpg"
+        "image": "/images/talent/portfolio/maison-chocolat-artisanal-gift-collection.jpg"
       }
     ],
     "role": "Packaging Designer",
-    "profileImage": "/images/talent/margot-de-la-tour.jpg"
+    "profileImage": "/images/talent/portraits/margot-de-la-tour.jpg"
   },
   {
     "id": "talent-038",
@@ -5080,7 +5080,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Keg Collar Artwork"
         ],
         "impact": "Became #1 fastest selling craft IPA in Pacific Northwest supermarket chains.",
-        "image": "/images/portfolio/apex-brewing-co-holographic-micro-can-suite.jpg"
+        "image": "/images/talent/portfolio/apex-brewing-co-holographic-micro-can-suite.jpg"
       },
       {
         "id": "p-038-2",
@@ -5105,7 +5105,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Sustainability Lifecycle Dossier"
         ],
         "impact": "Saved 40 tons of plastic foam from entering landfills across client product shipments.",
-        "image": "/images/portfolio/earthware-zero-plastic-biodegradable-tech-shippers.jpg"
+        "image": "/images/talent/portfolio/earthware-zero-plastic-biodegradable-tech-shippers.jpg"
       },
       {
         "id": "p-038-3",
@@ -5129,11 +5129,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Inner Cushion Origami Inserts"
         ],
         "impact": "Packaging damage in transit claims reduced by 91%; unboxing videos totaled 2M views.",
-        "image": "/images/portfolio/wild-oats-pantry-d2c-subscription-unboxing.jpg"
+        "image": "/images/talent/portfolio/wild-oats-pantry-d2c-subscription-unboxing.jpg"
       }
     ],
     "role": "Packaging Designer",
-    "profileImage": "/images/talent/tyler-brody.jpg"
+    "profileImage": "/images/talent/portraits/tyler-brody.jpg"
   },
   {
     "id": "talent-039",
@@ -5215,7 +5215,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Ingredient Regulatory Label Matrix"
         ],
         "impact": "Selected by Harrods London and Le Bon Marché Paris for international luxury retail display.",
-        "image": "/images/portfolio/soma-ayurvedic-elixirs-luxury-skincare-collection.jpg"
+        "image": "/images/talent/portfolio/soma-ayurvedic-elixirs-luxury-skincare-collection.jpg"
       },
       {
         "id": "p-039-2",
@@ -5239,7 +5239,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Collector Box Sleeve Dieline"
         ],
         "impact": "Drove 160% year-over-year growth in international export gift orders.",
-        "image": "/images/portfolio/chai-ghar-imperial-tea-heritage-tin-packaging.jpg"
+        "image": "/images/talent/portfolio/chai-ghar-imperial-tea-heritage-tin-packaging.jpg"
       },
       {
         "id": "p-039-3",
@@ -5263,11 +5263,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Hand-Assembled Assembly Guide"
         ],
         "impact": "Awarded Best Sustainable Spa Packaging at AsiaSpa Awards.",
-        "image": "/images/portfolio/ananda-spa-ritual-incense-bath-salts-suite.jpg"
+        "image": "/images/talent/portfolio/ananda-spa-ritual-incense-bath-salts-suite.jpg"
       }
     ],
     "role": "Packaging Designer",
-    "profileImage": "/images/talent/hina-patel.jpg"
+    "profileImage": "/images/talent/portraits/hina-patel.jpg"
   },
   {
     "id": "talent-040",
@@ -5348,7 +5348,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Web Portfolio Image Optimization"
         ],
         "impact": "Featured on cover of El Croquis and selected for ArchDaily Building of the Year photographic honors.",
-        "image": "/images/portfolio/casa-monolito-architectural-photography-monograph.jpg"
+        "image": "/images/talent/portfolio/casa-monolito-architectural-photography-monograph.jpg"
       },
       {
         "id": "p-040-2",
@@ -5372,7 +5372,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Press Kit Photography Suite"
         ],
         "impact": "Property achieved 100% summer occupancy within 3 weeks of campaign launch.",
-        "image": "/images/portfolio/can-ferrer-heritage-finca-luxury-hotel-campaign.jpg"
+        "image": "/images/talent/portfolio/can-ferrer-heritage-finca-luxury-hotel-campaign.jpg"
       },
       {
         "id": "p-040-3",
@@ -5395,11 +5395,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Museum Digital Archive Imagery"
         ],
         "impact": "Prints acquired into permanent museum photography collection.",
-        "image": "/images/portfolio/museo-del-aire-minimalist-facade-study.jpg"
+        "image": "/images/talent/portfolio/museo-del-aire-minimalist-facade-study.jpg"
       }
     ],
     "role": "Brand Photographer",
-    "profileImage": "/images/talent/sebastian-cruz.jpg"
+    "profileImage": "/images/talent/portraits/sebastian-cruz.jpg"
   },
   {
     "id": "talent-041",
@@ -5480,7 +5480,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Social Billboard Cutdowns"
         ],
         "impact": "Campaign imagery led to brand acquisition by global streetwear conglomerate.",
-        "image": "/images/portfolio/lower-east-side-streetwear-autumn-global-campaign.jpg"
+        "image": "/images/talent/portfolio/lower-east-side-streetwear-autumn-global-campaign.jpg"
       },
       {
         "id": "p-041-2",
@@ -5504,7 +5504,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Artist Press Photography Package (150 images)"
         ],
         "impact": "Covers featured on Spotify Billboard in Times Square.",
-        "image": "/images/portfolio/sound-spirit-record-label-artist-portraits.jpg"
+        "image": "/images/talent/portfolio/sound-spirit-record-label-artist-portraits.jpg"
       },
       {
         "id": "p-041-3",
@@ -5528,11 +5528,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Digital Ad Asset Deck"
         ],
         "impact": "Drove 80% lift in brand recall across Manhattan and Brooklyn bodegas.",
-        "image": "/images/portfolio/boro-beverage-cold-pressed-juice-street-campaign.jpg"
+        "image": "/images/talent/portfolio/boro-beverage-cold-pressed-juice-street-campaign.jpg"
       }
     ],
     "role": "Brand Photographer",
-    "profileImage": "/images/talent/harper-sloane.jpg"
+    "profileImage": "/images/talent/portraits/harper-sloane.jpg"
   },
   {
     "id": "talent-042",
@@ -5613,7 +5613,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Large Restaurant Prints"
         ],
         "impact": "Cookbook awarded Best Chef Book at Australian Culinary Book Awards.",
-        "image": "/images/portfolio/wild-wood-dining-monograph-cookbook.jpg"
+        "image": "/images/talent/portfolio/wild-wood-dining-monograph-cookbook.jpg"
       },
       {
         "id": "p-042-2",
@@ -5637,7 +5637,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Social Motion Video Stills"
         ],
         "impact": "Featured across 300 transit shelters in Melbourne and Sydney.",
-        "image": "/images/portfolio/yarra-valley-artisanal-ciders-beverage-campaign.jpg"
+        "image": "/images/talent/portfolio/yarra-valley-artisanal-ciders-beverage-campaign.jpg"
       },
       {
         "id": "p-042-3",
@@ -5660,11 +5660,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Hero Carousel Imagery"
         ],
         "impact": "Subscription gift box sales increased by 115% in the holiday quarter.",
-        "image": "/images/portfolio/provenance-cheese-artisan-web-photography.jpg"
+        "image": "/images/talent/portfolio/provenance-cheese-artisan-web-photography.jpg"
       }
     ],
     "role": "Brand Photographer",
-    "profileImage": "/images/talent/liam-o-connor.jpg"
+    "profileImage": "/images/talent/portraits/liam-o-connor.jpg"
   },
   {
     "id": "talent-043",
@@ -5745,7 +5745,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Social One-Liners"
         ],
         "impact": "D&AD Yellow Pencil for Copywriting; generated 8M organic Twitter impressions.",
-        "image": "/images/portfolio/the-unapologetic-gentleman-outdoor-headline-campaign.jpg"
+        "image": "/images/talent/portfolio/the-unapologetic-gentleman-outdoor-headline-campaign.jpg"
       },
       {
         "id": "p-043-2",
@@ -5770,7 +5770,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Bartender Legend Script"
         ],
         "impact": "Shortlisted for British Design & Art Direction Craft Awards.",
-        "image": "/images/portfolio/vesper-botanical-gin-origin-story-packaging-copy.jpg"
+        "image": "/images/talent/portfolio/vesper-botanical-gin-origin-story-packaging-copy.jpg"
       },
       {
         "id": "p-043-3",
@@ -5794,11 +5794,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Press Kit Announcement Essay"
         ],
         "impact": "Keynote livestream watched by 450,000 audiophiles; received standing ovation from tech press.",
-        "image": "/images/portfolio/meridian-audio-founder-keynote-launch-narrative.jpg"
+        "image": "/images/talent/portfolio/meridian-audio-founder-keynote-launch-narrative.jpg"
       }
     ],
     "role": "Copywriter",
-    "profileImage": "/images/talent/penelope-ward.jpg"
+    "profileImage": "/images/talent/portraits/penelope-ward.jpg"
   },
   {
     "id": "talent-044",
@@ -5878,7 +5878,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Microcopy Swipe Guide"
         ],
         "impact": "Lifted free trial signup conversion by 37.8%, adding $1.8M in pipeline revenue.",
-        "image": "/images/portfolio/pulseflow-saas-homepage-pricing-page-rewrite.jpg"
+        "image": "/images/talent/portfolio/pulseflow-saas-homepage-pricing-page-rewrite.jpg"
       },
       {
         "id": "p-044-2",
@@ -5903,7 +5903,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "SMS Notification Copy"
         ],
         "impact": "Open rates averaged 61% with a 24% deposit activation rate (vs 9% industry baseline).",
-        "image": "/images/portfolio/credo-capital-onboarding-email-sequence.jpg"
+        "image": "/images/talent/portfolio/credo-capital-onboarding-email-sequence.jpg"
       },
       {
         "id": "p-044-3",
@@ -5927,11 +5927,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Comparison Chart Copy"
         ],
         "impact": "Reduced customer return inquiries by 31% and increased checkout completion by 18%.",
-        "image": "/images/portfolio/nova-sleep-e-commerce-product-page-copy.jpg"
+        "image": "/images/talent/portfolio/nova-sleep-e-commerce-product-page-copy.jpg"
       }
     ],
     "role": "Copywriter",
-    "profileImage": "/images/talent/devon-washington.jpg"
+    "profileImage": "/images/talent/portraits/devon-washington.jpg"
   },
   {
     "id": "talent-045",
@@ -6013,7 +6013,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Founding Charter Agreement"
         ],
         "impact": "Read aloud at the World Economic Forum in Davos; signed by 180 enterprise leaders.",
-        "image": "/images/portfolio/biosphere-planetary-stewardship-manifesto-brand-anthem.jpg"
+        "image": "/images/talent/portfolio/biosphere-planetary-stewardship-manifesto-brand-anthem.jpg"
       },
       {
         "id": "p-045-2",
@@ -6038,7 +6038,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Media Op-Ed Toolkit"
         ],
         "impact": "Adopted by 5 European municipal governments for public participatory budgeting.",
-        "image": "/images/portfolio/agora-democracy-lab-verbal-architecture.jpg"
+        "image": "/images/talent/portfolio/agora-democracy-lab-verbal-architecture.jpg"
       },
       {
         "id": "p-045-3",
@@ -6062,11 +6062,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Developer Oath Card"
         ],
         "impact": "Endorsed by leading AI research institutions globally.",
-        "image": "/images/portfolio/neuraethic-ai-alignment-charter.jpg"
+        "image": "/images/talent/portfolio/neuraethic-ai-alignment-charter.jpg"
       }
     ],
     "role": "Copywriter",
-    "profileImage": "/images/talent/zoe-katsaros.jpg"
+    "profileImage": "/images/talent/portraits/zoe-katsaros.jpg"
   },
   {
     "id": "talent-046",
@@ -6149,7 +6149,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Review Workflow Automation Matrix"
         ],
         "impact": "Organic search visibility increased by 140%, attracting 12M monthly patient visits with zero clinical compliance errors.",
-        "image": "/images/portfolio/omnihealth-global-patient-education-knowledge-system.jpg"
+        "image": "/images/talent/portfolio/omnihealth-global-patient-education-knowledge-system.jpg"
       },
       {
         "id": "p-046-2",
@@ -6174,7 +6174,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Substack & LinkedIn Newsletter Framework"
         ],
         "impact": "Generated 35,000 executive subscribers including CFOs of 140 Fortune 500 corporations.",
-        "image": "/images/portfolio/ledgerpoint-b2b-thought-leadership-magazine.jpg"
+        "image": "/images/talent/portfolio/ledgerpoint-b2b-thought-leadership-magazine.jpg"
       },
       {
         "id": "p-046-3",
@@ -6198,11 +6198,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Article Template System"
         ],
         "impact": "Reduced customer support engineering ticket volume by 42%.",
-        "image": "/images/portfolio/cloudmatrix-developer-documentation-architecture.jpg"
+        "image": "/images/talent/portfolio/cloudmatrix-developer-documentation-architecture.jpg"
       }
     ],
     "role": "Content Strategist",
-    "profileImage": "/images/talent/gabriel-laurent.jpg"
+    "profileImage": "/images/talent/portraits/gabriel-laurent.jpg"
   },
   {
     "id": "talent-047",
@@ -6285,7 +6285,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "30 LinkedIn Data Carousel Posts"
         ],
         "impact": "Downloaded 65,000 times; cited by the Monetary Authority of Singapore and The Financial Times.",
-        "image": "/images/portfolio/future-of-asian-fintech-annual-benchmark-report.jpg"
+        "image": "/images/talent/portfolio/future-of-asian-fintech-annual-benchmark-report.jpg"
       },
       {
         "id": "p-047-2",
@@ -6309,7 +6309,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Conference Pitch One-Sheets"
         ],
         "impact": "Founder grew following from 4,000 to 110,000; invited to speak at TED and Davos.",
-        "image": "/images/portfolio/autonomous-founder-linkedin-executive-narrative.jpg"
+        "image": "/images/talent/portfolio/autonomous-founder-linkedin-executive-narrative.jpg"
       },
       {
         "id": "p-047-3",
@@ -6333,11 +6333,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Infographic Asset Deck"
         ],
         "impact": "Generated 14,000 qualified enterprise MQLs for client platform.",
-        "image": "/images/portfolio/saas-scale-benchmarks-whitepaper-series.jpg"
+        "image": "/images/talent/portfolio/saas-scale-benchmarks-whitepaper-series.jpg"
       }
     ],
     "role": "Content Strategist",
-    "profileImage": "/images/talent/maya-kapoor.jpg"
+    "profileImage": "/images/talent/portraits/maya-kapoor.jpg"
   },
   {
     "id": "talent-048",
@@ -6420,7 +6420,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Translation Quality Assurance Rubric"
         ],
         "impact": "Cut localized content creation costs by 45% while doubling engagement across all 5 regional markets.",
-        "image": "/images/portfolio/soundcraft-5-market-european-content-ecosystem.jpg"
+        "image": "/images/talent/portfolio/soundcraft-5-market-european-content-ecosystem.jpg"
       },
       {
         "id": "p-048-2",
@@ -6444,7 +6444,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "12 Month Content Roadmap"
         ],
         "impact": "Organic search became the #1 customer acquisition channel, overtaking paid ads.",
-        "image": "/images/portfolio/velvet-spirit-d2c-brand-journal-strategy.jpg"
+        "image": "/images/talent/portfolio/velvet-spirit-d2c-brand-journal-strategy.jpg"
       },
       {
         "id": "p-048-3",
@@ -6468,11 +6468,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Social Micro-Vignettes"
         ],
         "impact": "Drove 32% increase in high-tier luggage purchases by returning travelers.",
-        "image": "/images/portfolio/krona-luxury-travel-lifestyle-guides.jpg"
+        "image": "/images/talent/portfolio/krona-luxury-travel-lifestyle-guides.jpg"
       }
     ],
     "role": "Content Strategist",
-    "profileImage": "/images/talent/felix-hoffman.jpg"
+    "profileImage": "/images/talent/portraits/felix-hoffman.jpg"
   },
   {
     "id": "talent-049",
@@ -6555,7 +6555,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Executive Synthesis Playbook"
         ],
         "impact": "Directly guided redesign of patient test result portal; patient onboarding drop-off decreased by 58%.",
-        "image": "/images/portfolio/vitality-longevity-diagnostics-patient-psychology-study.jpg"
+        "image": "/images/talent/portfolio/vitality-longevity-diagnostics-patient-psychology-study.jpg"
       },
       {
         "id": "p-049-2",
@@ -6580,7 +6580,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Brand Positioning Recommendations"
         ],
         "impact": "Realigned enterprise sales messaging, resulting in a 41% lift in RFP win rates.",
-        "image": "/images/portfolio/enterprise-cloud-migration-decision-anxiety-research.jpg"
+        "image": "/images/talent/portfolio/enterprise-cloud-migration-decision-anxiety-research.jpg"
       },
       {
         "id": "p-049-3",
@@ -6604,11 +6604,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Value Proposition Validation Report"
         ],
         "impact": "Provided foundation for new wealth advisory tier attracting $1.1B in assets.",
-        "image": "/images/portfolio/modern-wealth-heuristics-next-gen-investor-study.jpg"
+        "image": "/images/talent/portfolio/modern-wealth-heuristics-next-gen-investor-study.jpg"
       }
     ],
     "role": "Consumer Research Specialist",
-    "profileImage": "/images/talent/dr-aris-thorne.jpg"
+    "profileImage": "/images/talent/portraits/dr-aris-thorne.jpg"
   },
   {
     "id": "talent-050",
@@ -6690,7 +6690,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Executive Pricing Recommendation Deck"
         ],
         "impact": "Identified optimal price point ($449 vs proposed $379), unlocking an estimated $22M in incremental launch margin.",
-        "image": "/images/portfolio/aura-smart-hardware-discrete-choice-conjoint-study.jpg"
+        "image": "/images/talent/portfolio/aura-smart-hardware-discrete-choice-conjoint-study.jpg"
       },
       {
         "id": "p-050-2",
@@ -6714,7 +6714,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Quarterly Equity Reports"
         ],
         "impact": "Highlighted key whitespace in 'low-sugar functional botanical' that guided successful product line expansion.",
-        "image": "/images/portfolio/beverage-brand-health-equity-benchmark-study.jpg"
+        "image": "/images/talent/portfolio/beverage-brand-health-equity-benchmark-study.jpg"
       },
       {
         "id": "p-050-3",
@@ -6738,11 +6738,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Copy Strategy Recommendations"
         ],
         "impact": "Ad copy implementing top trust triggers saw a 31% increase in conversion.",
-        "image": "/images/portfolio/fintech-trust-security-factor-conjoint.jpg"
+        "image": "/images/talent/portfolio/fintech-trust-security-factor-conjoint.jpg"
       }
     ],
     "role": "Consumer Research Specialist",
-    "profileImage": "/images/talent/samantha-lin.jpg"
+    "profileImage": "/images/talent/portraits/samantha-lin.jpg"
   },
   {
     "id": "talent-051",
@@ -6825,7 +6825,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Brand Opportunity Matrix"
         ],
         "impact": "Directly inspired viral product campaign generating over 45M impressions across TikTok.",
-        "image": "/images/portfolio/global-youth-aesthetics-slang-semiotics-study-2025.jpg"
+        "image": "/images/talent/portfolio/global-youth-aesthetics-slang-semiotics-study-2025.jpg"
       },
       {
         "id": "p-051-2",
@@ -6849,7 +6849,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Curated Designer Directory"
         ],
         "impact": "Featured in Dazed and Highsnobiety; led to major brand sponsorship deals for local designers.",
-        "image": "/images/portfolio/sub-saharan-streetwear-music-convergence-report.jpg"
+        "image": "/images/talent/portfolio/sub-saharan-streetwear-music-convergence-report.jpg"
       },
       {
         "id": "p-051-3",
@@ -6873,11 +6873,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Can Concept Feedback Deck"
         ],
         "impact": "Led directly to matte-black minimalist can redesign that reversed 3 years of youth market share decline.",
-        "image": "/images/portfolio/next-gen-gaming-beverage-perception-audit.jpg"
+        "image": "/images/talent/portfolio/next-gen-gaming-beverage-perception-audit.jpg"
       }
     ],
     "role": "Consumer Research Specialist",
-    "profileImage": "/images/talent/naledi-mokoena.jpg"
+    "profileImage": "/images/talent/portraits/naledi-mokoena.jpg"
   },
   {
     "id": "talent-052",
@@ -6959,7 +6959,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Production Specification Manual"
         ],
         "impact": "Won German Design Gold 2024 for Book Craft; 3,000 limited editions sold out in 4 days.",
-        "image": "/images/portfolio/porsche-heritage-monograph-ultra-precision-print-production.jpg"
+        "image": "/images/talent/portfolio/porsche-heritage-monograph-ultra-precision-print-production.jpg"
       },
       {
         "id": "p-052-2",
@@ -6984,7 +6984,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Factory Inspection Checklist"
         ],
         "impact": "Factory defect rate dropped from 7.4% to 0.12% across 20,000 unit production run.",
-        "image": "/images/portfolio/kronos-luxury-watch-presentation-box-tooling.jpg"
+        "image": "/images/talent/portfolio/kronos-luxury-watch-presentation-box-tooling.jpg"
       },
       {
         "id": "p-052-3",
@@ -7008,11 +7008,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Press Sign-off Sheets"
         ],
         "impact": "Exhibition catalog praised in Frieze for tactile fidelity to original 1920s prints.",
-        "image": "/images/portfolio/bauhaus-centennial-architectural-catalog.jpg"
+        "image": "/images/talent/portfolio/bauhaus-centennial-architectural-catalog.jpg"
       }
     ],
     "role": "Production & Print Specialist",
-    "profileImage": "/images/talent/wolfgang-krause.jpg"
+    "profileImage": "/images/talent/portraits/wolfgang-krause.jpg"
   },
   {
     "id": "talent-053",
@@ -7093,7 +7093,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Paper Sourcing Dossier"
         ],
         "impact": "Collateral featured in Communication Arts Design Annual 2024.",
-        "image": "/images/portfolio/hudson-valley-culinary-guild-letterpress-brand-suite.jpg"
+        "image": "/images/talent/portfolio/hudson-valley-culinary-guild-letterpress-brand-suite.jpg"
       },
       {
         "id": "p-053-2",
@@ -7117,7 +7117,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Exhibition Poster Set"
         ],
         "impact": "All copies sold out in 3 hours at the New York Art Book Fair.",
-        "image": "/images/portfolio/moma-ps1-experimental-risograph-poetry-zine.jpg"
+        "image": "/images/talent/portfolio/moma-ps1-experimental-risograph-poetry-zine.jpg"
       },
       {
         "id": "p-053-3",
@@ -7140,11 +7140,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Sample Proof Sheets"
         ],
         "impact": "Product line won Best Luxury Grooming Packaging at Indie Beauty Awards.",
-        "image": "/images/portfolio/apothecary-botanical-label-letterpress-suite.jpg"
+        "image": "/images/talent/portfolio/apothecary-botanical-label-letterpress-suite.jpg"
       }
     ],
     "role": "Production & Print Specialist",
-    "profileImage": "/images/talent/rachel-adler.jpg"
+    "profileImage": "/images/talent/portraits/rachel-adler.jpg"
   },
   {
     "id": "talent-054",
@@ -7226,7 +7226,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Master Certification Deck"
         ],
         "impact": "Bottles fetched world-record $350,000 hammer price at Sotheby's Hong Kong.",
-        "image": "/images/portfolio/suntory-rare-cask-whisky-commemorative-scroll-wooden-case.jpg"
+        "image": "/images/talent/portfolio/suntory-rare-cask-whisky-commemorative-scroll-wooden-case.jpg"
       },
       {
         "id": "p-054-2",
@@ -7250,7 +7250,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Conservation Certificates"
         ],
         "impact": "Acquired by the British Museum and the Metropolitan Museum of Art.",
-        "image": "/images/portfolio/kyoto-national-museum-heritage-exhibition-folio.jpg"
+        "image": "/images/talent/portfolio/kyoto-national-museum-heritage-exhibition-folio.jpg"
       },
       {
         "id": "p-054-3",
@@ -7273,11 +7273,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Lacquer Cure Protocol Guide"
         ],
         "impact": "Sold out within 2 hours at Tokyo flagship boutique.",
-        "image": "/images/portfolio/maison-ginza-bespoke-cosmetics-coffret.jpg"
+        "image": "/images/talent/portfolio/maison-ginza-bespoke-cosmetics-coffret.jpg"
       }
     ],
     "role": "Production & Print Specialist",
-    "profileImage": "/images/talent/kenzo-murata.jpg"
+    "profileImage": "/images/talent/portraits/kenzo-murata.jpg"
   },
   {
     "id": "talent-055",
@@ -7359,7 +7359,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "JSON Design Token Architecture"
         ],
         "impact": "Reduced brand inconsistency defects in production by 94% across 80+ software engineers.",
-        "image": "/images/portfolio/stripe-scale-global-multi-brand-design-token-system.jpg"
+        "image": "/images/talent/portfolio/stripe-scale-global-multi-brand-design-token-system.jpg"
       },
       {
         "id": "p-055-2",
@@ -7384,7 +7384,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Partner Co-Branding Matrix"
         ],
         "impact": "Decreased external agency onboarding time from 3 weeks to 1 day.",
-        "image": "/images/portfolio/apex-ai-enterprise-brand-system-governance-portal.jpg"
+        "image": "/images/talent/portfolio/apex-ai-enterprise-brand-system-governance-portal.jpg"
       },
       {
         "id": "p-055-3",
@@ -7408,11 +7408,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Figma Master Template Kit"
         ],
         "impact": "Saved $1.4M annually in duplicated design and legal naming reviews.",
-        "image": "/images/portfolio/omnicorp-multi-subsidiary-identity-framework.jpg"
+        "image": "/images/talent/portfolio/omnicorp-multi-subsidiary-identity-framework.jpg"
       }
     ],
     "role": "Brand Guidelines & Design Systems Specialist",
-    "profileImage": "/images/talent/dominic-sterling.jpg"
+    "profileImage": "/images/talent/portraits/dominic-sterling.jpg"
   },
   {
     "id": "talent-056",
@@ -7494,7 +7494,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Downloadable Asset Master Vault (50GB)"
         ],
         "impact": "Standardized global visual standards across 400 retail stores in 32 countries.",
-        "image": "/images/portfolio/bang-olufsen-lifestyle-brand-identity-manual.jpg"
+        "image": "/images/talent/portfolio/bang-olufsen-lifestyle-brand-identity-manual.jpg"
       },
       {
         "id": "p-056-2",
@@ -7518,7 +7518,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Exhibition Poster Figma Template Suite"
         ],
         "impact": "Exhibition marketing design efficiency increased by 75%.",
-        "image": "/images/portfolio/copenhagen-design-museum-visual-guidelines.jpg"
+        "image": "/images/talent/portfolio/copenhagen-design-museum-visual-guidelines.jpg"
       },
       {
         "id": "p-056-3",
@@ -7542,11 +7542,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "CAD Symbol Guidelines"
         ],
         "impact": "Over 80 global engineering firms adopted the standardized spec sheets.",
-        "image": "/images/portfolio/lundqvist-architectural-lighting-system-specs.jpg"
+        "image": "/images/talent/portfolio/lundqvist-architectural-lighting-system-specs.jpg"
       }
     ],
     "role": "Brand Guidelines & Design Systems Specialist",
-    "profileImage": "/images/talent/eva-lindgren.jpg"
+    "profileImage": "/images/talent/portraits/eva-lindgren.jpg"
   },
   {
     "id": "talent-057",
@@ -7627,7 +7627,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "5 Loom Training Walkthroughs"
         ],
         "impact": "Startup eliminated agency bottleneck and shipped 180+ marketing campaigns with zero off-brand designs.",
-        "image": "/images/portfolio/rapidpay-seed-to-series-a-agile-brand-playbook.jpg"
+        "image": "/images/talent/portfolio/rapidpay-seed-to-series-a-agile-brand-playbook.jpg"
       },
       {
         "id": "p-057-2",
@@ -7651,7 +7651,7 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "POS Shelf Talker Printable Files"
         ],
         "impact": "Social posting frequency tripled while maintaining 100% aesthetic consistency.",
-        "image": "/images/portfolio/mate-natural-energy-beverage-social-toolkit.jpg"
+        "image": "/images/talent/portfolio/mate-natural-energy-beverage-social-toolkit.jpg"
       },
       {
         "id": "p-057-3",
@@ -7675,11 +7675,11 @@ export const TALENT_PROFILES: TalentProfile[] = [
           "Keynote & Google Slides Pitch System"
         ],
         "impact": "Partner clinic onboarding time dropped from 14 days to under 2 hours.",
-        "image": "/images/portfolio/claro-telehealth-brand-onboarding-guide.jpg"
+        "image": "/images/talent/portfolio/claro-telehealth-brand-onboarding-guide.jpg"
       }
     ],
     "role": "Brand Guidelines & Design Systems Specialist",
-    "profileImage": "/images/talent/carlos-mendez.jpg"
+    "profileImage": "/images/talent/portraits/carlos-mendez.jpg"
   }
 ];
 

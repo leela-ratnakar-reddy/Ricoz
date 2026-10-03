@@ -1,0 +1,20 @@
+<svg width="800" height="520" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#18181C"/>
+        <stop offset="50%" stop-color="#121214"/>
+        <stop offset="100%" stop-color="#0A0A0C"/>
+      </linearGradient>
+      <radialGradient id="glow" cx="50%" cy="30%" r="60%">
+        <stop offset="0%" stop-color="#C8FF3D" stop-opacity="0.15"/>
+        <stop offset="100%" stop-color="#C8FF3D" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="800" height="520" fill="url(#bg)"/>
+    <rect width="800" height="520" fill="url(#glow)"/>
+    <circle cx="400" cy="197.6" r="114.4" fill="#242731" opacity="0.6"/>
+    <text x="400" y="218.4" font-family="Inter, sans-serif" font-size="72.80000000000001" font-weight="800" fill="#C8FF3D" text-anchor="middle" opacity="0.9">SA</text>
+    <rect x="80" y="374.4" width="640" height="1" fill="#242731"/>
+    <text x="400" y="405.6" font-family="Inter, sans-serif" font-size="30.4" font-weight="700" fill="#F5F5F0" text-anchor="middle">SaaSify Empty State & Error Delight Suite</text>
+    <text x="400" y="436.8" font-family="Inter, sans-serif" font-size="20.8" font-weight="500" fill="#A0A3AD" text-anchor="middle">Digital Product UI • B2B SaaS</text>
+  </svg>

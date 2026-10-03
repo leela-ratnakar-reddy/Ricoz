@@ -168,8 +168,8 @@ export default function TalentProfilePage() {
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
               {/* Human Portrait + Details */}
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-                {/* Large Human Portrait Image */}
-                <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl overflow-hidden bg-zinc-900 border-2 border-white/15 shadow-2xl shrink-0 relative group">
+                {/* Large Editorial Human Portrait */}
+                <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl overflow-hidden bg-zinc-900 border border-white/15 group-hover:border-accent/40 shadow-2xl shrink-0 relative group transition-colors aspect-square">
                   {!portraitError && talent.profileImage ? (
                     <img
                       src={talent.profileImage}
@@ -195,6 +195,9 @@ export default function TalentProfilePage() {
                         Featured Master
                       </span>
                     )}
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider text-zinc-400 bg-white/5 border border-white/10">
+                      Demo Profile
+                    </span>
                   </div>
 
                   <p className="text-base sm:text-lg text-accent font-medium">
@@ -214,6 +217,10 @@ export default function TalentProfilePage() {
                     <div className="flex items-center gap-1.5">
                       <Clock className="w-3.5 h-3.5 text-zinc-500" />
                       <span className="font-mono text-white font-semibold">{talent.hourlyRate}</span>
+                    </div>
+                    <div className="hidden sm:flex items-center gap-1.5 text-zinc-500">
+                      <span>•</span>
+                      <span className="text-[11px] font-mono text-zinc-400">Fictional Portfolio</span>
                     </div>
                   </div>
 
@@ -271,108 +278,188 @@ export default function TalentProfilePage() {
                 </span>
               </div>
 
-              {/* Visual Project Cards Grid */}
+              {/* Portfolio Showcase: Large Featured Project + Supporting Projects */}
               <div className="space-y-8">
-                {talent.portfolio.map((project) => (
-                  <div
-                    key={project.id}
-                    className="group rounded-2xl bg-[#111114] border border-white/10 hover:border-white/25 overflow-hidden transition-all duration-300 shadow-xl"
-                  >
-                    {/* Large Project Visual */}
+                {/* 1. Large Featured Case Study (Project 0) */}
+                {talent.portfolio.length > 0 && (() => {
+                  const featuredProject = talent.portfolio[0];
+                  return (
                     <div
-                      className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-900 cursor-pointer"
-                      onClick={() => setSelectedProject(project)}
+                      key={featuredProject.id}
+                      className="group rounded-2xl bg-[#111114] border border-white/10 hover:border-white/25 overflow-hidden transition-all duration-300 shadow-xl"
                     >
-                      {project.image ? (
-                        <img
-                          src={project.image}
-                          alt={project.title}
-                          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                          loading="lazy"
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-zinc-800 flex items-center justify-center text-zinc-500 font-mono text-xs">
-                          Case Study Visual
-                        </div>
-                      )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
-
-                      {/* Tag Overlay */}
-                      <div className="absolute top-3 left-3 z-10 flex items-center gap-2">
-                        <span className="px-2.5 py-1 rounded-full text-[11px] font-mono font-semibold bg-black/70 backdrop-blur-md text-accent border border-accent/30">
-                          {project.projectType}
-                        </span>
-                        {project.year && (
-                          <span className="px-2.5 py-1 rounded-full text-[11px] font-mono text-zinc-300 bg-black/70 backdrop-blur-md border border-white/10">
-                            {project.year}
-                          </span>
+                      {/* Large Featured Project Visual */}
+                      <div
+                        className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-900 cursor-pointer"
+                        onClick={() => setSelectedProject(featuredProject)}
+                      >
+                        {featuredProject.image ? (
+                          <img
+                            src={featuredProject.image}
+                            alt={featuredProject.title}
+                            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-zinc-800 flex items-center justify-center text-zinc-500 font-mono text-xs">
+                            Featured Case Study Visual
+                          </div>
                         )}
-                      </div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
 
-                      <div className="absolute bottom-3 right-3 z-10">
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-black/80 backdrop-blur-md text-white border border-white/20 group-hover:bg-accent group-hover:text-black transition-colors">
-                          <span>View Case Study</span>
-                          <ExternalLink className="w-3.5 h-3.5" />
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Project Body */}
-                    <div className="p-6 space-y-4">
-                      <div>
-                        <div className="flex items-center gap-2 text-xs font-mono text-zinc-400 mb-1">
-                          <span>Industry: {project.industry}</span>
-                          {project.client && (
-                            <>
-                              <span>•</span>
-                              <span>Client: {project.client}</span>
-                            </>
+                        {/* Top Badges */}
+                        <div className="absolute top-3 left-3 z-10 flex items-center gap-2">
+                          <span className="px-2.5 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider font-bold bg-accent text-black shadow-glow">
+                            Featured Project
+                          </span>
+                          <span className="px-2.5 py-1 rounded-full text-[11px] font-mono font-semibold bg-black/70 backdrop-blur-md text-white border border-white/15">
+                            {featuredProject.projectType}
+                          </span>
+                          {featuredProject.year && (
+                            <span className="px-2.5 py-1 rounded-full text-[11px] font-mono text-zinc-300 bg-black/70 backdrop-blur-md border border-white/10">
+                              {featuredProject.year}
+                            </span>
                           )}
                         </div>
 
-                        <h3
-                          onClick={() => setSelectedProject(project)}
-                          className="text-xl font-bold text-white hover:text-accent transition-colors cursor-pointer"
-                        >
-                          {project.title}
-                        </h3>
+                        <div className="absolute bottom-3 right-3 z-10">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-black/80 backdrop-blur-md text-white border border-white/20 group-hover:bg-accent group-hover:text-black transition-colors">
+                            <span>View Case Study</span>
+                            <ExternalLink className="w-3.5 h-3.5" />
+                          </span>
+                        </div>
                       </div>
 
-                      <p className="text-sm text-zinc-300 leading-relaxed">
-                        {project.description}
-                      </p>
+                      {/* Featured Project Body */}
+                      <div className="p-6 space-y-4">
+                        <div>
+                          <div className="flex items-center gap-2 text-xs font-mono text-zinc-400 mb-1">
+                            <span>Industry: {featuredProject.industry}</span>
+                            {featuredProject.client && (
+                              <>
+                                <span>•</span>
+                                <span>Client: {featuredProject.client}</span>
+                              </>
+                            )}
+                          </div>
 
-                      {/* Deliverables / Services */}
-                      {project.services && project.services.length > 0 && (
-                        <div className="flex flex-wrap gap-1.5 pt-1">
-                          {project.services.map((service) => (
-                            <span
-                              key={service}
-                              className="px-2.5 py-1 rounded-md text-[11px] font-mono bg-white/5 text-zinc-300 border border-white/5"
-                            >
-                              {service}
-                            </span>
-                          ))}
+                          <h3
+                            onClick={() => setSelectedProject(featuredProject)}
+                            className="text-xl font-bold text-white hover:text-accent transition-colors cursor-pointer"
+                          >
+                            {featuredProject.title}
+                          </h3>
                         </div>
-                      )}
 
-                      {/* Impact Highlight */}
-                      {project.impact && (
-                        <div className="rounded-xl bg-accent/5 border border-accent/20 p-3.5 flex items-start gap-3">
-                          <Award className="w-4 h-4 text-accent shrink-0 mt-0.5" />
+                        <p className="text-sm text-zinc-300 leading-relaxed">
+                          {featuredProject.description}
+                        </p>
+
+                        {/* Deliverables / Services */}
+                        {featuredProject.services && featuredProject.services.length > 0 && (
+                          <div className="flex flex-wrap gap-1.5 pt-1">
+                            {featuredProject.services.map((service) => (
+                              <span
+                                key={service}
+                                className="px-2.5 py-1 rounded-md text-[11px] font-mono bg-white/5 text-zinc-300 border border-white/5"
+                              >
+                                {service}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+
+                        {/* Impact Highlight */}
+                        {featuredProject.impact && (
+                          <div className="rounded-xl bg-accent/5 border border-accent/20 p-3.5 flex items-start gap-3">
+                            <Award className="w-4 h-4 text-accent shrink-0 mt-0.5" />
+                            <div>
+                              <p className="text-[10px] font-mono uppercase tracking-wider text-accent font-semibold mb-0.5">
+                                Outcome & Impact
+                              </p>
+                              <p className="text-xs text-zinc-200 leading-relaxed font-medium">
+                                {featuredProject.impact}
+                              </p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })()}
+
+                {/* 2. Smaller Supporting Projects (Grid) */}
+                {talent.portfolio.length > 1 && (
+                  <div className="space-y-4 pt-2">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-xs font-mono uppercase tracking-wider text-zinc-400">
+                        Supporting Selected Works
+                      </h3>
+                      <span className="text-[11px] font-mono text-zinc-500">
+                        {talent.portfolio.length - 1} additional projects
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                      {talent.portfolio.slice(1).map((project) => (
+                        <div
+                          key={project.id}
+                          onClick={() => setSelectedProject(project)}
+                          className="group/card rounded-2xl bg-[#111114] border border-white/10 hover:border-white/25 overflow-hidden transition-all duration-300 flex flex-col justify-between cursor-pointer hover:-translate-y-1 shadow-lg"
+                        >
                           <div>
-                            <p className="text-[10px] font-mono uppercase tracking-wider text-accent font-semibold mb-0.5">
-                              Outcome & Impact
-                            </p>
-                            <p className="text-xs text-zinc-200 leading-relaxed font-medium">
-                              {project.impact}
-                            </p>
+                            {/* Project Visual */}
+                            <div className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-900">
+                              {project.image ? (
+                                <img
+                                  src={project.image}
+                                  alt={project.title}
+                                  className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover/card:scale-105"
+                                  loading="lazy"
+                                />
+                              ) : (
+                                <div className="w-full h-full bg-zinc-800 flex items-center justify-center text-zinc-500 font-mono text-xs">
+                                  Case Study Visual
+                                </div>
+                              )}
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
+
+                              {/* Badges */}
+                              <div className="absolute top-2.5 left-2.5 z-10 flex items-center gap-1.5">
+                                <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-black/75 backdrop-blur-md text-accent border border-accent/30">
+                                  {project.projectType}
+                                </span>
+                                {project.year && (
+                                  <span className="px-2 py-0.5 rounded-full text-[10px] font-mono text-zinc-300 bg-black/75 backdrop-blur-md border border-white/10">
+                                    {project.year}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Body */}
+                            <div className="p-4 space-y-2">
+                              <p className="text-[11px] font-mono text-zinc-400">
+                                {project.industry} {project.client ? `• ${project.client}` : ""}
+                              </p>
+                              <h4 className="text-sm font-bold text-white group-hover/card:text-accent transition-colors line-clamp-2 leading-snug">
+                                {project.title}
+                              </h4>
+                              <p className="text-xs text-zinc-400 line-clamp-2 leading-relaxed">
+                                {project.description}
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="p-4 pt-0 flex items-center justify-between text-xs font-semibold text-accent group-hover/card:text-white transition-colors">
+                            <span>View Case Study</span>
+                            <ArrowLeft className="w-3.5 h-3.5 rotate-180" />
                           </div>
                         </div>
-                      )}
+                      ))}
                     </div>
                   </div>
-                ))}
+                )}
               </div>
             </div>
 

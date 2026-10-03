@@ -11,7 +11,8 @@ import {
   Sparkles,
   Zap,
   MapPin,
-  Clock
+  Clock,
+  Award
 } from "lucide-react";
 import { ProjectAnalysisResult } from "@/types/talent";
 import { toggleShortlist, isShortlisted } from "@/lib/storage";
@@ -193,7 +194,48 @@ export const RecommendedTeam: React.FC<RecommendedTeamProps> = ({
                         ))}
                       </ul>
                     )}
+
+                    {/* Match Signals */}
+                    {member.matchSignals && member.matchSignals.length > 0 && (
+                      <div className="pt-2 border-t border-white/5 space-y-1.5">
+                        <span className="text-[9px] font-mono uppercase tracking-wider text-zinc-500 block">
+                          AI Match Signals
+                        </span>
+                        <div className="space-y-1">
+                          {member.matchSignals.slice(0, 3).map((sig, sIdx) => (
+                            <div
+                              key={sIdx}
+                              className="flex items-center gap-1.5 text-[10px]"
+                            >
+                              <span
+                                className={`w-1.5 h-1.5 rounded-full shrink-0 ${
+                                  sig.matched ? "bg-accent" : "bg-zinc-600"
+                                }`}
+                              />
+                              <span className="text-zinc-400 font-medium shrink-0">{sig.label}:</span>
+                              <span className="text-zinc-300 truncate">{sig.detail}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
+
+                  {/* Concrete Portfolio Evidence Callout (Requirement 15) */}
+                  {member.portfolioEvidence && (
+                    <div className="p-3 rounded-xl bg-accent/5 border border-accent/25 space-y-1">
+                      <div className="flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wider text-accent font-bold">
+                        <Award className="w-3.5 h-3.5 text-accent shrink-0" />
+                        <span>Portfolio Proof Point</span>
+                      </div>
+                      <p className="text-xs text-white font-semibold truncate">
+                        &ldquo;{member.portfolioEvidence.projectTitle}&rdquo;
+                      </p>
+                      <p className="text-[11px] text-zinc-300 leading-relaxed">
+                        {member.portfolioEvidence.reason}
+                      </p>
+                    </div>
+                  )}
 
                   {/* Work Visual Preview Thumbnail */}
                   {featuredWork && (

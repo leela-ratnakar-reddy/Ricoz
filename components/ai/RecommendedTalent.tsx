@@ -49,7 +49,7 @@ export const RecommendedTalent: React.FC<RecommendedTalentProps> = ({ candidates
       </div>
 
       <div className="space-y-4">
-        {candidates.map(({ talent, score, matchReasons }) => {
+        {candidates.map(({ talent, score, matchReasons, matchedSkills, portfolioEvidence }) => {
           const isTalentSaved = shortlistedIds.includes(talent.id);
           const featuredWork = talent.portfolio?.[0];
 
@@ -100,8 +100,8 @@ export const RecommendedTalent: React.FC<RecommendedTalentProps> = ({ candidates
                     <span className="font-mono text-white font-medium">{talent.hourlyRate}</span>
                   </div>
 
-                  {/* Why this profile */}
-                  <div className="mt-2.5 space-y-1">
+                  {/* Why this profile & match signals */}
+                  <div className="mt-2.5 space-y-1.5">
                     {matchReasons.slice(0, 2).map((reason, idx) => (
                       <div
                         key={idx}
@@ -111,6 +111,32 @@ export const RecommendedTalent: React.FC<RecommendedTalentProps> = ({ candidates
                         <span className="truncate">{reason}</span>
                       </div>
                     ))}
+
+                    {/* Portfolio Evidence */}
+                    {portfolioEvidence && (
+                      <div className="pt-1 flex items-center gap-1.5 text-[11px] text-zinc-300">
+                        <Award className="w-3.5 h-3.5 text-accent shrink-0" />
+                        <span className="text-accent font-mono text-[10px] uppercase tracking-wider font-semibold">Proof:</span>
+                        <span className="text-white font-medium truncate">&ldquo;{portfolioEvidence.projectTitle}&rdquo;</span>
+                        <span className="text-zinc-500 hidden sm:inline">({portfolioEvidence.projectType})</span>
+                      </div>
+                    )}
+
+                    {matchedSkills && matchedSkills.length > 0 && (
+                      <div className="flex flex-wrap items-center gap-1 pt-1">
+                        <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider mr-1">
+                          Matched Skills:
+                        </span>
+                        {matchedSkills.slice(0, 3).map((sk) => (
+                          <span
+                            key={sk}
+                            className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-accent/10 text-accent border border-accent/20"
+                          >
+                            {sk}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
