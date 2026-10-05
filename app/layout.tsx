@@ -2,17 +2,17 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "RICOZ — Creative Directors for Rebranding Projects",
+  title: "RICOZ — Find The Right Creative Talent",
   description:
-    "Connect enterprise rebranding projects with experienced Creative Directors, Brand Identity Designers and specialist creative talent.",
+    "RICOZ helps businesses discover, evaluate and connect with creative talent for their next project.",
   keywords: [
     "ricoz",
+    "creative talent",
     "creative directors",
-    "rebranding",
     "brand identity",
-    "typography specialists",
-    "enterprise design",
-    "brand strategy",
+    "ui ux designers",
+    "motion designers",
+    "design systems",
   ],
   authors: [{ name: "Ricoz" }],
 };
@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full dark" style={{ backgroundColor: "#07080C", color: "#F5F5F0" }}>
+    <html lang="en" className="h-full">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

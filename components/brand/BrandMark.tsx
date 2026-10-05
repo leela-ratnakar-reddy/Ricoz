@@ -4,13 +4,19 @@ interface BrandMarkProps {
   size?: number;
   className?: string;
   withGlow?: boolean;
+  variant?: "dark" | "light";
+  accentColor?: "lime" | "red";
 }
 
 export const BrandMark: React.FC<BrandMarkProps> = ({
   size = 28,
   className = "",
   withGlow = false,
+  variant = "dark",
+  accentColor = variant === "light" ? "red" : "lime",
 }) => {
+  const primaryAccent = accentColor === "red" ? "#DC2626" : "#C8FF3D";
+  const glowColor = accentColor === "red" ? "rgba(220, 38, 38, 0.25)" : "rgba(200, 255, 61, 0.35)";
   return (
     <div
       className={`relative inline-flex items-center justify-center shrink-0 ${className}`}
@@ -19,7 +25,7 @@ export const BrandMark: React.FC<BrandMarkProps> = ({
       {withGlow && (
         <div
           className="absolute inset-0 rounded-full blur-md opacity-40 pointer-events-none"
-          style={{ backgroundColor: "rgba(200, 255, 61, 0.35)" }}
+          style={{ backgroundColor: glowColor }}
         />
       )}
       <svg
@@ -77,14 +83,14 @@ export const BrandMark: React.FC<BrandMarkProps> = ({
           opacity="0.6"
         />
 
-        {/* Signature Lime Accent apex bevel */}
+        {/* Signature Accent apex bevel */}
         <path
           d="M13 5L15 2.5H9L7 5H13Z"
-          fill="#C8FF3D"
+          fill={primaryAccent}
         />
 
-        {/* Machine Optical Sensor / Pivot dot (Signature lime) */}
-        <circle cx="24.5" cy="26" r="1.5" fill="#C8FF3D" />
+        {/* Machine Optical Sensor / Pivot dot */}
+        <circle cx="24.5" cy="26" r="1.5" fill={primaryAccent} />
       </svg>
     </div>
   );
