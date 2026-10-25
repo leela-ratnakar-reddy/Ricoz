@@ -10,6 +10,7 @@ import { TalentFilterState } from "@/types/talent";
 import { TalentCard } from "@/components/talent/TalentCard";
 import { TalentFilters } from "@/components/talent/TalentFilters";
 import { ShortlistDrawer } from "@/components/talent/ShortlistDrawer";
+import { EditorialStar, EditorialBadge } from "@/components/ui/EditorialDecorations";
 
 const INITIAL_FILTERS: TalentFilterState = {
   search: "",
@@ -123,46 +124,44 @@ export default function TalentDiscoveryPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-brand selection:bg-accent selection:text-background">
+    <div className="min-h-screen flex flex-col bg-[#FBF6F0] text-[#38241F] selection:bg-[#541719] selection:text-[#FFF9F3]">
       {/* Top Header Navigation */}
       <Navbar />
 
       <main className="flex-1">
         {/* Editorial Hero Header Section */}
-        <section className="relative pt-12 pb-10 border-b border-white/5 overflow-hidden bg-background">
-          {/* Subtle background ambient lighting */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[340px] bg-gradient-to-b from-accent/5 via-transparent to-transparent blur-3xl pointer-events-none" />
-
+        <section className="relative pt-12 pb-10 border-b border-[#E6D8CF] overflow-hidden bg-[#FBF6F0]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-8">
               <div className="max-w-3xl">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium bg-accent/10 text-accent border border-accent/20 mb-4">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-                  <span>CURATED CREATIVE ROSTER • 57 SPECIALISTS</span>
+                <div className="mb-4">
+                  <EditorialBadge variant="burgundy">
+                    CURATED CREATIVE ROSTER • 57 SPECIALISTS
+                  </EditorialBadge>
                 </div>
 
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-[1.12] mb-4">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-black tracking-tight text-[#38241F] leading-[1.12] mb-4">
                   Find the right creative talent <br className="hidden sm:inline" />
-                  for your next <span className="text-accent">big idea.</span>
+                  for your next <span className="italic font-normal text-[#541719]">defining mandate.</span>
                 </h1>
 
-                <p className="text-sm sm:text-base text-zinc-300 leading-relaxed max-w-2xl font-normal">
-                  Explore 57 creative specialists across brand, digital, motion, strategy, packaging and other creative disciplines.
+                <p className="text-sm sm:text-base text-[#76665F] leading-relaxed max-w-2xl font-sans font-normal">
+                  Explore 57 vetted creative specialists across brand identity, digital architecture, motion, category strategy, and packaging design.
                 </p>
               </div>
 
               {/* Minimalist AI Matcher Shortcut Banner */}
-              <div className="lg:w-80 p-4 rounded-2xl bg-[#111114] border border-accent/30 shadow-[0_8px_24px_rgba(0,0,0,0.5)] flex flex-col justify-between shrink-0">
-                <div className="flex items-center gap-2 text-xs font-mono text-accent font-semibold mb-1.5">
+              <div className="lg:w-80 p-5 rounded-3xl bg-white border border-[#E6D8CF] shadow-card flex flex-col justify-between shrink-0">
+                <div className="flex items-center gap-2 text-xs font-sans text-[#541719] font-bold mb-1.5">
                   <Sparkles className="w-3.5 h-3.5" />
-                  <span>AI MATCHING ENGINE</span>
+                  <span>AI MATCHING ENGINE V3.1</span>
                 </div>
-                <p className="text-xs text-zinc-400 mb-3 leading-relaxed">
+                <p className="text-xs text-[#76665F] mb-3 leading-relaxed font-sans">
                   Have a specific client brief? Let RICOZ AI analyze your scope and match a balanced 5-role squad.
                 </p>
                 <Link
                   href="/ai-match"
-                  className="inline-flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-accent text-black font-semibold text-xs hover:bg-accent-hover active:bg-[#B5F228] transition-all shadow-glow"
+                  className="inline-flex items-center justify-between px-4 py-2.5 rounded-full bg-[#541719] text-[#FFF9F3] font-sans font-semibold text-xs hover:bg-[#3E1012] transition-all shadow-burgundy"
                 >
                   <span>Launch AI Matcher</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -182,7 +181,7 @@ export default function TalentDiscoveryPage() {
         </section>
 
         {/* Editorial Talent Discovery Grid */}
-        <section className="py-12 bg-background">
+        <section className="py-12 bg-[#FBF6F0]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {filteredTalent.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -191,20 +190,20 @@ export default function TalentDiscoveryPage() {
                 ))}
               </div>
             ) : (
-              <div className="py-24 text-center rounded-2xl bg-[#111114] border border-white/10 p-8 max-w-lg mx-auto">
-                <div className="w-14 h-14 rounded-2xl bg-[#18181C] border border-white/10 flex items-center justify-center mx-auto mb-4 text-zinc-400">
+              <div className="py-24 text-center rounded-3xl bg-white border border-[#E6D8CF] p-8 max-w-lg mx-auto shadow-subtle">
+                <div className="w-14 h-14 rounded-full bg-[#FFF9F3] border border-[#E6D8CF] flex items-center justify-center mx-auto mb-4 text-[#76665F]">
                   <FilterX className="w-7 h-7" />
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2">
+                <h3 className="text-lg font-serif font-bold text-[#38241F] mb-2">
                   No creative talent found
                 </h3>
-                <p className="text-xs text-zinc-400 leading-relaxed mb-6">
+                <p className="text-xs text-[#76665F] leading-relaxed mb-6 font-sans">
                   No profiles matched your active criteria. Try broadening your keywords or resetting filters.
                 </p>
                 <button
                   type="button"
                   onClick={handleResetFilters}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition-colors"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#541719] text-[#FFF9F3] text-xs font-semibold hover:bg-[#3E1012] transition-colors shadow-burgundy font-sans"
                 >
                   Reset All Filters
                 </button>

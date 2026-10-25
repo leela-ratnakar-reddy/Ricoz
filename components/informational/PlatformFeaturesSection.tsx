@@ -2,7 +2,8 @@
 
 import React from "react";
 import Link from "next/link";
-import { Search, Sparkles, FolderKanban, ArrowRight, ShieldCheck, Check } from "lucide-react";
+import { Search, Sparkles, FolderKanban, ArrowRight, Check } from "lucide-react";
+import { EditorialStar, EditorialBadge } from "@/components/ui/EditorialDecorations";
 
 export const PlatformFeaturesSection: React.FC = () => {
   const features = [
@@ -11,13 +12,13 @@ export const PlatformFeaturesSection: React.FC = () => {
       title: "Talent Discovery",
       eyebrow: "CURATED SEARCH",
       description:
-        "Explore relevant creative professionals and discover the expertise your project needs.",
+        "Explore senior creative professionals and discover the specialized craft your project demands.",
       icon: Search,
       href: "/talent",
       actionText: "Explore Talent Directory",
       capabilities: [
         "Filter across 19 specialized creative disciplines",
-        "Vetted senior backgrounds (ex-Pentagram, Apple, Pentagram)",
+        "Vetted senior backgrounds (ex-Pentagram, Wolff Olins, Apple)",
         "Direct access to documented portfolio case studies",
       ],
     },
@@ -26,7 +27,7 @@ export const PlatformFeaturesSection: React.FC = () => {
       title: "Shortlist & Match",
       eyebrow: "INTELLIGENT COMPATIBILITY",
       description:
-        "Review profiles, compare options and build a focused shortlist.",
+        "Review profiles, evaluate work specimens, and assemble your multidisciplinary squad.",
       icon: Sparkles,
       href: "/ai-match",
       actionText: "Try AI Matching Engine",
@@ -41,7 +42,7 @@ export const PlatformFeaturesSection: React.FC = () => {
       title: "Project Management",
       eyebrow: "STREAMLINED EXECUTION",
       description:
-        "Move from talent discovery into an organized project workflow.",
+        "Transition seamlessly from talent discovery into an organized milestone roadmap.",
       icon: FolderKanban,
       href: "/dashboard/company",
       actionText: "Open Project Dashboard",
@@ -54,20 +55,22 @@ export const PlatformFeaturesSection: React.FC = () => {
   ];
 
   return (
-    <section id="features" className="py-20 sm:py-28 bg-white border-b border-slate-100 relative">
+    <section id="features" className="py-20 sm:py-28 bg-white border-b border-[#E6D8CF] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* HEADER */}
         <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 border border-red-200 text-red-600 text-xs font-bold tracking-wider uppercase mb-4 shadow-sm">
-            <span>RICOZ PLATFORM</span>
+          <div className="mb-4">
+            <EditorialBadge variant="burgundy">
+              RICOZ PLATFORM ARCHITECTURE
+            </EditorialBadge>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 leading-tight">
-            One Platform. A Better Way To Manage Creative Projects.
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-black tracking-tight text-[#38241F] leading-tight">
+            One Platform. A Better Way To Direct Creative Mandates.
           </h2>
 
-          <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed">
-            Discover talent, evaluate profiles, build your shortlist and move projects forward through a centralized experience.
+          <p className="mt-4 text-base sm:text-lg text-[#76665F] leading-relaxed font-sans font-normal">
+            Discover talent, evaluate profiles, build your shortlist and execute projects through a centralized, curated ecosystem.
           </p>
         </div>
 
@@ -78,47 +81,47 @@ export const PlatformFeaturesSection: React.FC = () => {
             return (
               <div
                 key={feature.title}
-                className="bg-white rounded-2xl border border-slate-200/90 p-8 shadow-sm hover:shadow-2xl hover:shadow-slate-200/60 hover:border-red-200 transition-all duration-300 flex flex-col justify-between group"
+                className="bg-[#FFF9F3] rounded-3xl border border-[#E6D8CF] p-8 shadow-subtle hover:shadow-card hover:border-[#C7A99A] transition-all duration-300 flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-center justify-between mb-6">
-                    <div className="w-12 h-12 rounded-xl bg-red-50 text-red-600 flex items-center justify-center group-hover:bg-red-600 group-hover:text-white transition-all shadow-sm">
+                    <div className="w-12 h-12 rounded-2xl bg-[#541719]/10 text-[#541719] flex items-center justify-center group-hover:bg-[#541719] group-hover:text-[#FFF9F3] transition-all shadow-subtle">
                       <Icon className="w-6 h-6" />
                     </div>
-                    <span className="font-mono text-sm font-bold text-slate-300 group-hover:text-red-500 transition-colors">
+                    <span className="font-serif text-sm font-bold text-[#C7A99A] group-hover:text-[#541719] transition-colors">
                       {feature.step}
                     </span>
                   </div>
 
-                  <div className="text-[11px] font-bold uppercase tracking-wider text-red-600 mb-1">
+                  <div className="text-[11px] font-sans font-bold uppercase tracking-wider text-[#541719] mb-1">
                     {feature.eyebrow}
                   </div>
 
-                  <h3 className="text-2xl font-black text-slate-900 mb-3 tracking-tight">
+                  <h3 className="text-2xl font-serif font-bold text-[#38241F] mb-3 tracking-tight">
                     {feature.title}
                   </h3>
 
-                  <p className="text-sm text-slate-600 leading-relaxed mb-6 font-normal">
+                  <p className="text-sm text-[#76665F] leading-relaxed mb-6 font-sans font-normal">
                     {feature.description}
                   </p>
 
-                  <div className="space-y-2.5 mb-8">
-                    {feature.capabilities.map((cap, idx) => (
-                      <div key={idx} className="flex items-start gap-2.5 text-xs text-slate-600">
-                        <Check className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+                  <div className="space-y-2.5 pt-4 border-t border-[#E6D8CF] mb-8">
+                    {feature.capabilities.map((cap, i) => (
+                      <div key={i} className="flex items-start gap-2.5 text-xs text-[#76665F] font-sans">
+                        <Check className="w-4 h-4 text-[#541719] shrink-0 mt-0.5" />
                         <span>{cap}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-slate-100">
+                <div className="pt-4 border-t border-[#E6D8CF]">
                   <Link
                     href={feature.href}
-                    className="inline-flex items-center gap-2 text-sm font-bold text-slate-900 group-hover:text-red-600 transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#541719] hover:underline font-sans"
                   >
                     <span>{feature.actionText}</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
               </div>

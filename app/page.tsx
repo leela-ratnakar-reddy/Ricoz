@@ -1,11 +1,14 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { LandingNavbar } from "@/components/informational/LandingNavbar";
 import { HeroSection } from "@/components/informational/HeroSection";
+import { BrandArtifactsShowcase } from "@/components/informational/BrandArtifactsShowcase";
 import { PlatformPreview } from "@/components/informational/PlatformPreview";
+import { InteractiveDisciplineFilter } from "@/components/informational/InteractiveDisciplineFilter";
 import { HowItWorksSection } from "@/components/informational/HowItWorksSection";
 import { WhyRicozSection } from "@/components/informational/WhyRicozSection";
+import { MandateEstimator } from "@/components/informational/MandateEstimator";
 import { WhoIsItForSection } from "@/components/informational/WhoIsItForSection";
 import { PlatformFeaturesSection } from "@/components/informational/PlatformFeaturesSection";
 import { ProductShowcaseSection } from "@/components/informational/ProductShowcaseSection";
@@ -13,63 +16,73 @@ import { TrustValueSection } from "@/components/informational/TrustValueSection"
 import { FAQSection } from "@/components/informational/FAQSection";
 import { FinalCTASection } from "@/components/informational/FinalCTASection";
 import { LandingFooter } from "@/components/informational/LandingFooter";
+import { ConciergeBriefingModal } from "@/components/informational/ConciergeBriefingModal";
 
 export default function HomePage() {
-  useEffect(() => {
-    // Ensure clean light page rendering on the informational landing page
-    document.documentElement.style.backgroundColor = "#FFFFFF";
-    document.documentElement.style.color = "#0F172A";
-    document.body.style.backgroundColor = "#FFFFFF";
-    document.body.style.color = "#0F172A";
+  const [briefingModalOpen, setBriefingModalOpen] = useState(false);
 
-    return () => {
-      // Revert to dark theme when navigating to other existing RICOZ routes
-      document.documentElement.style.backgroundColor = "#07080C";
-      document.documentElement.style.color = "#F5F5F0";
-      document.body.style.backgroundColor = "#07080C";
-      document.body.style.color = "#F5F5F0";
-    };
-  }, []);
+  const handleOpenBriefing = () => {
+    setBriefingModalOpen(true);
+  };
+
+  const handleCloseBriefing = () => {
+    setBriefingModalOpen(false);
+  };
 
   return (
-    <div className="min-h-screen flex flex-col bg-white text-slate-900 selection:bg-red-500 selection:text-white font-sans antialiased overflow-x-hidden">
+    <div className="min-h-screen flex flex-col bg-background text-brand selection:bg-accent selection:text-cream font-sans antialiased overflow-x-hidden">
       {/* 1. STICKY TOP NAVIGATION */}
-      <LandingNavbar />
+      <LandingNavbar onOpenBriefing={handleOpenBriefing} />
 
       <main className="flex-1">
-        {/* 2. HERO SECTION */}
-        <HeroSection />
+        {/* 2. HERO SECTION WITH CURATED TALENT COMPOSITION */}
+        <HeroSection onOpenBriefing={handleOpenBriefing} />
 
-        {/* 3. PRODUCT VISUAL / PLATFORM PREVIEW */}
+        {/* 3. BRAND ARTIFACTS & DELIVERABLE SPECIMENS */}
+        <BrandArtifactsShowcase />
+
+        {/* 4. PRODUCT VISUAL / PLATFORM PREVIEW FRAME */}
         <PlatformPreview />
 
-        {/* 4. HOW RICOZ WORKS (4-STEP ONBOARDING PROGRESSION) */}
+        {/* 5. INTERACTIVE TALENT SEARCH & DISCIPLINE FILTER */}
+        <InteractiveDisciplineFilter />
+
+        {/* 6. HOW RICOZ WORKS (4-STEP ONBOARDING PROGRESSION) */}
         <HowItWorksSection />
 
-        {/* 5. WHY RICOZ (6 BENEFIT CARDS) */}
+        {/* 7. WHY RICOZ ASYMMETRIC BENTO GRID */}
         <WhyRicozSection />
 
-        {/* 6. WHO RICOZ IS FOR (3 AUDIENCE PERSONAS) */}
+        {/* 8. INTERACTIVE SCOPE & MANDATE ESTIMATOR */}
+        <MandateEstimator onOpenBriefing={handleOpenBriefing} />
+
+        {/* 9. WHO RICOZ IS FOR (AUDIENCE ALIGNMENT) */}
         <WhoIsItForSection />
 
-        {/* 7. PLATFORM FEATURES (3 MAJOR FEATURE CARDS) */}
+        {/* 10. PRODUCT / PLATFORM FEATURES SHOWCASE */}
         <PlatformFeaturesSection />
 
-        {/* 8. REAL PRODUCT SHOWCASE ("SEE RICOZ IN ACTION" ALTERNATING ROWS) */}
+        {/* 11. TALENT SPOTLIGHT & VERIFIED ROLES */}
         <ProductShowcaseSection />
 
-        {/* 9. TRUST / VALUE STRIP & CONFIDENCE SECTION */}
+        {/* 12. TRUST, QUALITY & ESCROW GUARANTEES */}
         <TrustValueSection />
 
-        {/* 10. FAQ SECTION (6 ACCORDIONS) */}
+        {/* 13. FREQUENTLY ASKED QUESTIONS ACCORDION */}
         <FAQSection />
 
-        {/* 11. FINAL HIGH-IMPACT CTA */}
-        <FinalCTASection />
+        {/* 14. FINAL INVITATION / HIGH-CONVERSION CTA */}
+        <FinalCTASection onOpenBriefing={handleOpenBriefing} />
       </main>
 
-      {/* 12. CLEAN SAAS FOOTER */}
-      <LandingFooter />
+      {/* 15. MULTI-COLUMN AGENCY FOOTER */}
+      <LandingFooter onOpenBriefing={handleOpenBriefing} />
+
+      {/* CONCIERGE BRIEFING MODAL */}
+      <ConciergeBriefingModal
+        isOpen={briefingModalOpen}
+        onClose={handleCloseBriefing}
+      />
     </div>
   );
 }

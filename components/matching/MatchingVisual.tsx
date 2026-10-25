@@ -70,7 +70,7 @@ export const MatchingVisual: React.FC = () => {
                 cx="64"
                 cy="64"
                 r="52"
-                stroke="#242731"
+                stroke="#E6D8CF"
                 strokeWidth="6"
                 fill="none"
               />
@@ -78,7 +78,7 @@ export const MatchingVisual: React.FC = () => {
                 cx="64"
                 cy="64"
                 r="52"
-                stroke="#C8FF3D"
+                stroke="#541719"
                 strokeWidth="6"
                 strokeDasharray={2 * Math.PI * 52}
                 strokeDashoffset={2 * Math.PI * 52 * (1 - 0.94)}

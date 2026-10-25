@@ -207,8 +207,8 @@ export function HeroMatchingDemo() {
         >
           <defs>
             <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#C8FF3D" stopOpacity="0.8" />
-              <stop offset="100%" stopColor="#8B5CF6" stopOpacity="0.4" />
+              <stop offset="0%" stopColor="#541719" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="#C7A99A" stopOpacity="0.4" />
             </linearGradient>
             <filter id="glowFilter" x="-20%" y="-20%" width="140%" height="140%">
               <feGaussianBlur stdDeviation="3" result="blur" />
@@ -230,7 +230,7 @@ export function HeroMatchingDemo() {
                   y1={centerHub.y}
                   x2={talent.coords.x}
                   y2={talent.coords.y}
-                  stroke={isHovered ? "#C8FF3D" : isActive ? "#2C303D" : "#1A1D24"}
+                  stroke={isHovered ? "#541719" : isActive ? "#2C303D" : "#1A1D24"}
                   strokeWidth={isHovered ? "2" : "1.2"}
                   strokeDasharray={isActive ? "4 4" : "2 2"}
                   opacity={isActive ? (isHovered ? 1 : 0.6) : 0.2}
@@ -241,7 +241,7 @@ export function HeroMatchingDemo() {
                 {isMatching && (
                   <motion.circle
                     r={isHovered ? "4" : "2.5"}
-                    fill="#C8FF3D"
+                    fill="#541719"
                     filter="url(#glowFilter)"
                     initial={{ cx: centerHub.x, cy: centerHub.y, opacity: 0 }}
                     animate={{
@@ -267,7 +267,7 @@ export function HeroMatchingDemo() {
               cx={centerHub.x}
               cy={centerHub.y}
               r="40"
-              stroke="#C8FF3D"
+              stroke="#541719"
               strokeWidth="1.5"
               fill="none"
               initial={{ r: 20, opacity: 0.8 }}

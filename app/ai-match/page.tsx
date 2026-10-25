@@ -5,6 +5,7 @@ import { Sparkles, Cpu } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ShortlistDrawer } from "@/components/talent/ShortlistDrawer";
+import { EditorialStar, ContourFlourish } from "@/components/ui/EditorialDecorations";
 import { analyzeProjectBrief, PROMPT_STARTERS } from "@/lib/talentMatching";
 import { ProjectAnalysisResult, ProjectRequirements } from "@/types/talent";
 import { HeroPipeline } from "@/components/ai/HeroPipeline";
@@ -189,29 +190,29 @@ export default function AIMatchPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-brand selection:bg-accent selection:text-background">
+    <div className="min-h-screen flex flex-col bg-background text-foreground selection:bg-accent selection:text-[#FFF9F3]">
       {/* Clean Global Navigation */}
       <Navbar />
 
       <main className="flex-1 pb-24">
         {/* Editorial AI Hero Header */}
-        <section className="relative pt-12 pb-8 border-b border-white/5 overflow-hidden bg-background">
-          {/* Subtle ambient back glow */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[360px] bg-gradient-to-b from-accent/10 via-accent/5 to-transparent blur-3xl pointer-events-none" />
+        <section className="relative pt-16 pb-12 border-b border-[#E6D8CF] overflow-hidden bg-background">
+          <ContourFlourish className="absolute -top-16 -right-16 w-80 h-80 text-taupe/15 pointer-events-none" />
+          <ContourFlourish className="absolute -bottom-16 -left-16 w-72 h-72 text-taupe/15 pointer-events-none rotate-180" />
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="max-w-3xl mx-auto text-center space-y-4 mb-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium bg-accent/15 text-accent border border-accent/25">
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>RICOZ AI • CREATIVE TALENT MATCHING</span>
+            <div className="max-w-3xl mx-auto text-center space-y-4 mb-8">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-medium bg-[#FFF9F3] text-accent border border-[#E6D8CF] shadow-xs">
+                <EditorialStar size={13} className="text-accent" />
+                <span>RICOZ AI • CURATED CREATIVE INTELLIGENCE</span>
               </div>
 
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.1]">
-                Tell us what you&apos;re <span className="text-accent">building.</span>
+              <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-espresso leading-[1.12]">
+                Tell us what you&apos;re <span className="italic text-accent">building.</span>
               </h1>
 
-              <p className="text-sm sm:text-base text-zinc-300 leading-relaxed max-w-2xl mx-auto font-normal">
-                Describe your project, goals and creative needs. RICOZ will identify the right specialists and build a recommended creative team.
+              <p className="text-sm sm:text-base text-muted leading-relaxed max-w-2xl mx-auto font-normal">
+                Describe your project, commercial objectives, and creative ambition. RICOZ will identify the right specialists and assemble a tailored creative team.
               </p>
             </div>
 

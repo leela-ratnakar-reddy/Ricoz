@@ -23,7 +23,16 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+.env
 .env*.local
+
+# database
+*.db
+*.db-wal
+*.db-shm
+data/*.db
+data/*.db-wal
+data/*.db-shm
 
 # typescript
 *.tsbuildinfo

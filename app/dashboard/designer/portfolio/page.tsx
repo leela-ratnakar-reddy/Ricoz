@@ -126,7 +126,7 @@ export default function DesignerPortfolioPage() {
         challenge,
         solution,
         impact,
-        palette: ["#07080C", "#151820", "#C8FF3D", "#8B5CF6"],
+        palette: ["#38241F", "#541719", "#C7A99A", "#FFF9F3"],
       });
     }
 

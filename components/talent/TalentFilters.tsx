@@ -59,19 +59,19 @@ export const TalentFilters: React.FC<TalentFiltersProps> = ({
     <div className="space-y-4">
       {/* 1. Large Search Input */}
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9E8E87]" />
         <input
           type="text"
           value={filters.search}
           onChange={(e) => updateField("search", e.target.value)}
           placeholder="Search by creative name, discipline, aesthetic specialty, or industry..."
-          className="w-full bg-[#121215] border border-white/10 hover:border-white/20 rounded-2xl pl-11 pr-12 py-3.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-accent/60 transition-all shadow-inner"
+          className="w-full bg-white border border-[#E6D8CF] hover:border-[#C7A99A] rounded-full pl-11 pr-12 py-3.5 text-sm text-[#38241F] placeholder-[#9E8E87] focus:outline-none focus:border-[#541719] focus:ring-1 focus:ring-[#541719] transition-all shadow-subtle"
         />
         {filters.search && (
           <button
             type="button"
             onClick={() => updateField("search", "")}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white transition-colors"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-[#9E8E87] hover:text-[#38241F] transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -82,13 +82,13 @@ export const TalentFilters: React.FC<TalentFiltersProps> = ({
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3">
         {/* Filter 1: Role / Discipline */}
         <div>
-          <label className="block text-[10px] font-mono uppercase tracking-wider text-zinc-400 mb-1.5">
+          <label className="block text-[11px] font-sans font-bold uppercase tracking-wider text-[#76665F] mb-1.5">
             Discipline / Role
           </label>
           <select
             value={filters.role}
             onChange={(e) => updateField("role", e.target.value)}
-            className="w-full bg-[#141418] border border-white/10 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-accent/60 cursor-pointer truncate"
+            className="w-full bg-white border border-[#E6D8CF] rounded-2xl px-3 py-2.5 text-xs text-[#38241F] focus:outline-none focus:border-[#541719] cursor-pointer truncate shadow-subtle"
           >
             <option value="">All Disciplines</option>
             {ALL_ROLES.map((r) => (
@@ -101,13 +101,13 @@ export const TalentFilters: React.FC<TalentFiltersProps> = ({
 
         {/* Filter 2: Industry */}
         <div>
-          <label className="block text-[10px] font-mono uppercase tracking-wider text-zinc-400 mb-1.5">
+          <label className="block text-[11px] font-sans font-bold uppercase tracking-wider text-[#76665F] mb-1.5">
             Industry Focus
           </label>
           <select
             value={filters.industry}
             onChange={(e) => updateField("industry", e.target.value)}
-            className="w-full bg-[#141418] border border-white/10 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-accent/60 cursor-pointer truncate"
+            className="w-full bg-white border border-[#E6D8CF] rounded-2xl px-3 py-2.5 text-xs text-[#38241F] focus:outline-none focus:border-[#541719] cursor-pointer truncate shadow-subtle"
           >
             <option value="">All Industries</option>
             {ALL_INDUSTRIES.map((ind) => (
@@ -120,13 +120,13 @@ export const TalentFilters: React.FC<TalentFiltersProps> = ({
 
         {/* Filter 3: Experience */}
         <div>
-          <label className="block text-[10px] font-mono uppercase tracking-wider text-zinc-400 mb-1.5">
+          <label className="block text-[11px] font-sans font-bold uppercase tracking-wider text-[#76665F] mb-1.5">
             Experience Level
           </label>
           <select
             value={filters.experience}
             onChange={(e) => updateField("experience", e.target.value)}
-            className="w-full bg-[#141418] border border-white/10 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-accent/60 cursor-pointer truncate"
+            className="w-full bg-white border border-[#E6D8CF] rounded-2xl px-3 py-2.5 text-xs text-[#38241F] focus:outline-none focus:border-[#541719] cursor-pointer truncate shadow-subtle"
           >
             <option value="">Any Experience</option>
             <option value="5-8">5–8 yrs (Senior)</option>
@@ -137,13 +137,13 @@ export const TalentFilters: React.FC<TalentFiltersProps> = ({
 
         {/* Filter 4: Availability */}
         <div>
-          <label className="block text-[10px] font-mono uppercase tracking-wider text-zinc-400 mb-1.5">
+          <label className="block text-[11px] font-sans font-bold uppercase tracking-wider text-[#76665F] mb-1.5">
             Availability
           </label>
           <select
             value={filters.availability}
             onChange={(e) => updateField("availability", e.target.value)}
-            className="w-full bg-[#141418] border border-white/10 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-accent/60 cursor-pointer truncate"
+            className="w-full bg-white border border-[#E6D8CF] rounded-2xl px-3 py-2.5 text-xs text-[#38241F] focus:outline-none focus:border-[#541719] cursor-pointer truncate shadow-subtle"
           >
             <option value="">All Statuses</option>
             <option value="Available">● Available Now</option>
@@ -157,16 +157,16 @@ export const TalentFilters: React.FC<TalentFiltersProps> = ({
           <button
             type="button"
             onClick={() => setShowMoreFilters(!showMoreFilters)}
-            className={`w-full inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border text-xs font-medium transition-colors ${
+            className={`w-full inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-2xl border text-xs font-sans font-medium transition-colors ${
               showMoreFilters || activeSecondaryCount > 0
-                ? "bg-accent/15 border-accent text-accent"
-                : "bg-[#141418] border-white/10 text-zinc-300 hover:text-white hover:border-white/20"
+                ? "bg-[#541719]/10 border-[#541719] text-[#541719] font-bold"
+                : "bg-white border-[#E6D8CF] text-[#38241F] hover:border-[#C7A99A] shadow-subtle"
             }`}
           >
             <SlidersHorizontal className="w-3.5 h-3.5" />
             <span>More Filters</span>
             {activeSecondaryCount > 0 && (
-              <span className="w-4 h-4 rounded-full bg-accent text-black font-mono text-[10px] font-bold flex items-center justify-center">
+              <span className="w-4 h-4 rounded-full bg-[#541719] text-[#FFF9F3] text-[10px] font-bold flex items-center justify-center">
                 {activeSecondaryCount}
               </span>
             )}
@@ -181,16 +181,16 @@ export const TalentFilters: React.FC<TalentFiltersProps> = ({
 
       {/* 3. Collapsible "More Filters" Drawer */}
       {showMoreFilters && (
-        <div className="p-4 rounded-2xl bg-[#0D0D10] border border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-3 animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className="p-5 rounded-3xl bg-[#FFF9F3] border border-[#E6D8CF] grid grid-cols-1 sm:grid-cols-3 gap-3 animate-in fade-in slide-in-from-top-2 duration-200">
           {/* Location */}
           <div>
-            <label className="block text-[10px] font-mono uppercase tracking-wider text-zinc-400 mb-1.5">
+            <label className="block text-[11px] font-sans font-bold uppercase tracking-wider text-[#76665F] mb-1.5">
               Global Location
             </label>
             <select
               value={filters.location}
               onChange={(e) => updateField("location", e.target.value)}
-              className="w-full bg-[#141418] border border-white/10 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-accent/60 truncate"
+              className="w-full bg-white border border-[#E6D8CF] rounded-2xl px-3 py-2.5 text-xs text-[#38241F] focus:outline-none focus:border-[#541719] truncate shadow-subtle"
             >
               <option value="">All Locations</option>
               {ALL_LOCATIONS.map((loc) => (
@@ -203,13 +203,13 @@ export const TalentFilters: React.FC<TalentFiltersProps> = ({
 
           {/* Project Type */}
           <div>
-            <label className="block text-[10px] font-mono uppercase tracking-wider text-zinc-400 mb-1.5">
+            <label className="block text-[11px] font-sans font-bold uppercase tracking-wider text-[#76665F] mb-1.5">
               Project Type
             </label>
             <select
               value={filters.projectType}
               onChange={(e) => updateField("projectType", e.target.value)}
-              className="w-full bg-[#141418] border border-white/10 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-accent/60 truncate"
+              className="w-full bg-white border border-[#E6D8CF] rounded-2xl px-3 py-2.5 text-xs text-[#38241F] focus:outline-none focus:border-[#541719] truncate shadow-subtle"
             >
               <option value="">All Project Types</option>
               {ALL_PROJECT_TYPES.map((pt) => (
@@ -222,7 +222,7 @@ export const TalentFilters: React.FC<TalentFiltersProps> = ({
 
           {/* Sort By */}
           <div>
-            <label className="block text-[10px] font-mono uppercase tracking-wider text-zinc-400 mb-1.5">
+            <label className="block text-[11px] font-sans font-bold uppercase tracking-wider text-[#76665F] mb-1.5">
               Sort Results By
             </label>
             <select
@@ -230,7 +230,7 @@ export const TalentFilters: React.FC<TalentFiltersProps> = ({
               onChange={(e) =>
                 updateField("sortBy", e.target.value as TalentFilterState["sortBy"])
               }
-              className="w-full bg-[#141418] border border-white/10 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-accent/60"
+              className="w-full bg-white border border-[#E6D8CF] rounded-2xl px-3 py-2.5 text-xs text-[#38241F] focus:outline-none focus:border-[#541719] shadow-subtle"
             >
               <option value="recommended">Featured / Curated First</option>
               <option value="experience">Years Experience (High to Low)</option>
@@ -242,10 +242,10 @@ export const TalentFilters: React.FC<TalentFiltersProps> = ({
       )}
 
       {/* 4. Active Filters Bar & Clean Results Counter */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pt-1 pb-1 text-xs text-zinc-400 font-mono">
+      <div className="flex flex-wrap items-center justify-between gap-3 pt-1 pb-1 text-xs text-[#76665F] font-sans">
         <div>
-          Showing <span className="text-white font-semibold">{filteredCount}</span> of{" "}
-          <span className="text-white font-semibold">{totalCount}</span> creative specialists
+          Showing <span className="text-[#38241F] font-bold">{filteredCount}</span> of{" "}
+          <span className="text-[#38241F] font-bold">{totalCount}</span> creative specialists
           {totalActiveFilters > 0 && " (filtered)"}
         </div>
 
@@ -253,7 +253,7 @@ export const TalentFilters: React.FC<TalentFiltersProps> = ({
           <button
             type="button"
             onClick={onReset}
-            className="inline-flex items-center gap-1.5 text-accent hover:underline text-xs"
+            className="inline-flex items-center gap-1.5 text-[#541719] hover:underline font-semibold"
           >
             <RotateCcw className="w-3 h-3" />
             <span>Reset all filters ({totalActiveFilters})</span>

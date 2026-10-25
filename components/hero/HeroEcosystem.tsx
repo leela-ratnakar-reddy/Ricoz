@@ -246,8 +246,8 @@ export function HeroEcosystem() {
             whileHover={{ y: -3, opacity: 1, scale: 1.04 }}
             className="absolute z-15 pointer-events-auto hidden md:block cursor-default group"
           >
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface/90 hover:bg-surface-elevated/95 backdrop-blur-md border border-white/10 hover:border-accent/40 shadow-sm hover:shadow-[0_0_15px_rgba(200,255,61,0.25)] transition-all duration-300">
-              <span className="w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_6px_#C8FF3D] shrink-0" />
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface/90 hover:bg-surface-elevated/95 backdrop-blur-md border border-white/10 hover:border-accent/40 shadow-sm transition-all duration-300">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
               <span className="text-[10px] font-mono tracking-wider text-brand-secondary group-hover:text-white uppercase transition-colors whitespace-nowrap">
                 {pill.text}
               </span>
@@ -287,8 +287,8 @@ export function HeroEcosystem() {
                   y2={talent.lineEndY}
                   stroke={
                     isHovered || isConnected
-                      ? "#C8FF3D"
-                      : "#242733"
+                      ? "#541719"
+                      : "#E6D8CF"
                   }
                   strokeWidth={isHovered || isCurrentlyConnecting ? "2.5" : "1.5"}
                   strokeDasharray={isConnected ? "none" : "4 5"}
@@ -301,7 +301,7 @@ export function HeroEcosystem() {
                   cx={talent.lineStartX}
                   cy={talent.lineStartY}
                   r={isHovered ? "4" : "2.5"}
-                  fill={isConnected ? "#C8FF3D" : "#323746"}
+                  fill={isConnected ? "#541719" : "#C7A99A"}
                   opacity={isConnected ? 1 : 0.4}
                 />
 
@@ -309,7 +309,7 @@ export function HeroEcosystem() {
                 {(isCurrentlyConnecting || animStep === 6) && !shouldReduceMotion && (
                   <motion.circle
                     r="3.5"
-                    fill="#C8FF3D"
+                    fill="#541719"
                     filter="url(#nodeGlow)"
                     initial={{
                       cx: talent.lineStartX,
@@ -338,7 +338,7 @@ export function HeroEcosystem() {
               cx="500"
               cy="500"
               r="40"
-              stroke="#C8FF3D"
+              stroke="#541719"
               strokeWidth="1.5"
               fill="none"
               initial={{ r: 40, opacity: 0.8 }}
@@ -425,7 +425,7 @@ export function HeroEcosystem() {
                 rx="60"
                 ry="40"
                 fill="none"
-                stroke="#C8FF3D"
+                stroke="#541719"
                 strokeWidth="1"
                 strokeOpacity={animStep === 6 ? "0.6" : "0.32"}
                 filter="url(#orbitGlow)"
@@ -435,10 +435,10 @@ export function HeroEcosystem() {
                 cx="60"
                 cy="0"
                 r="2.5"
-                fill="#C8FF3D"
+                fill="#541719"
                 filter="url(#coreParticleGlow)"
               />
-              <circle cx="-60" cy="0" r="2" fill="#C8FF3D" opacity="0.85" />
+              <circle cx="-60" cy="0" r="2" fill="#541719" opacity="0.85" />
             </motion.g>
 
             {/* Orbit 2: 60° tilt ellipse (~142px diameter) */}
@@ -454,7 +454,7 @@ export function HeroEcosystem() {
                 ry="44"
                 transform="rotate(60 0 0)"
                 fill="none"
-                stroke="#C8FF3D"
+                stroke="#541719"
                 strokeWidth="1"
                 strokeOpacity={animStep === 6 ? "0.55" : "0.28"}
                 filter="url(#orbitGlow)"
@@ -464,14 +464,14 @@ export function HeroEcosystem() {
                 cx="35.5"
                 cy="61.5"
                 r="2.5"
-                fill="#C8FF3D"
+                fill="#541719"
                 filter="url(#coreParticleGlow)"
               />
               <circle
                 cx="-35.5"
                 cy="-61.5"
                 r="2"
-                fill="#C8FF3D"
+                fill="#541719"
                 opacity="0.85"
               />
             </motion.g>
@@ -489,7 +489,7 @@ export function HeroEcosystem() {
                 ry="46"
                 transform="rotate(120 0 0)"
                 fill="none"
-                stroke="#C8FF3D"
+                stroke="#541719"
                 strokeWidth="1"
                 strokeOpacity={animStep === 6 ? "0.5" : "0.25"}
                 filter="url(#orbitGlow)"
@@ -499,14 +499,14 @@ export function HeroEcosystem() {
                 cx="-41"
                 cy="71"
                 r="2.5"
-                fill="#C8FF3D"
+                fill="#541719"
                 filter="url(#coreParticleGlow)"
               />
               <circle
                 cx="41"
                 cy="-71"
                 r="2"
-                fill="#C8FF3D"
+                fill="#541719"
                 opacity="0.85"
               />
             </motion.g>
@@ -522,19 +522,19 @@ export function HeroEcosystem() {
                 cy="0"
                 r="92"
                 fill="none"
-                stroke="rgba(200, 255, 61, 0.22)"
+                stroke="rgba(84, 23, 25, 0.22)"
                 strokeWidth="1"
                 strokeDasharray="3 5"
               />
-              <circle cx="92" cy="0" r="2" fill="#C8FF3D" opacity="0.75" />
-              <circle cx="-92" cy="0" r="2" fill="#C8FF3D" opacity="0.75" />
+              <circle cx="92" cy="0" r="2" fill="#541719" opacity="0.75" />
+              <circle cx="-92" cy="0" r="2" fill="#541719" opacity="0.75" />
             </motion.g>
           </svg>
 
           {/* Layer 4 & 5: Stationary Circular RICOZ Core (80px x 80px)
               Positioned exactly at the center of the 220px x 220px container */}
           <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-surface-elevated/95 backdrop-blur-md border-2 border-accent/80 flex flex-col items-center justify-center p-2 z-10 shadow-[0_0_24px_rgba(200,255,61,0.25)] select-none"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-[#FFF9F3] border-2 border-accent/80 flex flex-col items-center justify-center p-2 z-10 shadow-sm select-none"
           >
             {/* Perfectly static R logo */}
             <BrandMark size={26} withGlow={false} />

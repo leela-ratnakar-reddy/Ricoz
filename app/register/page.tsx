@@ -9,6 +9,7 @@ import { Button } from "@/components/Button";
 import { setCurrentUser } from "@/lib/storage";
 import { User } from "@/types";
 import { Building2, UserCheck } from "lucide-react";
+import { EditorialStar, ContourFlourish } from "@/components/ui/EditorialDecorations";
 
 function RegisterContent() {
   const router = useRouter();
@@ -51,145 +52,151 @@ function RegisterContent() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-brand">
+    <div className="min-h-screen flex flex-col bg-background text-foreground selection:bg-accent selection:text-[#FFF9F3]">
       <Navbar />
 
-      <main className="flex-1 flex items-center justify-center py-16 px-4 sm:px-6">
-        <div className="w-full max-w-lg space-y-8">
+      <main className="flex-1 flex items-center justify-center py-16 px-4 sm:px-6 relative overflow-hidden">
+        <ContourFlourish className="absolute -top-16 -right-16 w-80 h-80 text-taupe/15 pointer-events-none" />
+        <ContourFlourish className="absolute -bottom-16 -left-16 w-72 h-72 text-taupe/15 pointer-events-none rotate-180" />
+
+        <div className="w-full max-w-lg space-y-6 relative z-10">
           <div className="text-center space-y-2">
-            <span className="font-mono text-[11px] font-medium uppercase tracking-widest text-accent">
-              NETWORK REGISTRATION
-            </span>
-            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white font-sans">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium bg-[#FFF9F3] text-accent border border-[#E6D8CF] shadow-xs mb-1">
+              <EditorialStar size={11} className="text-accent" />
+              <span>NETWORK REGISTRATION</span>
+            </div>
+            <h1 className="font-serif text-3xl sm:text-4xl font-normal tracking-tight text-espresso">
               Create an enterprise account
             </h1>
-            <p className="text-xs text-brand-muted max-w-sm mx-auto">
+            <p className="text-xs text-muted max-w-sm mx-auto font-sans">
               Join RICOZ to connect with top-tier creative leadership or showcase your senior portfolio.
             </p>
           </div>
 
-          <form onSubmit={handleRegister} className="space-y-6">
-            {/* ACCOUNT TYPE SELECTION */}
-            <div>
-              <label className="block text-[11px] font-mono uppercase tracking-wider text-brand-muted mb-2 font-medium">
-                Account Type
-              </label>
-              <div className="grid grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  onClick={() => setRole("company")}
-                  className={`p-4 rounded-xl border text-left transition-all ${
-                    role === "company"
-                      ? "border-accent bg-surface-elevated ring-1 ring-accent"
-                      : "border-surface-border bg-surface-elevated/40 hover:border-surface-borderLight"
-                  }`}
-                >
-                  <Building2
-                    className={`w-5 h-5 mb-2 ${
-                      role === "company" ? "text-accent" : "text-brand-muted"
-                    }`}
-                  />
-                  <div className="font-medium text-xs text-brand">Company / Enterprise</div>
-                  <div className="text-[11px] text-brand-muted mt-0.5 font-light">
-                    Hiring creative directors & brand teams
-                  </div>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setRole("designer")}
-                  className={`p-4 rounded-xl border text-left transition-all ${
-                    role === "designer"
-                      ? "border-accent bg-surface-elevated ring-1 ring-accent"
-                      : "border-surface-border bg-surface-elevated/40 hover:border-surface-borderLight"
-                  }`}
-                >
-                  <UserCheck
-                    className={`w-5 h-5 mb-2 ${
-                      role === "designer" ? "text-accent" : "text-brand-muted"
-                    }`}
-                  />
-                  <div className="font-medium text-xs text-brand">Creative Professional</div>
-                  <div className="text-[11px] text-brand-muted mt-0.5 font-light">
-                    Creative Directors, Designers & Strategists
-                  </div>
-                </button>
-              </div>
-            </div>
-
-            {/* FORM FIELDS */}
-            <div className="space-y-4">
+          <div className="bg-[#FFF9F3] border border-[#E6D8CF] rounded-3xl p-6 sm:p-8 space-y-6 shadow-xs">
+            <form onSubmit={handleRegister} className="space-y-6">
+              {/* ACCOUNT TYPE SELECTION */}
               <div>
-                <label className="block text-[11px] font-mono uppercase tracking-wider text-brand-muted mb-1.5 font-medium">
-                  Full Name
+                <label className="block text-[11px] font-mono uppercase tracking-wider text-muted mb-2 font-medium">
+                  Account Type
                 </label>
-                <input
-                  type="text"
-                  required
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  placeholder="e.g. Alex Vance"
-                  className="w-full px-3.5 py-2.5 bg-surface-elevated border border-surface-border rounded-md text-xs text-brand placeholder-brand-muted focus:outline-none focus:border-accent/40"
-                />
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setRole("company")}
+                    className={`p-4 rounded-xl border text-left transition-all ${
+                      role === "company"
+                        ? "border-2 border-accent bg-white shadow-xs"
+                        : "border-[#E6D8CF] bg-white/70 hover:border-accent/40"
+                    }`}
+                  >
+                    <Building2
+                      className={`w-5 h-5 mb-2 ${
+                        role === "company" ? "text-accent" : "text-taupe"
+                      }`}
+                    />
+                    <div className="font-semibold text-xs text-espresso">Company / Enterprise</div>
+                    <div className="text-[11px] text-muted mt-0.5">
+                      Hiring creative directors & brand teams
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setRole("designer")}
+                    className={`p-4 rounded-xl border text-left transition-all ${
+                      role === "designer"
+                        ? "border-2 border-accent bg-white shadow-xs"
+                        : "border-[#E6D8CF] bg-white/70 hover:border-accent/40"
+                    }`}
+                  >
+                    <UserCheck
+                      className={`w-5 h-5 mb-2 ${
+                        role === "designer" ? "text-accent" : "text-taupe"
+                      }`}
+                    />
+                    <div className="font-semibold text-xs text-espresso">Creative Professional</div>
+                    <div className="text-[11px] text-muted mt-0.5">
+                      Creative Directors & Specialists
+                    </div>
+                  </button>
+                </div>
               </div>
 
-              <div>
-                <label className="block text-[11px] font-mono uppercase tracking-wider text-brand-muted mb-1.5 font-medium">
-                  Work Email Address
-                </label>
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="e.g. alex@company.com"
-                  className="w-full px-3.5 py-2.5 bg-surface-elevated border border-surface-border rounded-md text-xs text-brand placeholder-brand-muted focus:outline-none focus:border-accent/40 font-mono"
-                />
-              </div>
-
-              {role === "company" && (
+              {/* FORM FIELDS */}
+              <div className="space-y-4">
                 <div>
-                  <label className="block text-[11px] font-mono uppercase tracking-wider text-brand-muted mb-1.5 font-medium">
-                    Company / Organization
+                  <label className="block text-[11px] font-mono uppercase tracking-wider text-muted mb-1.5 font-medium">
+                    Full Name
                   </label>
                   <input
                     type="text"
                     required
-                    value={companyName}
-                    onChange={(e) => setCompanyName(e.target.value)}
-                    placeholder="e.g. Vantage Robotics"
-                    className="w-full px-3.5 py-2.5 bg-surface-elevated border border-surface-border rounded-md text-xs text-brand placeholder-brand-muted focus:outline-none focus:border-accent/40"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    placeholder="e.g. Alex Vance"
+                    className="w-full px-3.5 py-2.5 bg-white border border-[#E6D8CF] rounded-xl text-xs text-espresso placeholder-[#76665F]/60 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent font-sans shadow-2xs"
                   />
                 </div>
-              )}
 
-              <div>
-                <label className="block text-[11px] font-mono uppercase tracking-wider text-brand-muted mb-1.5 font-medium">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Minimum 8 characters"
-                  className="w-full px-3.5 py-2.5 bg-surface-elevated border border-surface-border rounded-md text-xs text-brand placeholder-brand-muted focus:outline-none focus:border-accent/40 font-mono"
-                />
+                <div>
+                  <label className="block text-[11px] font-mono uppercase tracking-wider text-muted mb-1.5 font-medium">
+                    Work Email Address
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="e.g. alex@company.com"
+                    className="w-full px-3.5 py-2.5 bg-white border border-[#E6D8CF] rounded-xl text-xs text-espresso placeholder-[#76665F]/60 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent font-mono shadow-2xs"
+                  />
+                </div>
+
+                {role === "company" && (
+                  <div>
+                    <label className="block text-[11px] font-mono uppercase tracking-wider text-muted mb-1.5 font-medium">
+                      Company / Organization
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={companyName}
+                      onChange={(e) => setCompanyName(e.target.value)}
+                      placeholder="e.g. Vantage Robotics"
+                      className="w-full px-3.5 py-2.5 bg-white border border-[#E6D8CF] rounded-xl text-xs text-espresso placeholder-[#76665F]/60 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent font-sans shadow-2xs"
+                    />
+                  </div>
+                )}
+
+                <div>
+                  <label className="block text-[11px] font-mono uppercase tracking-wider text-muted mb-1.5 font-medium">
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Minimum 8 characters"
+                    className="w-full px-3.5 py-2.5 bg-white border border-[#E6D8CF] rounded-xl text-xs text-espresso placeholder-[#76665F]/60 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent font-mono shadow-2xs"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="pt-2">
-              <Button type="submit" fullWidth size="lg">
-                Complete Registration & Open Dashboard
-              </Button>
-            </div>
-          </form>
+              <div className="pt-2">
+                <Button type="submit" fullWidth size="lg">
+                  Complete Registration & Open Dashboard
+                </Button>
+              </div>
+            </form>
 
-          <div className="text-center pt-4 border-t border-surface-border text-xs text-brand-secondary font-mono">
-            Already have an account?{" "}
-            <Link href="/login" className="font-semibold text-brand hover:text-accent underline transition-colors">
-              Sign in
-            </Link>
+            <div className="text-center pt-4 border-t border-[#E6D8CF] text-xs text-muted font-mono">
+              Already have an account?{" "}
+              <Link href="/login" className="font-semibold text-espresso hover:text-accent underline transition-colors">
+                Sign in
+              </Link>
+            </div>
           </div>
         </div>
       </main>
@@ -201,7 +208,7 @@ function RegisterContent() {
 
 export default function RegisterPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-background p-12 text-center text-xs font-mono text-brand-muted">Loading registration...</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-background p-12 text-center text-xs font-mono text-muted">Loading registration...</div>}>
       <RegisterContent />
     </Suspense>
   );

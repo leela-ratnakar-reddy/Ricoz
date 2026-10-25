@@ -1,31 +1,36 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #07080C;
-  --background-secondary: #0B0D12;
-  --surface: #101218;
-  --surface-elevated: #151820;
-  --surface-border: #242731;
-  --foreground: #F5F5F0;
-  --foreground-secondary: #A0A3AD;
-  --foreground-muted: #70747F;
-  --accent: #C8FF3D;
-  --accent-violet: #8B5CF6;
+  --background: #FBF6F0;
+  --background-secondary: #FFF9F3;
+  --surface: #FFFFFF;
+  --surface-muted: #FFF9F3;
+  --surface-elevated: #FFFFFF;
+  --surface-border: #E6D8CF;
+  --foreground: #38241F;
+  --foreground-secondary: #76665F;
+  --foreground-muted: #9E8E87;
+  --accent: #541719;
+  --accent-hover: #3E1012;
+  --accent-muted: rgba(84, 23, 25, 0.08);
+  --taupe: #C7A99A;
+  --beige: #E0CEC3;
 }
 
 html {
   scroll-behavior: smooth;
+  background-color: #FBF6F0;
 }
 
 html, body {
-  background-color: #07080C;
-  color: #F5F5F0;
+  background-color: #FBF6F0;
+  color: #38241F;
   margin: 0;
   padding: 0;
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: "DM Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 body {
@@ -33,38 +38,61 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  background-color: #FBF6F0;
+  color: #38241F;
 }
 
-/* Subtle dark scrollbar */
+/* Warm Editorial Scrollbar */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #07080C;
+  background: #FBF6F0;
 }
 ::-webkit-scrollbar-thumb {
-  background: #242731;
+  background: #C7A99A;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #3A3E4E;
+  background: #B39281;
 }
 
-/* Luxury Editorial Grid Overlay */
+/* Luxury Editorial Grid Overlay (Warm subtle grain & contour lines) */
 .bg-subtle-grid {
   background-size: 40px 40px;
   background-image: 
-    linear-gradient(to right, rgba(36, 39, 49, 0.25) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(36, 39, 49, 0.25) 1px, transparent 1px);
+    linear-gradient(to right, rgba(230, 216, 207, 0.4) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(230, 216, 207, 0.4) 1px, transparent 1px);
 }
 
-.bg-hero-glow {
-  background: radial-gradient(circle at 65% 35%, rgba(139, 92, 246, 0.08) 0%, rgba(200, 255, 61, 0.04) 30%, transparent 70%);
+.bg-editorial-glow {
+  background: radial-gradient(circle at 65% 35%, rgba(84, 23, 25, 0.04) 0%, rgba(199, 169, 154, 0.08) 35%, transparent 70%);
 }
 
-/* Selection Color with Lime */
+/* Selection Color with Warm Deep Burgundy */
 ::selection {
-  background-color: #C8FF3D;
-  color: #07080C;
+  background-color: #541719;
+  color: #FFF9F3;
+}
+
+/* Editorial Serif Utility */
+.font-editorial {
+  font-family: "Playfair Display", "DM Serif Display", Georgia, serif;
+}
+
+/* Elegant frame contour */
+.editorial-frame {
+  position: relative;
+  border: 1px solid #E6D8CF;
+  background: #FFFFFF;
+}
+
+.editorial-frame::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(199, 169, 154, 0.35);
+  pointer-events: none;
+  border-radius: inherit;
 }

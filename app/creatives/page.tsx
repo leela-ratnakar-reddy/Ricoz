@@ -1,13 +1,15 @@
 import React from "react";
+import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { Button } from "@/components/Button";
+import { EditorialStar, ContourFlourish } from "@/components/ui/EditorialDecorations";
 import {
   DollarSign,
   Briefcase,
   Layers,
   ShieldCheck,
   CheckCircle2,
+  ArrowRight
 } from "lucide-react";
 
 export default function ForCreativesPage() {
@@ -35,46 +37,60 @@ export default function ForCreativesPage() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-brand">
+    <div className="min-h-screen flex flex-col bg-background text-foreground selection:bg-accent selection:text-[#FFF9F3]">
       <Navbar />
 
-      <main className="flex-1 py-12 md:py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mb-16">
-            <span className="text-[11px] font-mono uppercase tracking-widest text-accent font-medium block mb-3">
-              FOR CREATIVE DIRECTORS & SPECIALISTS
-            </span>
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight font-sans">
-              Lead transformative rebrands on your own terms<span className="text-accent">.</span>
+      <main className="flex-1 py-12 md:py-20 relative overflow-hidden">
+        <ContourFlourish className="absolute -top-16 -right-16 w-80 h-80 text-taupe/15 pointer-events-none" />
+        <ContourFlourish className="absolute bottom-20 -left-20 w-72 h-72 text-taupe/15 pointer-events-none rotate-90" />
+
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="max-w-3xl mb-16 space-y-4">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-medium bg-[#FFF9F3] text-accent border border-[#E6D8CF] shadow-xs">
+              <EditorialStar size={13} className="text-accent" />
+              <span>FOR CREATIVE DIRECTORS & SPECIALISTS</span>
+            </div>
+
+            <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-espresso leading-[1.12]">
+              Lead transformative mandates on your <span className="italic text-accent">own terms.</span>
             </h1>
-            <p className="mt-4 text-base sm:text-lg text-brand-secondary leading-relaxed">
+
+            <p className="text-base sm:text-lg text-muted leading-relaxed font-sans">
               RICOZ provides premier independent Creative Directors, Brand Strategists, and Typographers with direct access to ambitious enterprise clients.
             </p>
-            <div className="mt-8 flex flex-col sm:flex-row gap-4">
-              <Button href="/register?role=designer" size="lg">
-                Apply to Join Network
-              </Button>
-              <Button href="/dashboard/designer" variant="outline" size="lg">
-                View Designer Studio Demo
-              </Button>
+
+            <div className="pt-4 flex flex-col sm:flex-row gap-4">
+              <Link
+                href="/register?role=designer"
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-accent text-[#FFF9F3] font-semibold text-sm hover:bg-[#3E1012] transition-all shadow-md active:translate-y-0.5"
+              >
+                <span>Apply to Join Network</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                href="/dashboard/designer"
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-white border border-[#E6D8CF] text-espresso font-semibold text-sm hover:bg-[#FFF9F3] transition-colors shadow-2xs"
+              >
+                <span>View Designer Studio Demo</span>
+              </Link>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-16">
             {creativePillars.map((p) => {
               const Icon = p.icon;
               return (
                 <div
                   key={p.title}
-                  className="bg-surface/80 border border-surface-border rounded-xl p-8 hover:border-accent/40 transition-all shadow-subtle group"
+                  className="bg-white border border-[#E6D8CF] rounded-2xl p-8 hover:border-accent/40 transition-all shadow-xs group"
                 >
-                  <div className="w-10 h-10 rounded-md bg-surface-elevated flex items-center justify-center text-accent mb-6 border border-surface-border">
+                  <div className="w-11 h-11 rounded-xl bg-[#FFF9F3] flex items-center justify-center text-accent mb-6 border border-[#E6D8CF]">
                     <Icon className="w-5 h-5 text-accent" />
                   </div>
-                  <h3 className="text-lg font-medium text-brand mb-2">
+                  <h3 className="font-serif text-xl font-normal text-espresso mb-2">
                     {p.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-brand-secondary leading-relaxed font-light">
+                  <p className="text-sm text-muted leading-relaxed font-sans">
                     {p.desc}
                   </p>
                 </div>
@@ -83,11 +99,11 @@ export default function ForCreativesPage() {
           </div>
 
           {/* APPLICATION CRITERIA */}
-          <div className="bg-surface/80 border border-surface-border rounded-xl p-8 sm:p-10 my-16">
-            <h3 className="text-xl sm:text-2xl font-bold text-white mb-4 tracking-tight font-sans">
+          <div className="bg-[#FFF9F3] border border-[#E6D8CF] rounded-2xl p-8 sm:p-10 my-16 shadow-xs">
+            <h3 className="font-serif text-2xl sm:text-3xl font-normal text-espresso mb-3 tracking-tight">
               Curatorial Admission Standards
             </h3>
-            <p className="text-sm text-brand-secondary max-w-2xl mb-6">
+            <p className="text-sm text-muted max-w-2xl mb-6">
               Our network maintains the highest creative concentration in the industry. Applicants must meet the following criteria:
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -97,9 +113,9 @@ export default function ForCreativesPage() {
                 "Verifiable client references or top-tier design studio tenure",
                 "Specialization in brand identity, typography, strategy, or creative direction",
               ].map((crit, idx) => (
-                <div key={idx} className="flex items-start gap-2.5 text-xs text-brand">
+                <div key={idx} className="flex items-start gap-2.5 text-xs text-espresso">
                   <CheckCircle2 className="w-4 h-4 text-accent shrink-0 mt-0.5" />
-                  <span className="font-light">{crit}</span>
+                  <span>{crit}</span>
                 </div>
               ))}
             </div>

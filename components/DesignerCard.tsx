@@ -3,11 +3,10 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Designer } from "@/types";
-import { Badge } from "@/components/Badge";
-import { MatchScore } from "@/components/MatchScore";
 import { PortfolioVisual } from "@/components/PortfolioVisual";
 import { Heart, MapPin, Briefcase, ArrowRight, ShieldCheck } from "lucide-react";
 import { isShortlisted, toggleShortlist } from "@/lib/storage";
+import { EditorialStar } from "@/components/ui/EditorialDecorations";
 
 interface DesignerCardProps {
   designer: Designer;
@@ -45,14 +44,11 @@ export const DesignerCard: React.FC<DesignerCardProps> = ({
   const leadProject = designer.portfolio[0];
 
   return (
-    <div className="group relative bg-surface border border-surface-border rounded-xl overflow-hidden hover:border-surface-borderLight transition-all duration-300 hover:-translate-y-1 hover:shadow-surface flex flex-col justify-between">
-      {/* Accent Reveal Line on top hover */}
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-accent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20" />
-
+    <div className="group relative bg-white border border-[#E6D8CF] rounded-3xl overflow-hidden hover:border-[#C7A99A] transition-all duration-300 hover:-translate-y-1 hover:shadow-card flex flex-col justify-between">
       <div>
         {/* Large Portfolio Artwork / Preview */}
         {showLargeVisual && leadProject && (
-          <div className="relative overflow-hidden aspect-[16/10] bg-surface-muted border-b border-surface-border">
+          <div className="relative overflow-hidden aspect-[16/10] bg-[#FFF9F3] border-b border-[#E6D8CF]">
             <PortfolioVisual
               title={leadProject.title}
               client={leadProject.client}
@@ -61,122 +57,120 @@ export const DesignerCard: React.FC<DesignerCardProps> = ({
               aspectRatio="aspect-[16/10]"
               className="w-full h-full transform transition-transform duration-700 group-hover:scale-105"
             />
-            {/* Top overlay badge: Availability & Heart */}
+            {/* Top overlay badge: Heart Button */}
             <div className="absolute top-3 right-3 z-20 flex items-center gap-2">
               <button
                 type="button"
                 onClick={handleToggle}
                 className={`p-2 rounded-full backdrop-blur-md border transition-all ${
                   shortlisted
-                    ? "bg-accent-muted border-accent text-accent"
-                    : "bg-background/70 border-surface-border text-brand-muted hover:text-white hover:border-surface-borderLight"
+                    ? "bg-[#541719] border-[#541719] text-[#FFF9F3] shadow-burgundy"
+                    : "bg-white/95 border-[#E6D8CF] text-[#38241F] hover:text-[#541719] hover:bg-white"
                 }`}
                 title={shortlisted ? "Remove from shortlist" : "Add to shortlist"}
                 aria-label={shortlisted ? "Remove from shortlist" : "Add to shortlist"}
               >
                 <Heart
-                  className={`w-3.5 h-3.5 ${shortlisted ? "fill-accent text-accent" : ""}`}
+                  className={`w-3.5 h-3.5 ${shortlisted ? "fill-current" : ""}`}
                 />
               </button>
             </div>
           </div>
         )}
 
-        <div className="p-5 sm:p-6 space-y-4">
+        <div className="p-6 space-y-4">
           {/* Top metadata & Match Score */}
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2">
               <span
                 className={`w-2 h-2 rounded-full ${
                   designer.availability === "Available now"
-                    ? "bg-accent"
+                    ? "bg-[#541719] animate-pulse"
                     : designer.availability === "Available soon"
-                    ? "bg-amber-400"
-                    : "bg-brand-muted"
+                    ? "bg-[#C7A99A]"
+                    : "bg-[#9E8E87]"
                 }`}
               />
-              <span className="text-[11px] font-mono text-brand-secondary">
+              <span className="text-xs font-sans font-medium text-[#76665F]">
                 {designer.availability}
               </span>
             </div>
 
-            <MatchScore score={displayMatch} size="sm" />
+            <span className="text-xs font-sans font-bold px-2.5 py-0.5 rounded-full bg-[#541719]/10 text-[#541719] border border-[#541719]/20">
+              {displayMatch}% Match
+            </span>
           </div>
 
-          {/* Profile Details */}
-          <div className="flex items-start gap-3.5">
-            <div className="w-11 h-11 rounded-lg bg-surface-elevated text-brand font-mono font-bold text-xs flex items-center justify-center shrink-0 border border-surface-border group-hover:border-accent/40 transition-colors">
-              {designer.initials}
-            </div>
+          {/* Designer Identity */}
+          <div>
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full overflow-hidden bg-[#FFF9F3] border border-[#E6D8CF] shrink-0">
+                <img
+                  src={designer.avatar}
+                  alt={designer.name}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
 
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-1.5">
+              <div className="min-w-0 flex-1">
                 <Link
                   href={`/designers/${designer.id}`}
-                  className="font-bold text-base text-brand group-hover:text-accent transition-colors truncate"
+                  className="block font-serif font-bold text-lg text-[#38241F] hover:text-[#541719] transition-colors truncate"
                 >
                   {designer.name}
                 </Link>
-                {designer.verified && (
-                  <span title="Vetted Senior Rebranding Specialist">
-                    <ShieldCheck className="w-4 h-4 text-accent shrink-0" />
-                  </span>
-                )}
-              </div>
-              <p className="text-xs font-medium text-brand-secondary truncate">
-                {designer.role}
-              </p>
-              <div className="flex items-center gap-3 mt-1 text-[11px] font-mono text-brand-muted">
-                <span className="truncate">{designer.location}</span>
-                <span>•</span>
-                <span>{designer.yearsExperience} yrs exp</span>
+                <p className="text-xs font-sans text-[#541719] font-medium truncate">
+                  {designer.title || designer.role}
+                </p>
               </div>
             </div>
+
+            <p className="mt-3 text-xs text-[#76665F] line-clamp-2 leading-relaxed font-sans font-normal">
+              {designer.bio}
+            </p>
           </div>
 
-          {/* Bio Preview */}
-          <p className="text-xs text-brand-secondary line-clamp-2 leading-relaxed">
-            {designer.bio}
-          </p>
-
-          {/* Specialties & Sectors */}
-          <div className="space-y-2 pt-1">
-            <div className="flex flex-wrap gap-1.5">
-              {designer.skills.slice(0, 3).map((skill) => (
-                <span
-                  key={skill}
-                  className="text-[10px] font-mono text-brand-secondary bg-surface-elevated border border-surface-border px-2 py-0.5 rounded"
-                >
-                  {skill}
-                </span>
-              ))}
-              {designer.skills.length > 3 && (
-                <span className="text-[10px] font-mono text-brand-muted px-1 py-0.5">
-                  +{designer.skills.length - 3}
-                </span>
-              )}
+          {/* Metadata Row */}
+          <div className="flex items-center justify-between text-xs text-[#76665F] font-sans pt-1 border-t border-[#E6D8CF]">
+            <div className="flex items-center gap-1">
+              <MapPin className="w-3.5 h-3.5 text-[#9E8E87]" />
+              <span>{designer.location}</span>
             </div>
-
-            <div className="text-[11px] font-mono text-brand-muted truncate">
-              <span className="text-brand-muted/70 uppercase">Sectors:</span>{" "}
-              {designer.industries.slice(0, 3).join(", ")}
+            <div className="flex items-center gap-1">
+              <Briefcase className="w-3.5 h-3.5 text-[#9E8E87]" />
+              <span>{designer.yearsExperience}y exp</span>
             </div>
+            <span className="font-mono text-[#38241F] font-bold">{designer.dayRate}</span>
+          </div>
+
+          {/* Skills Badges */}
+          <div className="flex flex-wrap gap-1.5 pt-1">
+            {designer.skills.slice(0, 3).map((skill) => (
+              <span
+                key={skill}
+                className="px-2.5 py-0.5 rounded-full text-[11px] font-sans bg-[#FFF9F3] text-[#76665F] border border-[#E6D8CF]"
+              >
+                {skill}
+              </span>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Card Footer Bar */}
-      <div className="px-5 py-3.5 sm:px-6 bg-surface-muted border-t border-surface-border flex items-center justify-between text-xs">
-        <span className="font-mono text-brand font-medium">
-          {designer.dayRate}
+      {/* Card Action */}
+      <div className="p-4 pt-3 border-t border-[#E6D8CF] bg-[#FFF9F3] flex items-center justify-between">
+        <span className="text-xs text-[#76665F] font-sans flex items-center gap-1.5">
+          <ShieldCheck className="w-3.5 h-3.5 text-[#541719]" />
+          <span>Vetted Portfolio</span>
         </span>
 
         <Link
           href={`/designers/${designer.id}`}
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-secondary group-hover:text-accent transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-sans font-bold text-[#541719] hover:underline"
         >
           <span>View Profile</span>
-          <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="w-3.5 h-3.5" />
         </Link>
       </div>
     </div>

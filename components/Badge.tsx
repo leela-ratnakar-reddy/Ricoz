@@ -22,12 +22,12 @@ export const Badge: React.FC<BadgeProps> = ({
   const base = "inline-flex items-center font-medium tracking-tight select-none rounded-full";
 
   const variants = {
-    neutral: "bg-surface-elevated text-brand-secondary border border-surface-border",
-    subtle: "bg-surface text-brand-muted border border-surface-border/60",
-    accent: "bg-accent-muted text-accent border border-accent-border font-semibold",
-    violet: "bg-violet-muted text-violet border border-violet-border font-semibold",
-    success: "bg-emerald-950/60 text-emerald-400 border border-emerald-800/50",
-    outline: "bg-transparent text-brand-secondary border border-surface-border",
+    neutral: "bg-[#FFF9F3] text-espresso border border-[#E6D8CF]",
+    subtle: "bg-white text-muted border border-[#E6D8CF]/80",
+    accent: "bg-accent/10 text-accent border border-accent/20 font-semibold",
+    violet: "bg-taupe/15 text-espresso border border-taupe/30 font-semibold",
+    success: "bg-emerald-50 text-emerald-850 border border-emerald-200",
+    outline: "bg-transparent text-muted border border-[#E6D8CF]",
   };
 
   const sizes = {

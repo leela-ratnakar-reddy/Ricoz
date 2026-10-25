@@ -39,7 +39,7 @@ const SHOWCASE_WORKS = [
     industry: "Enterprise Cloud",
     designer: "Alex Morgan (Creative Director)",
     image: "/images/case-studies/northstar-cloud.jpg",
-    palette: ["#101218", "#181B24", "#C8FF3D", "#F5F5F0"],
+    palette: ["#38241F", "#541719", "#C7A99A", "#FFF9F3"],
     impact: "+64% enterprise perception rating post-acquisition",
     services: ["Creative Direction", "Design Systems", "Typography"],
   },
@@ -49,7 +49,7 @@ const SHOWCASE_WORKS = [
     industry: "Biotechnology",
     designer: "Elena Rostova (Brand Identity Designer)",
     image: "/images/case-studies/synthetix-bio.jpg",
-    palette: ["#0E0E14", "#181824", "#8B5CF6", "#F5F5F0"],
+    palette: ["#38241F", "#541719", "#E0CEC3", "#FFF9F3"],
     impact: "$120M Series C repositioning & visual architecture",
     services: ["Visual Identity", "Algorithmic Geometry", "Guidelines"],
   },
@@ -59,7 +59,7 @@ const SHOWCASE_WORKS = [
     industry: "Luxury Hospitality",
     designer: "Sophie Chen (Typography Specialist)",
     image: "/images/case-studies/atelier-house.jpg",
-    palette: ["#141210", "#26221C", "#C8FF3D", "#F5F5F0"],
+    palette: ["#38241F", "#541719", "#C7A99A", "#FFF9F3"],
     impact: "Proprietary 6-weight optical variable font family",
     services: ["Custom Typography", "Lettering", "Wayfinding"],
   },
@@ -137,21 +137,21 @@ export function CollaborationFlow() {
           {SHOWCASE_WORKS.map((item) => (
             <div
               key={item.title}
-              className="group rounded-2xl bg-[#111114] border border-white/10 hover:border-white/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col justify-between"
+              className="group rounded-2xl bg-white border border-[#E6D8CF] hover:border-accent/40 transition-all duration-300 hover:-translate-y-1 shadow-xs hover:shadow-md overflow-hidden flex flex-col justify-between"
             >
               <div>
                 {/* TOP: Category badge & Client Header */}
-                <div className="px-5 pt-4 pb-3 flex items-center justify-between border-b border-white/5 bg-[#141418]">
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-mono font-semibold uppercase tracking-wider bg-white/5 text-accent border border-accent/25">
+                <div className="px-5 pt-4 pb-3 flex items-center justify-between border-b border-[#E6D8CF] bg-[#FFF9F3]">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-mono font-semibold uppercase tracking-wider bg-white text-accent border border-accent/25">
                     {item.industry}
                   </span>
-                  <span className="text-[11px] font-mono text-zinc-400">
+                  <span className="text-[11px] font-mono text-muted">
                     {item.client}
                   </span>
                 </div>
 
                 {/* MIDDLE: Large visual case-study image (55–65% prominence) */}
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-900 border-b border-white/5">
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#E0CEC3]/30 border-b border-[#E6D8CF]">
                   <img
                     src={item.image}
                     alt={item.title}
@@ -159,21 +159,21 @@ export function CollaborationFlow() {
                     loading="lazy"
                   />
                   {/* Subtle dark overlay on hover */}
-                  <div className="absolute inset-0 bg-black/15 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                 </div>
 
                 {/* BOTTOM: Title, Lead, Impact */}
                 <div className="p-5 space-y-3">
                   <div>
-                    <h4 className="text-lg font-bold text-white group-hover:text-accent transition-colors leading-snug">
+                    <h4 className="font-serif text-lg font-normal text-espresso group-hover:text-accent transition-colors leading-snug">
                       {item.title}
                     </h4>
-                    <p className="text-xs text-zinc-400 font-mono mt-1">
+                    <p className="text-xs text-muted font-mono mt-1">
                       Lead: {item.designer}
                     </p>
                   </div>
 
-                  <div className="p-3 rounded-xl bg-black/40 border border-white/5 text-xs text-zinc-300">
+                  <div className="p-3 rounded-xl bg-[#FFF9F3] border border-[#E6D8CF] text-xs text-espresso">
                     <span className="text-[10px] font-mono uppercase text-accent font-semibold block mb-0.5">
                       Measured Impact
                     </span>
@@ -183,7 +183,7 @@ export function CollaborationFlow() {
               </div>
 
               {/* Card Footer: Tags & Review Action */}
-              <div className="p-4 border-t border-white/5 flex items-center justify-between text-xs font-mono bg-[#0D0D10]/80">
+              <div className="p-4 border-t border-[#E6D8CF] flex items-center justify-between text-xs font-mono bg-[#FFF9F3]/60">
                 <div className="flex flex-wrap gap-1.5">
                   {item.services.slice(0, 2).map((s) => (
                     <span

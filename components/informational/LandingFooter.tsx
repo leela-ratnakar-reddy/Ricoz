@@ -3,105 +3,180 @@
 import React from "react";
 import Link from "next/link";
 import { Wordmark } from "@/components/brand/Wordmark";
-import { Sparkles, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, PhoneCall, ShieldCheck, Mail } from "lucide-react";
+import { EditorialStar } from "@/components/ui/EditorialDecorations";
 
-export const LandingFooter: React.FC = () => {
+interface LandingFooterProps {
+  onOpenBriefing?: () => void;
+}
+
+export const LandingFooter: React.FC<LandingFooterProps> = ({ onOpenBriefing }) => {
   return (
-    <footer className="bg-slate-50 border-t border-slate-200/80 text-slate-600 text-xs sm:text-sm">
+    <footer className="bg-[#FFF9F3] border-t border-[#E6D8CF] text-[#76665F] text-xs sm:text-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12">
+        {/* 5-COLUMN AGENCY FOOTER */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 mb-16">
-          {/* Brand Column (5 cols) */}
-          <div className="lg:col-span-5 space-y-4">
-            <Wordmark markSize={26} variant="light" />
-            <p className="text-slate-600 text-sm leading-relaxed max-w-sm">
-              Connecting businesses with creative talent. Discover, evaluate and assemble senior creative directors, brand identity designers, and specialized talent for your next project.
+          {/* Brand Column (4 cols) */}
+          <div className="lg:col-span-4 space-y-4">
+            <Wordmark markSize={26} />
+            <p className="text-[#76665F] text-xs sm:text-sm leading-relaxed max-w-sm">
+              RICOZ is an editorial creative talent network connecting ambitious enterprises directly with verified Creative Directors, Brand Architects, and specialized design teams.
             </p>
             <div className="pt-2">
-              <span className="inline-flex items-center gap-2 px-3 py-1 text-xs font-medium text-slate-700 bg-white rounded-lg border border-slate-200 shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
-                <span>The Creative Talent Platform</span>
+              <span className="inline-flex items-center gap-2 px-3 py-1 text-xs font-sans text-[#541719] bg-white rounded-full border border-[#E6D8CF] shadow-subtle">
+                <EditorialStar size={10} color="#541719" />
+                <span>Curated Senior Principals (Top 3% Vetted)</span>
               </span>
             </div>
           </div>
 
-          {/* Navigation Links (3 cols) */}
-          <div className="lg:col-span-3 space-y-3">
-            <h4 className="font-bold text-xs text-slate-900 tracking-wider uppercase font-mono">
-              Overview
+          {/* Column 2: Creative Disciplines (2 cols) */}
+          <div className="lg:col-span-2 space-y-3">
+            <h4 className="font-serif font-bold text-xs text-[#38241F] tracking-wider uppercase">
+              Disciplines
             </h4>
-            <ul className="space-y-2.5 text-xs sm:text-sm">
+            <ul className="space-y-2 text-xs">
               <li>
-                <a href="#how-it-works" className="hover:text-red-600 transition-colors">
-                  How It Works
-                </a>
+                <Link href="/talent" className="hover:text-[#541719] transition-colors">
+                  Creative Direction
+                </Link>
               </li>
               <li>
-                <a href="#why-ricoz" className="hover:text-red-600 transition-colors">
-                  Why RICOZ
-                </a>
+                <Link href="/talent" className="hover:text-[#541719] transition-colors">
+                  Brand Strategy
+                </Link>
               </li>
               <li>
-                <a href="#features" className="hover:text-red-600 transition-colors">
-                  Features
-                </a>
+                <Link href="/talent" className="hover:text-[#541719] transition-colors">
+                  Brand Identity
+                </Link>
               </li>
               <li>
-                <a href="#faq" className="hover:text-red-600 transition-colors">
-                  FAQ
-                </a>
+                <Link href="/talent" className="hover:text-[#541719] transition-colors">
+                  UI/UX Architecture
+                </Link>
+              </li>
+              <li>
+                <Link href="/talent" className="hover:text-[#541719] transition-colors">
+                  Packaging Design
+                </Link>
+              </li>
+              <li>
+                <Link href="/talent" className="hover:text-[#541719] transition-colors">
+                  Motion & 3D
+                </Link>
               </li>
             </ul>
           </div>
 
-          {/* Product Links (4 cols) */}
-          <div className="lg:col-span-4 space-y-3">
-            <h4 className="font-bold text-xs text-slate-900 tracking-wider uppercase font-mono">
-              Product & Talent
+          {/* Column 3: Platform & Discovery (2 cols) */}
+          <div className="lg:col-span-2 space-y-3">
+            <h4 className="font-serif font-bold text-xs text-[#38241F] tracking-wider uppercase">
+              Platform
             </h4>
-            <ul className="space-y-2.5 text-xs sm:text-sm">
+            <ul className="space-y-2 text-xs">
               <li>
-                <Link
-                  href="/start-project"
-                  className="font-semibold text-red-600 hover:text-red-700 transition-colors flex items-center gap-1"
-                >
-                  <span>Start a Project</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
+                <Link href="/talent" className="hover:text-[#541719] transition-colors">
+                  Talent Directory (57)
                 </Link>
               </li>
               <li>
-                <Link href="/talent" className="hover:text-red-600 transition-colors">
-                  Explore Talent Directory
+                <Link href="/ai-match" className="hover:text-[#541719] transition-colors">
+                  AI Match Engine V3.1
                 </Link>
               </li>
               <li>
-                <Link href="/ai-match" className="hover:text-red-600 transition-colors flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-red-500" />
-                  <span>AI Matching Engine (V3.1)</span>
+                <Link href="/designers" className="hover:text-[#541719] transition-colors">
+                  Featured Designers
                 </Link>
               </li>
               <li>
-                <Link href="/designers" className="hover:text-red-600 transition-colors">
-                  Browse Specialists
+                <a href="#mandate-estimator" className="hover:text-[#541719] transition-colors">
+                  Scope & Fee Estimator
+                </a>
+              </li>
+              <li>
+                <Link href="/how-it-works" className="hover:text-[#541719] transition-colors">
+                  4-Step Progression
                 </Link>
               </li>
               <li>
-                <Link href="/login" className="hover:text-red-600 transition-colors">
-                  Sign In / Client Portal
+                <Link href="/admin" className="hover:text-[#541719] transition-colors">
+                  Admin Operations Suite
                 </Link>
               </li>
             </ul>
+          </div>
+
+          {/* Column 4: Governance & Safeguards (2 cols) */}
+          <div className="lg:col-span-2 space-y-3">
+            <h4 className="font-serif font-bold text-xs text-[#38241F] tracking-wider uppercase">
+              Safeguards
+            </h4>
+            <ul className="space-y-2 text-xs">
+              <li className="flex items-center gap-1.5">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#541719]" />
+                <span className="hover:text-[#541719] cursor-pointer">Milestone Escrow</span>
+              </li>
+              <li>
+                <span className="hover:text-[#541719] cursor-pointer">Mutual Enterprise NDA</span>
+              </li>
+              <li>
+                <span className="hover:text-[#541719] cursor-pointer">100% IP Assignment</span>
+              </li>
+              <li>
+                <span className="hover:text-[#541719] cursor-pointer">Replacement Guarantee</span>
+              </li>
+              <li>
+                <span className="hover:text-[#541719] cursor-pointer">Security Compliance</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 5: Direct Inquiries & Concierge (2 cols) */}
+          <div className="lg:col-span-2 space-y-3">
+            <h4 className="font-serif font-bold text-xs text-[#38241F] tracking-wider uppercase">
+              Mandate Intake
+            </h4>
+            <p className="text-xs text-[#76665F]">
+              Have an urgent rebranding or high-stakes launch mandate?
+            </p>
+            {onOpenBriefing && (
+              <button
+                type="button"
+                onClick={onOpenBriefing}
+                className="w-full py-2 px-3 rounded-full text-xs font-semibold bg-white border border-[#E6D8CF] text-[#38241F] hover:bg-[#FBF6F0] hover:text-[#541719] transition-colors flex items-center justify-center gap-1.5 shadow-subtle"
+              >
+                <PhoneCall className="w-3 h-3 text-[#541719]" />
+                <span>Concierge Briefing</span>
+              </button>
+            )}
+            <div className="pt-1">
+              <Link
+                href="/start-project"
+                className="text-xs text-[#541719] font-semibold hover:underline flex items-center gap-1"
+              >
+                <span>Submit self-serve brief</span>
+                <ArrowUpRight className="w-3 h-3" />
+              </Link>
+            </div>
           </div>
         </div>
 
-        {/* Bottom copyright & platform info */}
-        <div className="pt-8 border-t border-slate-200/80 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <div>
-            © 2026 RICOZ Technologies, Inc. All rights reserved.
-          </div>
-          <div className="flex items-center gap-6 text-xs font-mono">
-            <span>PRE-VETTED CREATIVE PRINCIPALS</span>
-            <span className="text-red-600 font-bold">•</span>
-            <span>STANDARDIZED MUTUAL NDA</span>
+        {/* Bottom Agency Bar */}
+        <div className="pt-8 border-t border-[#E6D8CF] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#9E8E87]">
+          <p>© {new Date().getFullYear()} RICOZ Collective Inc. Curated Creative Direction Platform.</p>
+          <div className="flex items-center gap-6">
+            <Link href="/how-it-works" className="hover:text-[#541719]">
+              How it works
+            </Link>
+            <Link href="/companies" className="hover:text-[#541719]">
+              For Enterprise
+            </Link>
+            <Link href="/creatives" className="hover:text-[#541719]">
+              For Creatives
+            </Link>
+            <span className="hover:text-[#541719] cursor-pointer">Privacy & Legal</span>
           </div>
         </div>
       </div>

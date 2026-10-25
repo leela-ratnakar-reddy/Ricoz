@@ -12,6 +12,7 @@ import {
   getConversations,
 } from "@/lib/storage";
 import { Designer, Project } from "@/types";
+import { EditorialStar } from "@/components/ui/EditorialDecorations";
 import {
   Eye,
   Briefcase,
@@ -42,7 +43,7 @@ export default function DesignerDashboardPage() {
   const profileCompletion = 90; // 90% completed
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-brand">
+    <div className="min-h-screen flex flex-col bg-background text-foreground selection:bg-accent selection:text-[#FFF9F3]">
       <Navbar />
 
       <div className="flex-1 flex flex-col lg:flex-row max-w-7xl w-full mx-auto">
@@ -50,15 +51,16 @@ export default function DesignerDashboardPage() {
 
         <main className="flex-1 p-6 lg:p-10 overflow-y-auto">
           {/* HEADER */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-8 mb-8 border-b border-surface-border">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-8 mb-8 border-b border-[#E6D8CF]">
             <div>
-              <span className="text-[11px] font-mono uppercase tracking-widest text-accent font-medium block mb-1">
-                CREATIVE DIRECTOR STUDIO
-              </span>
-              <h1 className="text-2xl sm:text-4xl font-bold tracking-tight text-white font-sans">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium bg-[#FFF9F3] text-accent border border-[#E6D8CF] shadow-xs mb-2">
+                <EditorialStar size={11} className="text-accent" />
+                <span>CREATIVE DIRECTOR STUDIO</span>
+              </div>
+              <h1 className="font-serif text-2xl sm:text-4xl font-normal tracking-tight text-espresso">
                 Studio Overview — {designer.name}
               </h1>
-              <p className="text-xs text-brand-muted font-mono mt-1">
+              <p className="text-xs text-muted font-mono mt-1">
                 {designer.role} • {designer.dayRate} • Verified Senior Status
               </p>
             </div>
@@ -73,13 +75,13 @@ export default function DesignerDashboardPage() {
           </div>
 
           {/* PROFILE COMPLETION BANNER */}
-          <div className="bg-surface/80 border border-surface-border rounded-xl p-6 mb-10">
+          <div className="bg-[#FFF9F3] border border-[#E6D8CF] rounded-2xl p-6 mb-10 shadow-xs">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-3">
               <div>
-                <h3 className="font-medium text-sm text-brand">
+                <h3 className="font-serif text-lg font-normal text-espresso">
                   Complete your enterprise profile
                 </h3>
-                <p className="text-xs text-brand-secondary mt-0.5 font-light">
+                <p className="text-xs text-muted mt-0.5">
                   High-completeness profiles receive 3.4x more executive discovery views.
                 </p>
               </div>
@@ -88,23 +90,23 @@ export default function DesignerDashboardPage() {
               </span>
             </div>
 
-            <div className="w-full h-1 bg-surface-elevated rounded-full overflow-hidden mb-3">
+            <div className="w-full h-1.5 bg-[#E0CEC3]/40 rounded-full overflow-hidden mb-3">
               <div
-                className="h-full bg-accent transition-all duration-500"
+                className="h-full bg-accent transition-all duration-500 rounded-full"
                 style={{ width: `${profileCompletion}%` }}
               />
             </div>
 
-            <div className="flex flex-wrap items-center gap-4 text-xs text-brand-secondary font-mono">
-              <span className="flex items-center gap-1 text-accent">
+            <div className="flex flex-wrap items-center gap-4 text-xs text-muted font-mono">
+              <span className="flex items-center gap-1 text-accent font-semibold">
                 <CheckCircle2 className="w-3.5 h-3.5" /> Bio & Career Tenures Added
               </span>
-              <span className="flex items-center gap-1 text-accent">
+              <span className="flex items-center gap-1 text-accent font-semibold">
                 <CheckCircle2 className="w-3.5 h-3.5" /> 3 Rebrand Case Studies Live
               </span>
               <Link
                 href="/dashboard/designer/profile"
-                className="text-brand-muted hover:text-brand transition-colors underline"
+                className="text-muted hover:text-espresso transition-colors underline"
               >
                 Add 1 More Case Study (+10%)
               </Link>
@@ -113,57 +115,57 @@ export default function DesignerDashboardPage() {
 
           {/* METRICS GRID */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-            <div className="bg-surface/80 border border-surface-border rounded-xl p-5">
-              <div className="flex items-center justify-between text-brand-muted mb-2">
-                <span className="text-xs font-mono uppercase tracking-wider">Portfolio Views</span>
+            <div className="bg-white border border-[#E6D8CF] rounded-2xl p-5 shadow-2xs">
+              <div className="flex items-center justify-between text-muted mb-2">
+                <span className="text-xs font-mono uppercase tracking-wider font-semibold">Portfolio Views</span>
                 <Eye className="w-4 h-4 text-accent" />
               </div>
-              <div className="text-2xl font-light text-brand font-mono">
+              <div className="text-3xl font-serif font-normal text-espresso">
                 384
               </div>
-              <div className="text-[10px] text-accent font-mono mt-1">+24% this week</div>
+              <div className="text-[10px] text-accent font-mono mt-1 font-semibold">+24% this week</div>
             </div>
 
             <Link
               href="/dashboard/designer/opportunities"
-              className="bg-surface/80 border border-surface-border rounded-xl p-5 hover:border-surface-borderLight transition-all group"
+              className="bg-white border border-[#E6D8CF] rounded-2xl p-5 hover:border-accent/40 transition-all group shadow-2xs"
             >
-              <div className="flex items-center justify-between text-brand-muted mb-2">
-                <span className="text-xs font-mono uppercase tracking-wider">Opportunities</span>
+              <div className="flex items-center justify-between text-muted mb-2">
+                <span className="text-xs font-mono uppercase tracking-wider font-semibold">Opportunities</span>
                 <Briefcase className="w-4 h-4 text-accent" />
               </div>
-              <div className="text-2xl font-light text-brand font-mono">
+              <div className="text-3xl font-serif font-normal text-espresso">
                 {projects.length}
               </div>
-              <div className="text-[10px] text-brand-muted font-mono mt-1">High compatibility</div>
+              <div className="text-[10px] text-muted font-mono mt-1">High compatibility</div>
             </Link>
 
             <Link
               href="/dashboard/designer/portfolio"
-              className="bg-surface/80 border border-surface-border rounded-xl p-5 hover:border-surface-borderLight transition-all group"
+              className="bg-white border border-[#E6D8CF] rounded-2xl p-5 hover:border-accent/40 transition-all group shadow-2xs"
             >
-              <div className="flex items-center justify-between text-brand-muted mb-2">
-                <span className="text-xs font-mono uppercase tracking-wider">Live Projects</span>
-                <Layers className="w-4 h-4 text-brand-muted group-hover:text-accent transition-colors" />
+              <div className="flex items-center justify-between text-muted mb-2">
+                <span className="text-xs font-mono uppercase tracking-wider font-semibold">Live Projects</span>
+                <Layers className="w-4 h-4 text-taupe group-hover:text-accent transition-colors" />
               </div>
-              <div className="text-2xl font-light text-brand font-mono">
+              <div className="text-3xl font-serif font-normal text-espresso">
                 {designer.portfolio.length}
               </div>
-              <div className="text-[10px] text-brand-muted font-mono mt-1">Published case studies</div>
+              <div className="text-[10px] text-muted font-mono mt-1">Published case studies</div>
             </Link>
 
             <Link
               href="/dashboard/designer/messages"
-              className="bg-surface/80 border border-surface-border rounded-xl p-5 hover:border-surface-borderLight transition-all group"
+              className="bg-white border border-[#E6D8CF] rounded-2xl p-5 hover:border-accent/40 transition-all group shadow-2xs"
             >
-              <div className="flex items-center justify-between text-brand-muted mb-2">
-                <span className="text-xs font-mono uppercase tracking-wider">Messages</span>
-                <MessageSquare className="w-4 h-4 text-brand-muted group-hover:text-accent transition-colors" />
+              <div className="flex items-center justify-between text-muted mb-2">
+                <span className="text-xs font-mono uppercase tracking-wider font-semibold">Messages</span>
+                <MessageSquare className="w-4 h-4 text-taupe group-hover:text-accent transition-colors" />
               </div>
-              <div className="text-2xl font-light text-brand font-mono">
+              <div className="text-3xl font-serif font-normal text-espresso">
                 {unreadMsgCount}
               </div>
-              <div className="text-[10px] text-brand-muted font-mono mt-1">Client inquiries</div>
+              <div className="text-[10px] text-muted font-mono mt-1">Client inquiries</div>
             </Link>
           </div>
 
@@ -171,16 +173,16 @@ export default function DesignerDashboardPage() {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-xs font-mono uppercase tracking-widest text-accent font-medium">
+                <h2 className="text-xs font-mono uppercase tracking-widest text-accent font-semibold">
                   Incoming Rebranding Mandates
                 </h2>
-                <p className="text-xs text-brand-muted mt-0.5 font-mono">
+                <p className="text-xs text-muted mt-0.5 font-mono">
                   Enterprise briefs matching your {designer.role} specialization
                 </p>
               </div>
               <Link
                 href="/dashboard/designer/opportunities"
-                className="text-xs font-mono text-brand-secondary hover:text-accent flex items-center gap-1 transition-colors"
+                className="text-xs font-mono text-muted hover:text-accent flex items-center gap-1 transition-colors font-semibold"
               >
                 <span>View all opportunities</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -191,24 +193,24 @@ export default function DesignerDashboardPage() {
               {projects.slice(0, 3).map((proj) => (
                 <div
                   key={proj.id}
-                  className="bg-surface/80 border border-surface-border rounded-xl p-5 hover:border-accent/40 transition-all shadow-subtle flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                  className="bg-white border border-[#E6D8CF] rounded-2xl p-5 hover:border-accent/40 transition-all shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                 >
                   <div className="space-y-1 max-w-xl">
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-medium text-brand">
+                      <span className="text-xs font-semibold text-espresso">
                         {proj.companyName}
                       </span>
-                      <span className="text-xs text-surface-border font-mono">•</span>
-                      <span className="text-xs text-brand-muted font-mono">
+                      <span className="text-xs text-taupe font-mono">•</span>
+                      <span className="text-xs text-muted font-mono">
                         {proj.industry}
                       </span>
                     </div>
 
-                    <h4 className="font-semibold text-sm sm:text-base text-white font-sans">
+                    <h4 className="font-serif text-base text-espresso">
                       {proj.title}
                     </h4>
 
-                    <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-brand-muted pt-1">
+                    <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-muted pt-1">
                       <span>Timeline: {proj.timeline}</span>
                       <span>•</span>
                       <span>Budget: {proj.budgetRange}</span>
@@ -216,7 +218,7 @@ export default function DesignerDashboardPage() {
                   </div>
 
                   <div className="flex items-center gap-3 shrink-0">
-                    <span className="font-mono text-xs font-medium px-2.5 py-1 bg-accent/10 text-accent rounded border border-accent/20">
+                    <span className="font-mono text-xs font-semibold px-2.5 py-1 bg-accent/10 text-accent rounded-full border border-accent/20">
                       94% Match
                     </span>
                     <Button

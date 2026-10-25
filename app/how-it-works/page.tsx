@@ -1,17 +1,15 @@
 import React from "react";
+import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { Button } from "@/components/Button";
-import {
-  Clock,
-  CheckCircle2,
-} from "lucide-react";
+import { Clock, CheckCircle2, ArrowRight } from "lucide-react";
+import { EditorialStar, ContourFlourish } from "@/components/ui/EditorialDecorations";
 
 export default function HowItWorksPage() {
   const detailedSteps = [
     {
       num: "01",
-      title: "Define your rebranding mandate",
+      title: "Define your creative mandate",
       subtitle: "Structured brief creation",
       desc: "Enterprise rebrands fail when objectives are vague. Our project architecture tool prompts key executives on post-M&A goals, international expansion needs, market differentiation, and required disciplines.",
       points: [
@@ -29,7 +27,7 @@ export default function HowItWorksPage() {
       points: [
         "Weighted scoring with granular factor breakdowns",
         "No opaque black boxes; clear transparency into why each specialist fits",
-        "Direct sector track records in B2B tech, finance, robotics, and hospitality",
+        "Direct sector track records in B2B tech, finance, robotics, and luxury",
       ],
       time: "Instant recommendation",
     },
@@ -60,55 +58,61 @@ export default function HowItWorksPage() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-brand">
+    <div className="min-h-screen flex flex-col bg-background text-foreground selection:bg-accent selection:text-[#FFF9F3]">
       <Navbar />
 
-      <main className="flex-1 py-12 md:py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <main className="flex-1 py-12 md:py-20 relative overflow-hidden">
+        <ContourFlourish className="absolute -top-16 -right-16 w-80 h-80 text-taupe/15 pointer-events-none" />
+        <ContourFlourish className="absolute top-1/2 -left-20 w-72 h-72 text-taupe/15 pointer-events-none rotate-90" />
+
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* HERO */}
-          <div className="max-w-3xl mb-16">
-            <span className="text-[11px] font-mono uppercase tracking-widest text-accent font-medium block mb-3">
-              METHODOLOGY & WORKFLOW
-            </span>
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight font-sans">
-              A disciplined pathway to senior creative leadership<span className="text-accent">.</span>
+          <div className="max-w-3xl mb-16 space-y-4">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-medium bg-[#FFF9F3] text-accent border border-[#E6D8CF] shadow-xs">
+              <EditorialStar size={13} className="text-accent" />
+              <span>METHODOLOGY & OPERATIONAL DISCIPLINE</span>
+            </div>
+
+            <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-espresso leading-[1.12]">
+              A disciplined pathway to <span className="italic text-accent">creative excellence.</span>
             </h1>
-            <p className="mt-4 text-base sm:text-lg text-brand-secondary leading-relaxed">
+
+            <p className="text-base sm:text-lg text-muted leading-relaxed font-sans">
               Traditional branding agencies charge massive overhead for junior execution. Freelance sites offer unverified clutter. RICOZ delivers direct access to elite Creative Directors calibrated for high-impact enterprise mandates.
             </p>
           </div>
 
           {/* DETAILED STEPS */}
-          <div className="space-y-8">
+          <div className="space-y-6">
             {detailedSteps.map((step) => (
               <div
                 key={step.num}
-                className="bg-surface/80 border border-surface-border rounded-xl p-8 sm:p-10 shadow-subtle grid grid-cols-1 lg:grid-cols-12 gap-8 items-start hover:border-accent/40 transition-all"
+                className="bg-white border border-[#E6D8CF] rounded-2xl p-8 sm:p-10 shadow-xs grid grid-cols-1 lg:grid-cols-12 gap-8 items-start hover:border-accent/40 transition-all group"
               >
                 <div className="lg:col-span-3 space-y-2">
-                  <div className="font-mono text-3xl sm:text-4xl font-light text-accent">
+                  <div className="font-serif text-3xl sm:text-4xl font-normal text-accent">
                     {step.num}
                   </div>
-                  <span className="text-xs font-mono text-brand-muted uppercase tracking-wider block">
+                  <span className="text-xs font-mono text-taupe uppercase tracking-wider block font-semibold">
                     {step.subtitle}
                   </span>
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-elevated text-brand-secondary text-xs font-mono border border-surface-border">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFF9F3] text-espresso text-xs font-mono border border-[#E6D8CF]">
                     <Clock className="w-3.5 h-3.5 text-accent" />
                     <span>{step.time}</span>
                   </div>
                 </div>
 
-                <div className="lg:col-span-9 space-y-4">
-                  <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight font-sans">
+                <div className="lg:col-span-9 space-y-3">
+                  <h3 className="font-serif text-xl sm:text-2xl font-normal text-espresso tracking-tight">
                     {step.title}
                   </h3>
-                  <p className="text-sm text-brand-secondary leading-relaxed">
+                  <p className="text-sm text-muted leading-relaxed">
                     {step.desc}
                   </p>
 
-                  <div className="pt-3 space-y-2">
+                  <div className="pt-2 space-y-2">
                     {step.points.map((pt, i) => (
-                      <div key={i} className="flex items-start gap-2.5 text-xs text-brand">
+                      <div key={i} className="flex items-start gap-2.5 text-xs text-espresso">
                         <CheckCircle2 className="w-4 h-4 text-accent shrink-0 mt-0.5" />
                         <span>{pt}</span>
                       </div>
@@ -120,24 +124,33 @@ export default function HowItWorksPage() {
           </div>
 
           {/* VETTING ACCORD SECTION */}
-          <div className="mt-16 bg-surface/80 border border-surface-border rounded-xl p-8 sm:p-10">
-            <div className="max-w-3xl space-y-4">
-              <span className="font-mono text-xs font-medium uppercase text-accent">
-                QUALITY ASSURANCE
+          <div className="mt-16 bg-espresso text-[#FFF9F3] border border-[#38241F] rounded-2xl p-8 sm:p-12 shadow-xl relative overflow-hidden">
+            <ContourFlourish className="absolute -right-16 -bottom-16 w-80 h-80 text-white/5 pointer-events-none" />
+
+            <div className="max-w-3xl space-y-4 relative z-10">
+              <span className="font-mono text-xs font-medium uppercase text-taupe tracking-wider">
+                CURATION STANDARDS & QUALITY ASSURANCE
               </span>
-              <h2 className="text-2xl sm:text-4xl font-bold text-white tracking-tight font-sans">
+              <h2 className="font-serif text-2xl sm:text-4xl font-normal text-[#FFF9F3] tracking-tight">
                 How we vet creative professionals
               </h2>
-              <p className="text-sm text-brand-secondary leading-relaxed">
+              <p className="text-sm text-[#FFF9F3]/80 leading-relaxed font-sans">
                 Fewer than 4% of applicant creative directors are admitted to the Ricoz network. Every professional undergoes rigorous portfolio case study analysis, executive client references, and deep-dive technical evaluations into design system scalability.
               </p>
               <div className="pt-4 flex flex-col sm:flex-row gap-4">
-                <Button href="/dashboard/company/projects/new" size="md">
-                  Create a Project Brief
-                </Button>
-                <Button href="/designers" variant="outline" size="md">
-                  Explore Curated Talent
-                </Button>
+                <Link
+                  href="/start-project"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-accent text-[#FFF9F3] font-semibold text-sm hover:bg-[#3E1012] transition-all shadow-md active:translate-y-0.5"
+                >
+                  <span>Create a Project Brief</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link
+                  href="/talent"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-[#FFF9F3] font-semibold text-sm transition-colors"
+                >
+                  <span>Explore Curated Talent</span>
+                </Link>
               </div>
             </div>
           </div>

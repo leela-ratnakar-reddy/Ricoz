@@ -10,17 +10,15 @@ import { saveProject, getCurrentUser } from "@/lib/storage";
 import { TALENT_PROFILES } from "@/data/talentProfiles";
 import { TalentProfile } from "@/types/talent";
 import { Industry, Role, BudgetTier, Project } from "@/types";
+import { EditorialStar, ContourFlourish } from "@/components/ui/EditorialDecorations";
 import {
   ArrowRight,
   ArrowLeft,
   CheckCircle2,
   Sparkles,
-  ShieldCheck,
-  Star,
   Users,
   Building,
   Target,
-  Clock,
   DollarSign
 } from "lucide-react";
 
@@ -156,16 +154,19 @@ export default function StartProjectPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-white text-slate-900 selection:bg-red-500 selection:text-white">
+    <div className="min-h-screen flex flex-col bg-background text-foreground selection:bg-accent selection:text-[#FFF9F3]">
       <LandingNavbar />
 
-      <main className="flex-1 py-12 sm:py-16 bg-slate-50/50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <main className="flex-1 py-12 sm:py-16 relative overflow-hidden">
+        <ContourFlourish className="absolute -top-16 -right-16 w-80 h-80 text-taupe/15 pointer-events-none" />
+        <ContourFlourish className="absolute -bottom-16 -left-16 w-72 h-72 text-taupe/15 pointer-events-none rotate-180" />
+
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* STEPPER PROGRESS BAR */}
           <div className="mb-10 sm:mb-12">
-            <div className="flex items-center justify-between text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">
+            <div className="flex items-center justify-between text-xs font-mono font-semibold text-muted uppercase tracking-wider mb-3">
               <span>Step {step} of 5</span>
-              <span>
+              <span className="text-espresso font-semibold">
                 {step === 1 && "Project Details"}
                 {step === 2 && "Creative Goals"}
                 {step === 3 && "Required Disciplines"}
@@ -173,35 +174,35 @@ export default function StartProjectPage() {
                 {step === 5 && "Squad Match Complete"}
               </span>
             </div>
-            <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+            <div className="w-full bg-[#E0CEC3]/40 h-1.5 rounded-full overflow-hidden">
               <div
-                className="bg-red-600 h-full transition-all duration-300 rounded-full"
+                className="bg-accent h-full transition-all duration-300 rounded-full"
                 style={{ width: `${(step / 5) * 100}%` }}
               />
             </div>
           </div>
 
           {/* CARD CONTAINER */}
-          <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-10 shadow-xl shadow-slate-200/50">
+          <div className="bg-[#FFF9F3] rounded-3xl border border-[#E6D8CF] p-6 sm:p-10 shadow-xs">
             {/* ================= STEP 1: PROJECT ESSENTIALS ================= */}
             {step === 1 && (
               <div className="space-y-6">
                 <div>
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 text-red-600 text-xs font-bold tracking-wider uppercase mb-3">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white text-accent text-xs font-mono font-semibold tracking-wider uppercase mb-3 border border-[#E6D8CF]">
                     <Building className="w-3.5 h-3.5" />
                     <span>01 // PROJECT ESSENTIALS</span>
                   </div>
-                  <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                    Tell us what you're building.
+                  <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal text-espresso tracking-tight">
+                    Tell us what you&apos;re <span className="italic text-accent">building.</span>
                   </h2>
-                  <p className="text-sm text-slate-600 mt-1">
-                    Share basic context about your company and the core mandate.
+                  <p className="text-sm text-muted mt-1 font-sans">
+                    Share essential context about your organization and the core creative mandate.
                   </p>
                 </div>
 
                 <div className="space-y-4 pt-2">
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                    <label className="block text-xs font-mono font-semibold text-espresso uppercase tracking-wider mb-2">
                       Project Mandate Title
                     </label>
                     <input
@@ -209,12 +210,12 @@ export default function StartProjectPage() {
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
                       placeholder="e.g. Enterprise Cloud Rebrand & Design System"
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white transition-all"
+                      className="w-full px-4 py-3 rounded-xl border border-[#E6D8CF] bg-white text-espresso placeholder-[#76665F]/60 text-sm focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all font-sans shadow-2xs"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                    <label className="block text-xs font-mono font-semibold text-espresso uppercase tracking-wider mb-2">
                       Company Name
                     </label>
                     <input
@@ -222,12 +223,12 @@ export default function StartProjectPage() {
                       value={companyName}
                       onChange={(e) => setCompanyName(e.target.value)}
                       placeholder="e.g. Acme Technologies"
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white transition-all"
+                      className="w-full px-4 py-3 rounded-xl border border-[#E6D8CF] bg-white text-espresso placeholder-[#76665F]/60 text-sm focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all font-sans shadow-2xs"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                    <label className="block text-xs font-mono font-semibold text-espresso uppercase tracking-wider mb-2">
                       Primary Industry
                     </label>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
@@ -236,10 +237,10 @@ export default function StartProjectPage() {
                           key={ind}
                           type="button"
                           onClick={() => setIndustry(ind)}
-                          className={`px-3 py-2.5 rounded-xl text-xs font-semibold border transition-all text-center ${
+                          className={`px-3 py-2.5 rounded-xl text-xs font-mono font-semibold border transition-all text-center ${
                             industry === ind
-                              ? "bg-red-600 text-white border-red-600 shadow-sm"
-                              : "bg-slate-50 border-slate-200 text-slate-700 hover:border-slate-300"
+                              ? "bg-accent text-[#FFF9F3] border-accent shadow-xs"
+                              : "bg-white border-[#E6D8CF] text-espresso hover:border-accent/40"
                           }`}
                         >
                           {ind}
@@ -249,11 +250,11 @@ export default function StartProjectPage() {
                   </div>
                 </div>
 
-                <div className="pt-6 border-t border-slate-100 flex justify-end">
+                <div className="pt-6 border-t border-[#E6D8CF] flex justify-end">
                   <button
                     type="button"
                     onClick={() => setStep(2)}
-                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-red-600 text-white font-semibold text-sm hover:bg-red-700 transition-all shadow-md shadow-red-600/20"
+                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-accent text-[#FFF9F3] font-semibold text-sm hover:bg-[#3E1012] transition-all shadow-xs active:translate-y-0.5"
                   >
                     <span>Next: Creative Goals</span>
                     <ArrowRight className="w-4 h-4" />
@@ -266,14 +267,14 @@ export default function StartProjectPage() {
             {step === 2 && (
               <div className="space-y-6">
                 <div>
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 text-red-600 text-xs font-bold tracking-wider uppercase mb-3">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white text-accent text-xs font-mono font-semibold tracking-wider uppercase mb-3 border border-[#E6D8CF]">
                     <Target className="w-3.5 h-3.5" />
                     <span>02 // CREATIVE GOALS & DELIVERABLES</span>
                   </div>
-                  <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                    What concrete deliverables do you need?
+                  <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal text-espresso tracking-tight">
+                    What concrete deliverables do you require?
                   </h2>
-                  <p className="text-sm text-slate-600 mt-1">
+                  <p className="text-sm text-muted mt-1 font-sans">
                     Select all creative outputs required for this mandate.
                   </p>
                 </div>
@@ -288,14 +289,14 @@ export default function StartProjectPage() {
                         onClick={() => toggleGoal(goal)}
                         className={`p-4 rounded-xl border text-left flex items-center justify-between transition-all ${
                           isSelected
-                            ? "bg-red-50/70 border-red-300 text-slate-900 shadow-sm"
-                            : "bg-slate-50/60 border-slate-200 text-slate-700 hover:border-slate-300"
+                            ? "bg-white border-2 border-accent text-espresso shadow-xs"
+                            : "bg-white border border-[#E6D8CF] text-muted hover:border-accent/40 hover:text-espresso"
                         }`}
                       >
                         <span className="text-sm font-semibold">{goal}</span>
                         <div
                           className={`w-5 h-5 rounded-full flex items-center justify-center text-xs ${
-                            isSelected ? "bg-red-600 text-white" : "border border-slate-300"
+                            isSelected ? "bg-accent text-[#FFF9F3]" : "border border-[#E6D8CF]"
                           }`}
                         >
                           {isSelected && "✓"}
@@ -305,11 +306,11 @@ export default function StartProjectPage() {
                   })}
                 </div>
 
-                <div className="pt-6 border-t border-slate-100 flex items-center justify-between">
+                <div className="pt-6 border-t border-[#E6D8CF] flex items-center justify-between">
                   <button
                     type="button"
                     onClick={() => setStep(1)}
-                    className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-slate-900"
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-muted hover:text-espresso transition-colors"
                   >
                     <ArrowLeft className="w-4 h-4" />
                     <span>Back</span>
@@ -318,7 +319,7 @@ export default function StartProjectPage() {
                   <button
                     type="button"
                     onClick={() => setStep(3)}
-                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-red-600 text-white font-semibold text-sm hover:bg-red-700 transition-all shadow-md shadow-red-600/20"
+                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-accent text-[#FFF9F3] font-semibold text-sm hover:bg-[#3E1012] transition-all shadow-xs active:translate-y-0.5"
                   >
                     <span>Next: Required Roles</span>
                     <ArrowRight className="w-4 h-4" />
@@ -331,14 +332,14 @@ export default function StartProjectPage() {
             {step === 3 && (
               <div className="space-y-6">
                 <div>
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 text-red-600 text-xs font-bold tracking-wider uppercase mb-3">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white text-accent text-xs font-mono font-semibold tracking-wider uppercase mb-3 border border-[#E6D8CF]">
                     <Users className="w-3.5 h-3.5" />
                     <span>03 // CREATIVE DISCIPLINES</span>
                   </div>
-                  <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                  <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal text-espresso tracking-tight">
                     Which creative specialists do you require?
                   </h2>
-                  <p className="text-sm text-slate-600 mt-1">
+                  <p className="text-sm text-muted mt-1 font-sans">
                     Select roles for your dedicated project squad.
                   </p>
                 </div>
@@ -353,17 +354,17 @@ export default function StartProjectPage() {
                         onClick={() => toggleRole(role)}
                         className={`p-4 rounded-xl border text-left flex items-center justify-between transition-all ${
                           isSelected
-                            ? "bg-red-50/70 border-red-300 text-slate-900 shadow-sm"
-                            : "bg-slate-50/60 border-slate-200 text-slate-700 hover:border-slate-300"
+                            ? "bg-white border-2 border-accent text-espresso shadow-xs"
+                            : "bg-white border border-[#E6D8CF] text-muted hover:border-accent/40 hover:text-espresso"
                         }`}
                       >
                         <div>
                           <div className="text-sm font-semibold">{role}</div>
-                          <div className="text-[11px] text-slate-500">Curated studio principal</div>
+                          <div className="text-[11px] text-taupe font-mono">Curated studio principal</div>
                         </div>
                         <div
                           className={`w-5 h-5 rounded-full flex items-center justify-center text-xs ${
-                            isSelected ? "bg-red-600 text-white" : "border border-slate-300"
+                            isSelected ? "bg-accent text-[#FFF9F3]" : "border border-[#E6D8CF]"
                           }`}
                         >
                           {isSelected && "✓"}
@@ -373,11 +374,11 @@ export default function StartProjectPage() {
                   })}
                 </div>
 
-                <div className="pt-6 border-t border-slate-100 flex items-center justify-between">
+                <div className="pt-6 border-t border-[#E6D8CF] flex items-center justify-between">
                   <button
                     type="button"
                     onClick={() => setStep(2)}
-                    className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-slate-900"
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-muted hover:text-espresso transition-colors"
                   >
                     <ArrowLeft className="w-4 h-4" />
                     <span>Back</span>
@@ -386,7 +387,7 @@ export default function StartProjectPage() {
                   <button
                     type="button"
                     onClick={() => setStep(4)}
-                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-red-600 text-white font-semibold text-sm hover:bg-red-700 transition-all shadow-md shadow-red-600/20"
+                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-accent text-[#FFF9F3] font-semibold text-sm hover:bg-[#3E1012] transition-all shadow-xs active:translate-y-0.5"
                   >
                     <span>Next: Budget & Timeline</span>
                     <ArrowRight className="w-4 h-4" />
@@ -399,21 +400,21 @@ export default function StartProjectPage() {
             {step === 4 && (
               <div className="space-y-6">
                 <div>
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 text-red-600 text-xs font-bold tracking-wider uppercase mb-3">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white text-accent text-xs font-mono font-semibold tracking-wider uppercase mb-3 border border-[#E6D8CF]">
                     <DollarSign className="w-3.5 h-3.5" />
                     <span>04 // BUDGET & TIMELINE</span>
                   </div>
-                  <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                  <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal text-espresso tracking-tight">
                     Set project scope and parameters.
                   </h2>
-                  <p className="text-sm text-slate-600 mt-1">
+                  <p className="text-sm text-muted mt-1 font-sans">
                     Align budget expectations to receive matching talent proposals.
                   </p>
                 </div>
 
                 <div className="space-y-4 pt-2">
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                    <label className="block text-xs font-mono font-semibold text-espresso uppercase tracking-wider mb-2">
                       Target Budget Range
                     </label>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -427,22 +428,22 @@ export default function StartProjectPage() {
                           }}
                           className={`p-4 rounded-xl border text-left transition-all ${
                             budgetTier === opt.tier
-                              ? "bg-red-50/70 border-red-300 text-slate-900 shadow-sm"
-                              : "bg-slate-50/60 border-slate-200 text-slate-700 hover:border-slate-300"
+                              ? "bg-white border-2 border-accent text-espresso shadow-xs"
+                              : "bg-white border border-[#E6D8CF] text-muted hover:border-accent/40 hover:text-espresso"
                           }`}
                         >
                           <div className="flex items-center justify-between mb-1">
-                            <span className="font-bold text-sm text-slate-900">{opt.range}</span>
-                            <span className="font-mono text-xs font-bold text-red-600">{opt.tier}</span>
+                            <span className="font-bold text-sm text-espresso">{opt.range}</span>
+                            <span className="font-mono text-xs font-bold text-accent">{opt.tier}</span>
                           </div>
-                          <div className="text-xs text-slate-500">{opt.label}</div>
+                          <div className="text-xs text-muted">{opt.label}</div>
                         </button>
                       ))}
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                    <label className="block text-xs font-mono font-semibold text-espresso uppercase tracking-wider mb-2">
                       Estimated Duration
                     </label>
                     <div className="grid grid-cols-3 gap-3">
@@ -451,10 +452,10 @@ export default function StartProjectPage() {
                           key={time}
                           type="button"
                           onClick={() => setTimeline(time)}
-                          className={`py-3 rounded-xl text-xs font-semibold border text-center transition-all ${
+                          className={`py-3 rounded-xl text-xs font-mono font-semibold border text-center transition-all ${
                             timeline === time
-                              ? "bg-red-600 text-white border-red-600 shadow-sm"
-                              : "bg-slate-50 border-slate-200 text-slate-700 hover:border-slate-300"
+                              ? "bg-accent text-[#FFF9F3] border-accent shadow-xs"
+                              : "bg-white border-[#E6D8CF] text-espresso hover:border-accent/40"
                           }`}
                         >
                           {time}
@@ -464,11 +465,11 @@ export default function StartProjectPage() {
                   </div>
                 </div>
 
-                <div className="pt-6 border-t border-slate-100 flex items-center justify-between">
+                <div className="pt-6 border-t border-[#E6D8CF] flex items-center justify-between">
                   <button
                     type="button"
                     onClick={() => setStep(3)}
-                    className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-slate-900"
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-muted hover:text-espresso transition-colors"
                   >
                     <ArrowLeft className="w-4 h-4" />
                     <span>Back</span>
@@ -477,7 +478,7 @@ export default function StartProjectPage() {
                   <button
                     type="button"
                     onClick={handleCompleteAndMatch}
-                    className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-red-600 text-white font-semibold text-sm hover:bg-red-700 transition-all shadow-md shadow-red-600/20"
+                    className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-accent text-[#FFF9F3] font-semibold text-sm hover:bg-[#3E1012] transition-all shadow-xs active:translate-y-0.5"
                   >
                     <Sparkles className="w-4 h-4" />
                     <span>Assemble & Match Squad</span>
@@ -490,40 +491,40 @@ export default function StartProjectPage() {
             {step === 5 && (
               <div className="space-y-8 animate-in fade-in duration-300">
                 <div className="text-center max-w-xl mx-auto space-y-3">
-                  <div className="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-2">
+                  <div className="w-14 h-14 rounded-2xl bg-accent/10 border border-accent/20 text-accent flex items-center justify-center mx-auto mb-2 shadow-xs">
                     <CheckCircle2 className="w-8 h-8" />
                   </div>
-                  <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                  <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal text-espresso tracking-tight">
                     Your Creative Squad Is Ready.
                   </h2>
-                  <p className="text-sm text-slate-600">
-                    We've matched senior practitioners to your project parameters with mutual NDA protection.
+                  <p className="text-sm text-muted">
+                    We&apos;ve matched senior practitioners to your project parameters with mutual NDA protection.
                   </p>
                 </div>
 
                 {/* PROJECT OVERVIEW SUMMARY STRIP */}
-                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 flex flex-wrap items-center justify-between gap-4 text-xs">
+                <div className="p-4 rounded-2xl bg-white border border-[#E6D8CF] flex flex-wrap items-center justify-between gap-4 text-xs shadow-2xs">
                   <div>
-                    <span className="text-slate-500">Mandate:</span>{" "}
-                    <span className="font-bold text-slate-900">{title}</span>
+                    <span className="text-muted">Mandate:</span>{" "}
+                    <span className="font-bold text-espresso">{title}</span>
                   </div>
                   <div>
-                    <span className="text-slate-500">Industry:</span>{" "}
-                    <span className="font-semibold text-slate-900">{industry}</span>
+                    <span className="text-muted">Industry:</span>{" "}
+                    <span className="font-semibold text-espresso">{industry}</span>
                   </div>
                   <div>
-                    <span className="text-slate-500">Budget:</span>{" "}
-                    <span className="font-mono font-bold text-slate-900">{budgetRange}</span>
+                    <span className="text-muted">Budget:</span>{" "}
+                    <span className="font-mono font-bold text-accent">{budgetRange}</span>
                   </div>
                   <div>
-                    <span className="text-slate-500">Timeline:</span>{" "}
-                    <span className="font-semibold text-slate-900">{timeline}</span>
+                    <span className="text-muted">Timeline:</span>{" "}
+                    <span className="font-semibold text-espresso">{timeline}</span>
                   </div>
                 </div>
 
                 {/* MATCHED TALENT CARDS */}
                 <div className="space-y-4">
-                  <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                  <div className="text-xs font-mono font-semibold text-muted uppercase tracking-wider">
                     Recommended Squad Members ({matchedTalents.length})
                   </div>
 
@@ -531,9 +532,9 @@ export default function StartProjectPage() {
                     {matchedTalents.map((t, idx) => (
                       <div
                         key={t.id}
-                        className="p-4 rounded-2xl border border-slate-200/80 bg-white shadow-sm hover:border-red-200 transition-all flex items-start gap-3.5"
+                        className="p-4 rounded-2xl border border-[#E6D8CF] bg-white shadow-2xs hover:border-accent/40 transition-all flex items-start gap-3.5 group"
                       >
-                        <div className="relative w-12 h-12 rounded-xl overflow-hidden shrink-0 bg-slate-200 border border-slate-200">
+                        <div className="relative w-12 h-12 rounded-xl overflow-hidden shrink-0 bg-[#E0CEC3]/40 border border-[#E6D8CF]">
                           <Image
                             src={
                               idx === 0
@@ -546,19 +547,19 @@ export default function StartProjectPage() {
                             }
                             alt={t.name}
                             fill
-                            className="object-cover"
+                            className="object-cover group-hover:scale-105 transition-transform"
                             sizes="48px"
                           />
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between">
-                            <span className="font-bold text-slate-900 text-sm truncate">{t.name}</span>
-                            <span className="text-xs font-mono font-bold text-red-600">{t.hourlyRate}</span>
+                            <span className="font-serif text-base font-normal text-espresso truncate">{t.name}</span>
+                            <span className="text-xs font-mono font-bold text-accent">{t.hourlyRate}</span>
                           </div>
-                          <div className="text-xs text-red-600 font-medium truncate mb-1">
+                          <div className="text-xs text-accent font-mono truncate mb-1">
                             {t.specializations?.[0] || "Creative Specialist"}
                           </div>
-                          <div className="text-[11px] text-slate-500 truncate">
+                          <div className="text-[11px] text-muted truncate">
                             {t.experience} yrs exp • {t.location}
                           </div>
                         </div>
@@ -568,10 +569,10 @@ export default function StartProjectPage() {
                 </div>
 
                 {/* ACTIONS */}
-                <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="pt-6 border-t border-[#E6D8CF] flex flex-col sm:flex-row items-center justify-between gap-4">
                   <Link
                     href="/talent"
-                    className="w-full sm:w-auto text-center px-6 py-3 rounded-xl border border-slate-200 text-slate-700 font-semibold text-sm hover:bg-slate-50 transition-colors"
+                    className="w-full sm:w-auto text-center px-6 py-3 rounded-xl border border-[#E6D8CF] bg-white text-espresso font-semibold text-sm hover:bg-[#FFF9F3] transition-colors shadow-2xs"
                   >
                     Browse Complete Talent Pool
                   </Link>
@@ -579,14 +580,14 @@ export default function StartProjectPage() {
                   <div className="flex items-center gap-3 w-full sm:w-auto">
                     <Link
                       href="/ai-match"
-                      className="w-full sm:w-auto text-center px-6 py-3 rounded-xl bg-slate-900 text-white font-semibold text-sm hover:bg-slate-800 transition-colors"
+                      className="w-full sm:w-auto text-center px-6 py-3 rounded-xl bg-white border border-[#E6D8CF] text-espresso font-semibold text-sm hover:bg-[#FFF9F3] transition-colors shadow-2xs"
                     >
-                      Refine in AI Match V3.1
+                      Refine in AI Match
                     </Link>
 
                     <Link
                       href="/dashboard/company/projects"
-                      className="w-full sm:w-auto text-center px-6 py-3 rounded-xl bg-red-600 text-white font-semibold text-sm hover:bg-red-700 transition-all shadow-md shadow-red-600/20"
+                      className="w-full sm:w-auto text-center px-6 py-3 rounded-xl bg-accent text-[#FFF9F3] font-semibold text-sm hover:bg-[#3E1012] transition-all shadow-xs active:translate-y-0.5"
                     >
                       Open Project Dashboard
                     </Link>

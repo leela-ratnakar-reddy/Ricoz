@@ -1,57 +1,80 @@
 "use client";
 
-import React from "react";
-import Image from "next/image";
+import React, { useState } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
   CheckCircle2,
-  Sparkles,
-  Shield,
-  Layers,
-  Star,
-  Users,
-  Clock,
-  Compass,
-  FileCheck
+  Star
 } from "lucide-react";
+import { TalentAvatar } from "@/components/ui/TalentAvatar";
+import { CaseStudyArtwork } from "@/components/ui/CaseStudyArtwork";
+import { CaseStudyModal, CaseStudyItem } from "@/components/informational/CaseStudyModal";
+import { EditorialStar, EditorialBadge } from "@/components/ui/EditorialDecorations";
 
 export const ProductShowcaseSection: React.FC = () => {
+  const [selectedCase, setSelectedCase] = useState<CaseStudyItem | null>(null);
+
+  const apexAiCase: CaseStudyItem = {
+    id: "apex-ai",
+    title: "Apex AI — Enterprise Brand System & Token Architecture",
+    client: "Apex AI Autonomous Systems",
+    specialistName: "Mateo Silva & Dominic Sterling",
+    specialistRole: "Art Director & Design Systems Architect",
+    specialistAvatar: "/images/talent/mateo-silva.jpg",
+    discipline: "Design Systems & Visual Identity",
+    deliverables: [
+      "Enterprise Identity Mark",
+      "Figma Tokens Sync",
+      "Governance Web Portal",
+      "Executive Typeface Specimen",
+    ],
+    challenge:
+      "Apex AI needed to unify 4 subsidiary software products under one coherent design language while preparing for global Series B scaling.",
+    solution:
+      "Created tokenized design architecture, dark/light multi-theme Figma library, and audited typographic hierarchy.",
+    timeline: "8 Weeks",
+    image: "/images/talent/portfolio/apex-ai-enterprise-brand-system-governance-portal.jpg",
+    palette: ["#38241F", "#541719", "#C7A99A", "#FBF6F0"],
+  };
+
   return (
-    <section className="py-20 sm:py-28 bg-slate-50/70 border-b border-slate-100 overflow-hidden">
+    <section className="py-20 sm:py-28 bg-[#FFF9F3] border-b border-[#E6D8CF] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 sm:space-y-32">
-        {/* ROW 1: SEE RICOZ IN ACTION */}
+        {/* ROW 1: REAL-TIME MATCHING & TALENT EVALUATION */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Text (Left) */}
           <div className="lg:col-span-6 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 border border-red-200 text-red-600 text-xs font-bold tracking-wider uppercase shadow-sm">
-              <span>REAL-TIME MATCHING</span>
+            <div>
+              <EditorialBadge variant="burgundy">
+                REAL-TIME MATCHING ENGINE
+              </EditorialBadge>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 leading-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-black tracking-tight text-[#38241F] leading-tight">
               See RICOZ In Action.
             </h2>
 
-            <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
+            <p className="text-base sm:text-lg text-[#76665F] leading-relaxed font-sans font-normal">
               Instead of browsing generic freelancer profiles or sending blind inquiries, RICOZ structures your creative mandate into concrete disciplines, sector experience, and deliverable milestones.
             </p>
 
             <div className="space-y-3.5 pt-2">
               <div className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
-                <span className="text-sm text-slate-700 font-medium">
+                <CheckCircle2 className="w-5 h-5 text-[#541719] shrink-0 mt-0.5" />
+                <span className="text-sm text-[#38241F] font-sans font-medium">
                   Multi-dimensional matching based on industry background, aesthetic craft, and enterprise scale.
                 </span>
               </div>
               <div className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
-                <span className="text-sm text-slate-700 font-medium">
+                <CheckCircle2 className="w-5 h-5 text-[#541719] shrink-0 mt-0.5" />
+                <span className="text-sm text-[#38241F] font-sans font-medium">
                   Instant match score breakdowns showing exact reasons why a candidate fits your project.
                 </span>
               </div>
               <div className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
-                <span className="text-sm text-slate-700 font-medium">
+                <CheckCircle2 className="w-5 h-5 text-[#541719] shrink-0 mt-0.5" />
+                <span className="text-sm text-[#38241F] font-sans font-medium">
                   Transparent hourly rates and confirmed availability updated weekly.
                 </span>
               </div>
@@ -60,7 +83,7 @@ export const ProductShowcaseSection: React.FC = () => {
             <div className="pt-4">
               <Link
                 href="/ai-match"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-900 text-white font-semibold text-sm hover:bg-slate-800 transition-colors shadow-md"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#541719] text-[#FFF9F3] font-sans font-semibold text-sm hover:bg-[#3E1012] transition-colors shadow-burgundy focus:outline-none focus-visible:ring-2 focus-visible:ring-[#541719]"
               >
                 <span>Test Live Match Engine</span>
                 <ArrowRight className="w-4 h-4" />
@@ -70,128 +93,127 @@ export const ProductShowcaseSection: React.FC = () => {
 
           {/* Mockup (Right) */}
           <div className="lg:col-span-6">
-            <div className="bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-7 shadow-xl shadow-slate-200/60 relative">
-              <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-5">
+            <div className="bg-white rounded-3xl border border-[#E6D8CF] p-6 sm:p-7 shadow-card relative">
+              <div className="flex items-center justify-between border-b border-[#E6D8CF] pb-4 mb-5">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-3 h-3 rounded-full bg-red-500" />
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-800">
+                  <div className="w-3 h-3 rounded-full bg-[#541719]" />
+                  <span className="text-xs font-serif font-bold uppercase tracking-wider text-[#38241F]">
                     Squad Match Result
                   </span>
                 </div>
-                <span className="text-xs font-mono font-bold text-red-600 bg-red-50 px-2.5 py-1 rounded-full border border-red-100">
-                  3 Principals Matched
+                <span className="text-xs font-sans font-bold text-[#541719] bg-[#541719]/10 px-3 py-1 rounded-full border border-[#541719]/20">
+                  2 Principals Matched
                 </span>
               </div>
 
-              {/* Match Card Sample */}
+              {/* Match Card 1: Mateo Silva */}
               <div className="space-y-4">
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
+                <div className="p-4 rounded-xl bg-[#FFF9F3] border border-[#E6D8CF] flex items-center justify-between">
                   <div className="flex items-center gap-3.5">
-                    <div className="relative w-12 h-12 rounded-xl overflow-hidden shrink-0 border border-slate-200">
-                      <Image
-                        src="/images/talent/carlos-mendez.jpg"
-                        alt="Mateo Silva"
-                        fill
-                        className="object-cover"
-                        sizes="48px"
-                      />
-                    </div>
+                    <TalentAvatar
+                      src="/images/talent/mateo-silva.jpg"
+                      alt="Mateo Silva"
+                      initials="MS"
+                      size={48}
+                    />
                     <div>
-                      <div className="text-sm font-bold text-slate-900">Mateo Silva</div>
-                      <div className="text-xs text-red-600 font-medium">Art Director & Visual Identity Lead</div>
-                      <div className="text-[11px] text-slate-500">11 yrs exp • Ex-Koto / Wolff Olins</div>
+                      <div className="text-sm font-serif font-bold text-[#38241F]">Mateo Silva</div>
+                      <div className="text-xs text-[#541719] font-medium font-sans">Art Director & Visual Identity Lead</div>
+                      <div className="text-[11px] text-[#76665F] font-sans">11 yrs exp • Ex-Koto / Wolff Olins</div>
                     </div>
                   </div>
                   <div className="text-right">
-                    <span className="inline-block px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-mono font-bold">
+                    <span className="inline-block px-2.5 py-1 rounded-full bg-[#541719]/10 text-[#541719] border border-[#541719]/20 text-xs font-sans font-bold">
                       96% Match
                     </span>
-                    <div className="text-[11px] font-mono text-slate-700 mt-1">$155/hr</div>
+                    <div className="text-[11px] font-mono text-[#38241F] mt-1">$155/hr</div>
                   </div>
                 </div>
 
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
+                {/* Match Card 2: Camille Dupuis */}
+                <div className="p-4 rounded-xl bg-[#FFF9F3] border border-[#E6D8CF] flex items-center justify-between">
                   <div className="flex items-center gap-3.5">
-                    <div className="relative w-12 h-12 rounded-xl overflow-hidden shrink-0 border border-slate-200">
-                      <Image
-                        src="/images/talent/sienna-rodriguez.jpg"
-                        alt="Camille Dupuis"
-                        fill
-                        className="object-cover"
-                        sizes="48px"
-                      />
-                    </div>
+                    <TalentAvatar
+                      src="/images/talent/camille-dupuis.jpg"
+                      alt="Camille Dupuis"
+                      initials="CD"
+                      size={48}
+                    />
                     <div>
-                      <div className="text-sm font-bold text-slate-900">Camille Dupuis</div>
-                      <div className="text-xs text-red-600 font-medium">Packaging & Luxury Print Director</div>
-                      <div className="text-[11px] text-slate-500">13 yrs exp • Paris, FR</div>
+                      <div className="text-sm font-serif font-bold text-[#38241F]">Camille Dupuis</div>
+                      <div className="text-xs text-[#541719] font-medium font-sans">Packaging & Luxury Print Director</div>
+                      <div className="text-[11px] text-[#76665F] font-sans">13 yrs exp • Paris, FR</div>
                     </div>
                   </div>
                   <div className="text-right">
-                    <span className="inline-block px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-mono font-bold">
+                    <span className="inline-block px-2.5 py-1 rounded-full bg-[#541719]/10 text-[#541719] border border-[#541719]/20 text-xs font-sans font-bold">
                       95% Match
                     </span>
-                    <div className="text-[11px] font-mono text-slate-700 mt-1">$170/hr</div>
+                    <div className="text-[11px] font-mono text-[#38241F] mt-1">$170/hr</div>
                   </div>
                 </div>
               </div>
 
               {/* Bottom Stat Bar */}
-              <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+              <div className="mt-5 pt-4 border-t border-[#E6D8CF] flex items-center justify-between text-xs text-[#76665F] font-sans">
                 <span>Verified Match Criteria: Tech & Rebrand</span>
-                <span className="font-semibold text-slate-700">Estimated kickoff: 1-2 wks</span>
+                <span className="font-semibold text-[#38241F]">Kickoff window: 1-2 wks</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* ROW 2: FIND THE RIGHT CREATIVE EXPERTISE */}
+        {/* ROW 2: LIVE CASE STUDY ARTWORK */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Mockup (Left) */}
           <div className="lg:col-span-6 order-2 lg:order-1">
-            <div className="bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-7 shadow-xl shadow-slate-200/60 relative">
-              <div className="relative h-64 sm:h-72 w-full rounded-xl overflow-hidden mb-5 border border-slate-200">
-                <Image
-                  src="/images/talent/portfolio/apex-ai-enterprise-brand-system-governance-portal.jpg"
-                  alt="Portfolio Case Study"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-5">
-                  <div className="text-white">
-                    <span className="px-2 py-0.5 rounded bg-red-600 text-white text-[11px] font-bold uppercase tracking-wider mb-1.5 inline-block">
-                      Case Study
-                    </span>
-                    <div className="text-lg font-bold">Apex AI — Enterprise Brand Architecture & Token System</div>
-                    <div className="text-xs text-slate-300">Deliverables: Brand Identity, Design Tokens, Governance Portal</div>
-                  </div>
-                </div>
-              </div>
+            <div
+              onClick={() => setSelectedCase(apexAiCase)}
+              className="bg-white rounded-3xl border border-[#E6D8CF] p-6 sm:p-7 shadow-card relative cursor-pointer group hover:border-[#C7A99A] transition-all"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") setSelectedCase(apexAiCase);
+              }}
+              aria-label="View Apex AI Case Study"
+            >
+              {/* Robust Case Study Artwork with Image Fallback */}
+              <CaseStudyArtwork
+                src="/images/talent/portfolio/apex-ai-enterprise-brand-system-governance-portal.jpg"
+                title="Apex AI — Enterprise Brand System & Governance"
+                discipline="Design Systems & Architecture"
+                deliverables={["Brand Identity", "Design Tokens", "Governance Portal"]}
+                palette={["#38241F", "#541719", "#C7A99A", "#FBF6F0"]}
+                aspectRatio="aspect-[16/10]"
+                className="mb-4"
+              />
 
-              <div className="flex items-center justify-between text-xs text-slate-600 pt-1">
+              <div className="flex items-center justify-between text-xs text-[#76665F] pt-1 font-sans">
                 <div className="flex items-center gap-2">
-                  <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
-                  <span className="font-semibold text-slate-900">Enterprise Transformation</span>
+                  <EditorialStar size={12} color="#541719" />
+                  <span className="font-serif font-bold text-[#38241F]">Featured Enterprise Case Study</span>
                 </div>
-                <Link href="/talent" className="text-red-600 font-semibold hover:text-red-700">
-                  Explore 57 Profiles & Case Studies →
-                </Link>
+                <span className="text-[#541719] font-bold group-hover:underline flex items-center gap-1">
+                  <span>Open Full Case Study</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </span>
               </div>
             </div>
           </div>
 
           {/* Text (Right) */}
           <div className="lg:col-span-6 order-1 lg:order-2 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 border border-red-200 text-red-600 text-xs font-bold tracking-wider uppercase shadow-sm">
-              <span>SPECIALIZED TALENT</span>
+            <div>
+              <EditorialBadge variant="burgundy">
+                SPECIALIZED DISCIPLINE CRAFT
+              </EditorialBadge>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 leading-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-black tracking-tight text-[#38241F] leading-tight">
               Find The Right Creative Expertise.
             </h2>
 
-            <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
+            <p className="text-base sm:text-lg text-[#76665F] leading-relaxed font-sans font-normal">
               Great creative execution requires specialized focus. RICOZ gives you access to pre-vetted professionals across 19 critical creative disciplines.
             </p>
 
@@ -213,7 +235,7 @@ export const ProductShowcaseSection: React.FC = () => {
               ].map((role) => (
                 <span
                   key={role}
-                  className="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 text-xs font-semibold shadow-sm hover:border-red-300 hover:text-red-600 transition-colors"
+                  className="px-3.5 py-1.5 rounded-full text-xs font-sans font-medium bg-[#FFF9F3] border border-[#E6D8CF] text-[#38241F] hover:border-[#C7A99A] transition-colors"
                 >
                   {role}
                 </span>
@@ -223,125 +245,21 @@ export const ProductShowcaseSection: React.FC = () => {
             <div className="pt-4">
               <Link
                 href="/talent"
-                className="inline-flex items-center gap-2 text-sm font-bold text-red-600 hover:text-red-700 transition-colors"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-[#541719] hover:underline"
               >
-                <span>Browse the complete talent directory</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>Browse all 19 creative specializations &rarr;</span>
               </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* ROW 3: FROM SHORTLIST TO PROJECT */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          {/* Text (Left) */}
-          <div className="lg:col-span-6 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 border border-red-200 text-red-600 text-xs font-bold tracking-wider uppercase shadow-sm">
-              <span>PROJECT GOVERNANCE</span>
-            </div>
-
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 leading-tight">
-              From Shortlist To Project.
-            </h2>
-
-            <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
-              Moving from discovery into production is seamless. Organize your shortlisted talent, finalize team roles, execute standardized mutual NDAs, and initiate project milestones in one centralized workspace.
-            </p>
-
-            <div className="space-y-3.5 pt-2">
-              <div className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
-                <span className="text-sm text-slate-700 font-medium">
-                  Organized shortlist management with side-by-side profile comparisons.
-                </span>
-              </div>
-              <div className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
-                <span className="text-sm text-slate-700 font-medium">
-                  Clear milestone deliverables with escrow protection and verified sign-offs.
-                </span>
-              </div>
-              <div className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
-                <span className="text-sm text-slate-700 font-medium">
-                  Enterprise-ready IP assignment and mutual non-disclosure protection.
-                </span>
-              </div>
-            </div>
-
-            <div className="pt-4">
-              <Link
-                href="/start-project"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-red-600 text-white font-semibold text-sm hover:bg-red-700 transition-colors shadow-md shadow-red-600/20"
-              >
-                <span>Start a Project Mandate</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
-
-          {/* Mockup (Right) */}
-          <div className="lg:col-span-6">
-            <div className="bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-7 shadow-xl shadow-slate-200/60 space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                  Project Delivery Roadmap
-                </span>
-                <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                  Milestone 1 Active
-                </span>
-              </div>
-
-              {/* Step 1 */}
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs font-bold">
-                    ✓
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900">Sprint 01: Strategic Positioning</div>
-                    <div className="text-[11px] text-slate-500">Elena Rostova • Brand Architecture Dossier</div>
-                  </div>
-                </div>
-                <span className="text-[11px] font-mono text-emerald-600 font-bold">Completed</span>
-              </div>
-
-              {/* Step 2 */}
-              <div className="p-3.5 rounded-xl bg-white border border-red-200 shadow-sm flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-7 h-7 rounded-lg bg-red-600 text-white flex items-center justify-center text-xs font-bold">
-                    02
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900">Sprint 02: Visual Identity & Logomark</div>
-                    <div className="text-[11px] text-slate-500">Mateo Silva • Vector Marks & Typographic Specimen</div>
-                  </div>
-                </div>
-                <span className="text-[11px] font-mono text-red-600 font-bold">In Progress</span>
-              </div>
-
-              {/* Step 3 */}
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between opacity-75">
-                <div className="flex items-center gap-3">
-                  <div className="w-7 h-7 rounded-lg bg-slate-200 text-slate-600 flex items-center justify-center text-xs font-bold">
-                    03
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900">Sprint 03: Design Tokens & System</div>
-                    <div className="text-[11px] text-slate-500">Dominic Sterling • Figma Token Governance</div>
-                  </div>
-                </div>
-                <span className="text-[11px] font-mono text-slate-500">Queued</span>
-              </div>
-
-              <div className="pt-2 text-[11px] text-slate-500 flex items-center justify-between">
-                <span>Mutual NDA: Executed on File</span>
-                <span>Milestone Escrow: Verified</span>
-              </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* CASE STUDY MODAL */}
+      <CaseStudyModal
+        isOpen={!!selectedCase}
+        onClose={() => setSelectedCase(null)}
+        caseStudy={selectedCase}
+      />
     </section>
   );
 };

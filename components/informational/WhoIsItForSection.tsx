@@ -1,108 +1,158 @@
 "use client";
 
 import React from "react";
-import { Building2, Megaphone, Compass, CheckCircle2 } from "lucide-react";
+import { Building2, Megaphone, Compass, CheckCircle2, ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { EditorialStar, EditorialBadge } from "@/components/ui/EditorialDecorations";
 
 export const WhoIsItForSection: React.FC = () => {
-  const personas = [
-    {
-      title: "Businesses & Startups",
-      badge: "High Growth",
-      icon: Building2,
-      description:
-        "For companies looking for creative professionals to support branding, design and growth projects.",
-      highlights: [
-        "Seed to Series C brand launches",
-        "Category positioning & narrative creation",
-        "Complete digital identity and product design",
-      ],
-    },
-    {
-      title: "Marketing & Brand Teams",
-      badge: "Enterprise Scale",
-      icon: Megaphone,
-      description:
-        "For teams that need specialized creative expertise without building every capability in-house.",
-      highlights: [
-        "Executive brand refresh & campaigns",
-        "Design systems & token governance",
-        "Senior creative direction on-demand",
-      ],
-    },
-    {
-      title: "Project Owners",
-      badge: "Dedicated Mandates",
-      icon: Compass,
-      description:
-        "For people who need the right creative talent for a specific project or requirement.",
-      highlights: [
-        "Specialized packaging & industrial design",
-        "High-craft typographic & editorial monographs",
-        "Interactive 3D & motion campaigns",
-      ],
-    },
-  ];
-
   return (
-    <section className="py-20 sm:py-28 bg-slate-50/70 border-b border-slate-100 relative">
+    <section className="py-20 sm:py-28 bg-[#FFF9F3] border-b border-[#E6D8CF] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* HEADER */}
         <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-bold tracking-wider uppercase mb-4">
-            <span>WHO RICOZ IS FOR</span>
+          <div className="mb-4">
+            <EditorialBadge variant="burgundy">
+              MANDATE ALIGNMENT
+            </EditorialBadge>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 leading-tight">
-            Built For Businesses That Need Great Creative Work.
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-black tracking-tight text-[#38241F] leading-tight">
+            Built For Organizations That Value Distinctive Design.
           </h2>
 
-          <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed">
-            Whether scaling a venture-backed startup or leading brand transformation inside an enterprise, RICOZ aligns senior creative talent with your exact mandate.
+          <p className="mt-4 text-base sm:text-lg text-[#76665F] leading-relaxed font-sans font-normal">
+            Whether scaling a high-growth venture or spearheading brand transformation inside an enterprise, RICOZ aligns senior creative talent with your exact mandate.
           </p>
         </div>
 
-        {/* 3 AUDIENCE CARDS */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {personas.map((persona) => {
-            const Icon = persona.icon;
-            return (
-              <div
-                key={persona.title}
-                className="bg-white rounded-2xl border border-slate-200/80 p-8 shadow-sm hover:shadow-xl hover:shadow-slate-200/50 hover:border-red-200 transition-all duration-300 flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="w-12 h-12 rounded-xl bg-red-50 text-red-600 flex items-center justify-center">
-                      <Icon className="w-6 h-6" />
-                    </div>
-                    <span className="text-xs font-semibold text-slate-500 bg-slate-50 px-2.5 py-1 rounded-full border border-slate-200/60">
-                      {persona.badge}
-                    </span>
-                  </div>
-
-                  <h3 className="text-xl font-bold text-slate-900 mb-3 uppercase tracking-tight">
-                    {persona.title}
-                  </h3>
-
-                  <p className="text-sm text-slate-600 leading-relaxed mb-6 font-normal">
-                    {persona.description}
-                  </p>
+        {/* VARIED EDITORIAL LAYOUT */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          {/* Card 1: Businesses & Startups (4 cols) */}
+          <div className="lg:col-span-4 bg-white rounded-3xl border border-[#E6D8CF] p-8 shadow-subtle hover:shadow-card hover:border-[#C7A99A] transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-6">
+                <div className="w-12 h-12 rounded-2xl bg-[#541719]/10 text-[#541719] flex items-center justify-center shadow-subtle">
+                  <Building2 className="w-6 h-6" />
                 </div>
-
-                <div className="pt-6 border-t border-slate-100 space-y-2.5">
-                  <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
-                    Key Project Types
-                  </div>
-                  {persona.highlights.map((h, i) => (
-                    <div key={i} className="flex items-center gap-2.5 text-xs text-slate-600 font-medium">
-                      <CheckCircle2 className="w-4 h-4 text-red-600 shrink-0" />
-                      <span>{h}</span>
-                    </div>
-                  ))}
-                </div>
+                <span className="text-xs font-sans font-bold text-[#541719] bg-[#541719]/10 px-3 py-1 rounded-full border border-[#541719]/20">
+                  High Growth
+                </span>
               </div>
-            );
-          })}
+
+              <h3 className="text-2xl font-serif font-bold text-[#38241F] mb-3 tracking-tight">
+                Businesses & Startups
+              </h3>
+
+              <p className="text-sm text-[#76665F] leading-relaxed mb-6 font-sans font-normal">
+                For ambitious companies looking for premier creative professionals to lead branding, category architecture, and high-impact digital experiences.
+              </p>
+            </div>
+
+            <div className="pt-6 border-t border-[#E6D8CF] space-y-2.5">
+              <div className="text-[11px] font-sans font-bold text-[#9E8E87] uppercase tracking-wider mb-2">
+                Core Engagement Profiles
+              </div>
+              {[
+                "Seed to Series C brand launches",
+                "Category positioning & narrative creation",
+                "Complete digital identity and product design",
+              ].map((h, i) => (
+                <div key={i} className="flex items-start gap-2.5 text-xs text-[#76665F] font-medium font-sans">
+                  <CheckCircle2 className="w-4 h-4 text-[#541719] shrink-0 mt-0.5" />
+                  <span>{h}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Card 2: Marketing & Brand Teams - FEATURED CONTRAST (4 cols) */}
+          <div className="lg:col-span-4 bg-[#38241F] text-[#FFF9F3] rounded-3xl border border-[#C7A99A]/30 p-8 shadow-card flex flex-col justify-between relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-[#541719]/20 rounded-full blur-2xl pointer-events-none" />
+
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-6">
+                <div className="w-12 h-12 rounded-2xl bg-[#541719] text-[#FFF9F3] flex items-center justify-center shadow-burgundy">
+                  <Megaphone className="w-6 h-6" />
+                </div>
+                <span className="text-xs font-sans font-bold text-[#E0CEC3] bg-[#541719]/40 px-3 py-1 rounded-full border border-[#C7A99A]/40">
+                  Enterprise Scale
+                </span>
+              </div>
+
+              <h3 className="text-2xl font-serif font-bold text-[#FFF9F3] mb-3 tracking-tight">
+                Marketing & Brand Teams
+              </h3>
+
+              <p className="text-sm text-[#E0CEC3] leading-relaxed mb-6 font-sans font-normal">
+                For enterprise brand teams that require specialized senior creative direction without overhead or long agency ramp-ups.
+              </p>
+            </div>
+
+            <div className="pt-6 border-t border-white/10 relative z-10 space-y-2.5">
+              <div className="text-[11px] font-sans font-bold text-[#C7A99A] uppercase tracking-wider mb-2">
+                Enterprise Mandates
+              </div>
+              {[
+                "Executive brand refresh & global campaigns",
+                "Design systems & token governance",
+                "Senior creative direction on-demand",
+              ].map((h, i) => (
+                <div key={i} className="flex items-start gap-2.5 text-xs text-[#E0CEC3] font-medium font-sans">
+                  <CheckCircle2 className="w-4 h-4 text-[#C7A99A] shrink-0 mt-0.5" />
+                  <span>{h}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Card 3: Founders & Leadership (4 cols) */}
+          <div className="lg:col-span-4 bg-white rounded-3xl border border-[#E6D8CF] p-8 shadow-subtle hover:shadow-card hover:border-[#C7A99A] transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-6">
+                <div className="w-12 h-12 rounded-2xl bg-[#541719]/10 text-[#541719] flex items-center justify-center shadow-subtle">
+                  <Compass className="w-6 h-6" />
+                </div>
+                <span className="text-xs font-sans font-bold text-[#541719] bg-[#541719]/10 px-3 py-1 rounded-full border border-[#541719]/20">
+                  Leadership
+                </span>
+              </div>
+
+              <h3 className="text-2xl font-serif font-bold text-[#38241F] mb-3 tracking-tight">
+                Founders & Leadership
+              </h3>
+
+              <p className="text-sm text-[#76665F] leading-relaxed mb-6 font-sans font-normal">
+                For founders and executives who want direct access to proven creative principals to shape early or transformative brand identity.
+              </p>
+            </div>
+
+            <div className="pt-6 border-t border-[#E6D8CF] space-y-2.5">
+              <div className="text-[11px] font-sans font-bold text-[#9E8E87] uppercase tracking-wider mb-2">
+                Strategic Engagements
+              </div>
+              {[
+                "Pre-fundraising narrative & pitch design",
+                "Flagship product launch identity",
+                "Holistic executive creative advisory",
+              ].map((h, i) => (
+                <div key={i} className="flex items-start gap-2.5 text-xs text-[#76665F] font-medium font-sans">
+                  <CheckCircle2 className="w-4 h-4 text-[#541719] shrink-0 mt-0.5" />
+                  <span>{h}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* BOTTOM ACTION */}
+        <div className="mt-14 text-center">
+          <Link
+            href="/start-project"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-[#541719] hover:underline"
+          >
+            <span>Have a specific project mandate in mind? Define your requirements &rarr;</span>
+          </Link>
         </div>
       </div>
     </section>
