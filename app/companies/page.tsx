@@ -114,28 +114,34 @@ export default function ForCompaniesPage() {
                 </thead>
                 <tbody className="divide-y divide-[#E6D8CF] text-muted">
                   <tr>
-                    <td className="py-3.5 pr-4 font-semibold text-espresso">Senior Involvement</td>
-                    <td className="py-3.5 px-4 font-semibold text-accent">100% Senior Creative Leads</td>
-                    <td className="py-3.5 px-4">Senior pitch, junior execution</td>
-                    <td className="py-3.5 pl-4">Unverified / mostly junior</td>
+                    <td className="py-3.5 pr-4 font-semibold text-espresso">Talent Discovery</td>
+                    <td className="py-3.5 px-4 font-semibold text-accent">Curated senior directory & verified dossiers</td>
+                    <td className="py-3.5 px-4">Fixed internal agency roster</td>
+                    <td className="py-3.5 pl-4">Open unvetted marketplace</td>
                   </tr>
                   <tr>
-                    <td className="py-3.5 pr-4 font-semibold text-espresso">Procurement Cycle</td>
-                    <td className="py-3.5 px-4 font-semibold text-accent">Under 7 days to match</td>
-                    <td className="py-3.5 px-4">6 to 12 weeks RFP</td>
-                    <td className="py-3.5 pl-4">Fast but high vetting overhead</td>
+                    <td className="py-3.5 pr-4 font-semibold text-espresso">Team Formation</td>
+                    <td className="py-3.5 px-4 font-semibold text-accent">Direct bespoke 5-specialist squad assembly</td>
+                    <td className="py-3.5 px-4">Internal agency staff assignment</td>
+                    <td className="py-3.5 pl-4">Competitive freelance bidding</td>
                   </tr>
                   <tr>
-                    <td className="py-3.5 pr-4 font-semibold text-espresso">Agency Overhead Markup</td>
-                    <td className="py-3.5 px-4 font-semibold text-accent">Zero unnecessary overhead</td>
-                    <td className="py-3.5 px-4">150% - 300% agency markup</td>
-                    <td className="py-3.5 pl-4">Unpredictable quality</td>
+                    <td className="py-3.5 pr-4 font-semibold text-espresso">Project Requirements</td>
+                    <td className="py-3.5 px-4 font-semibold text-accent">AI-assisted brief decomposition & scope estimation</td>
+                    <td className="py-3.5 px-4">Manual discovery meetings & RFP rounds</td>
+                    <td className="py-3.5 pl-4">Freeform unstructured inquiry</td>
                   </tr>
                   <tr>
-                    <td className="py-3.5 pr-4 font-semibold text-espresso">Enterprise NDA & IP</td>
-                    <td className="py-3.5 px-4 font-semibold text-accent">Standardized institutional terms</td>
-                    <td className="py-3.5 px-4">Custom legal negotiations</td>
-                    <td className="py-3.5 pl-4">Vague click-through terms</td>
+                    <td className="py-3.5 pr-4 font-semibold text-espresso">Portfolio Review</td>
+                    <td className="py-3.5 px-4 font-semibold text-accent">Concrete deliverable artifacts & verified case studies</td>
+                    <td className="py-3.5 px-4">Generic agency sales deck</td>
+                    <td className="py-3.5 pl-4">Self-reported links & screenshots</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3.5 pr-4 font-semibold text-espresso">Flexibility & Governance</td>
+                    <td className="py-3.5 px-4 font-semibold text-accent">Milestone-based governance with zero retainer lock-in</td>
+                    <td className="py-3.5 px-4">Multi-month retainer commitment</td>
+                    <td className="py-3.5 pl-4">Ad-hoc hourly without milestone escrow</td>
                   </tr>
                 </tbody>
               </table>

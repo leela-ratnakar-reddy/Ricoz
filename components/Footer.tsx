@@ -30,22 +30,12 @@ export const Footer: React.FC = () => {
             <ul className="space-y-2 text-xs">
               <li>
                 <Link href="/talent" className="hover:text-[#541719] transition-colors">
-                  Find Creative Talent
+                  Explore Talent (57)
                 </Link>
               </li>
               <li>
                 <Link href="/ai-match" className="hover:text-[#541719] transition-colors">
                   AI Match Engine
-                </Link>
-              </li>
-              <li>
-                <Link href="/designers" className="hover:text-[#541719] transition-colors">
-                  Explore Designers
-                </Link>
-              </li>
-              <li>
-                <Link href="/how-it-works" className="hover:text-[#541719] transition-colors">
-                  How It Works
                 </Link>
               </li>
               <li>
@@ -58,73 +48,97 @@ export const Footer: React.FC = () => {
                   For Creatives
                 </Link>
               </li>
-            </ul>
-          </div>
-
-          {/* Company */}
-          <div className="space-y-3">
-            <h4 className="font-serif font-bold text-xs text-[#38241F] tracking-wider uppercase">
-              Company
-            </h4>
-            <ul className="space-y-2 text-xs">
               <li>
-                <span className="hover:text-[#541719] cursor-pointer transition-colors">About Ricoz</span>
-              </li>
-              <li>
-                <span className="hover:text-[#541719] cursor-pointer transition-colors">Curatorial Board</span>
-              </li>
-              <li>
-                <span className="hover:text-[#541719] cursor-pointer transition-colors">Enterprise Careers</span>
-              </li>
-              <li>
-                <span className="hover:text-[#541719] cursor-pointer transition-colors">Press & Media</span>
-              </li>
-              <li>
-                <Link href="/admin" className="hover:text-[#541719] transition-colors">
-                  Operations Portal
+                <Link href="/start-project" className="hover:text-[#541719] transition-colors">
+                  Start a Project
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Resources */}
+          {/* Governance & Admin */}
           <div className="space-y-3">
             <h4 className="font-serif font-bold text-xs text-[#38241F] tracking-wider uppercase">
-              Resources
+              Operations
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <span className="hover:text-[#541719] cursor-pointer transition-colors">Rebranding Guide</span>
+                <Link href="/admin" className="hover:text-[#541719] transition-colors">
+                  Operations Portal
+                </Link>
               </li>
               <li>
-                <span className="hover:text-[#541719] cursor-pointer transition-colors">Creative Strategy Briefs</span>
+                <Link href="/dashboard/company" className="hover:text-[#541719] transition-colors">
+                  Client Dashboard
+                </Link>
               </li>
               <li>
-                <span className="hover:text-[#541719] cursor-pointer transition-colors">Design System ROI</span>
+                <Link href="/dashboard/designer" className="hover:text-[#541719] transition-colors">
+                  Creative Dashboard
+                </Link>
               </li>
               <li>
-                <span className="hover:text-[#541719] cursor-pointer transition-colors">Typography Specimens</span>
+                <Link href="/login" className="hover:text-[#541719] transition-colors">
+                  Sign In
+                </Link>
               </li>
             </ul>
           </div>
 
-          {/* Legal */}
+          {/* Standards & Safeguards */}
           <div className="space-y-3">
             <h4 className="font-serif font-bold text-xs text-[#38241F] tracking-wider uppercase">
               Standards
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <span className="hover:text-[#541719] cursor-pointer transition-colors">Enterprise NDA & IP</span>
+                <span className="hover:text-[#541719] cursor-pointer transition-colors">
+                  Enterprise NDA & IP Transfer
+                </span>
               </li>
               <li>
-                <span className="hover:text-[#541719] cursor-pointer transition-colors">Escrow Safeguards</span>
+                <span className="hover:text-[#541719] cursor-pointer transition-colors">
+                  Milestone Escrow Safeguards
+                </span>
               </li>
               <li>
-                <span className="hover:text-[#541719] cursor-pointer transition-colors">Vetting Standards</span>
+                <span className="hover:text-[#541719] cursor-pointer transition-colors">
+                  100% Talent Vetting Standards
+                </span>
               </li>
               <li>
-                <span className="hover:text-[#541719] cursor-pointer transition-colors">Terms of Mandate</span>
+                <span className="hover:text-[#541719] cursor-pointer transition-colors">
+                  Production SLA Guarantees
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Network & Disciplines */}
+          <div className="space-y-3">
+            <h4 className="font-serif font-bold text-xs text-[#38241F] tracking-wider uppercase">
+              Disciplines
+            </h4>
+            <ul className="space-y-2 text-xs">
+              <li>
+                <Link href="/talent?discipline=Brand+Strategist" className="hover:text-[#541719] transition-colors">
+                  Brand Strategy
+                </Link>
+              </li>
+              <li>
+                <Link href="/talent?discipline=Creative+Director" className="hover:text-[#541719] transition-colors">
+                  Creative Direction
+                </Link>
+              </li>
+              <li>
+                <Link href="/talent?discipline=Brand+Identity+Designer" className="hover:text-[#541719] transition-colors">
+                  Visual Identity
+                </Link>
+              </li>
+              <li>
+                <Link href="/talent?discipline=UI%2FUX+Designer" className="hover:text-[#541719] transition-colors">
+                  Digital Product UX
+                </Link>
               </li>
             </ul>
           </div>
@@ -134,9 +148,12 @@ export const Footer: React.FC = () => {
         <div className="pt-8 border-t border-[#E6D8CF] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#9E8E87]">
           <p>© {new Date().getFullYear()} RICOZ Collective Inc. All rights reserved.</p>
           <div className="flex items-center gap-6">
+            <span className="hover:text-[#541719] cursor-pointer">Enterprise Security</span>
             <span className="hover:text-[#541719] cursor-pointer">Privacy Notice</span>
-            <span className="hover:text-[#541719] cursor-pointer">Security Practices</span>
-            <span className="hover:text-[#541719] cursor-pointer">System Status</span>
+            <span className="hover:text-[#541719] cursor-pointer">Terms of Service</span>
+            <Link href="/admin" className="hover:text-[#541719]">
+              Admin
+            </Link>
           </div>
         </div>
       </div>

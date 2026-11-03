@@ -1,21 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
-import { LandingNavbar } from "@/components/informational/LandingNavbar";
+import { Navbar } from "@/components/Navbar";
 import { HeroSection } from "@/components/informational/HeroSection";
+import { HowItWorksSection } from "@/components/informational/HowItWorksSection";
+import { InteractiveDisciplineFilter } from "@/components/informational/InteractiveDisciplineFilter";
 import { BrandArtifactsShowcase } from "@/components/informational/BrandArtifactsShowcase";
 import { PlatformPreview } from "@/components/informational/PlatformPreview";
-import { InteractiveDisciplineFilter } from "@/components/informational/InteractiveDisciplineFilter";
-import { HowItWorksSection } from "@/components/informational/HowItWorksSection";
 import { WhyRicozSection } from "@/components/informational/WhyRicozSection";
-import { MandateEstimator } from "@/components/informational/MandateEstimator";
 import { WhoIsItForSection } from "@/components/informational/WhoIsItForSection";
-import { PlatformFeaturesSection } from "@/components/informational/PlatformFeaturesSection";
-import { ProductShowcaseSection } from "@/components/informational/ProductShowcaseSection";
-import { TrustValueSection } from "@/components/informational/TrustValueSection";
-import { FAQSection } from "@/components/informational/FAQSection";
 import { FinalCTASection } from "@/components/informational/FinalCTASection";
-import { LandingFooter } from "@/components/informational/LandingFooter";
+import { Footer } from "@/components/Footer";
 import { ConciergeBriefingModal } from "@/components/informational/ConciergeBriefingModal";
 
 export default function HomePage() {
@@ -31,52 +26,37 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-brand selection:bg-accent selection:text-cream font-sans antialiased overflow-x-hidden">
-      {/* 1. STICKY TOP NAVIGATION */}
-      <LandingNavbar onOpenBriefing={handleOpenBriefing} />
+      {/* 1. GLOBAL NAVIGATION */}
+      <Navbar />
 
       <main className="flex-1">
-        {/* 2. HERO SECTION WITH CURATED TALENT COMPOSITION */}
+        {/* SECTION 1: HERO SECTION WITH CURATED TALENT COMPOSITION */}
         <HeroSection onOpenBriefing={handleOpenBriefing} />
 
-        {/* 3. BRAND ARTIFACTS & DELIVERABLE SPECIMENS */}
-        <BrandArtifactsShowcase />
-
-        {/* 4. PRODUCT VISUAL / PLATFORM PREVIEW FRAME */}
-        <PlatformPreview />
-
-        {/* 5. INTERACTIVE TALENT SEARCH & DISCIPLINE FILTER */}
-        <InteractiveDisciplineFilter />
-
-        {/* 6. HOW RICOZ WORKS (4-STEP ONBOARDING PROGRESSION) */}
+        {/* SECTION 2: HOW RICOZ WORKS (4-STEP PROGRESSION) */}
         <HowItWorksSection />
 
-        {/* 7. WHY RICOZ ASYMMETRIC BENTO GRID */}
+        {/* SECTION 3: EXPLORE CURATED TALENT & DISCIPLINE FILTER */}
+        <InteractiveDisciplineFilter />
+
+        {/* SECTION 4: PRODUCTION ARTIFACTS SHIPPED ACROSS MANDATES */}
+        <BrandArtifactsShowcase />
+
+        {/* SECTION 5: AI MATCHER 5-SPECIALIST SQUAD PREVIEW */}
+        <PlatformPreview />
+
+        {/* SECTION 6: WHY RICOZ ASYMMETRIC BENTO GRID */}
         <WhyRicozSection />
 
-        {/* 8. INTERACTIVE SCOPE & MANDATE ESTIMATOR */}
-        <MandateEstimator onOpenBriefing={handleOpenBriefing} />
-
-        {/* 9. WHO RICOZ IS FOR (AUDIENCE ALIGNMENT) */}
+        {/* SECTION 7: FOR COMPANIES AND CREATIVES */}
         <WhoIsItForSection />
 
-        {/* 10. PRODUCT / PLATFORM FEATURES SHOWCASE */}
-        <PlatformFeaturesSection />
-
-        {/* 11. TALENT SPOTLIGHT & VERIFIED ROLES */}
-        <ProductShowcaseSection />
-
-        {/* 12. TRUST, QUALITY & ESCROW GUARANTEES */}
-        <TrustValueSection />
-
-        {/* 13. FREQUENTLY ASKED QUESTIONS ACCORDION */}
-        <FAQSection />
-
-        {/* 14. FINAL INVITATION / HIGH-CONVERSION CTA */}
+        {/* SECTION 8: FINAL INVITATION / HIGH-CONVERSION CTA */}
         <FinalCTASection onOpenBriefing={handleOpenBriefing} />
       </main>
 
-      {/* 15. MULTI-COLUMN AGENCY FOOTER */}
-      <LandingFooter onOpenBriefing={handleOpenBriefing} />
+      {/* GLOBAL FOOTER */}
+      <Footer />
 
       {/* CONCIERGE BRIEFING MODAL */}
       <ConciergeBriefingModal

@@ -204,7 +204,7 @@ export const PlatformPreview: React.FC = () => {
                         <div>
                           <div className="flex items-center gap-2">
                             <span className="font-serif font-bold text-[#38241F] text-base">Dominic Sterling</span>
-                            <span className="text-[11px] font-sans text-[#76665F]">Zurich, CH</span>
+                            <span className="text-[11px] font-sans text-[#76665F]">San Francisco, CA</span>
                           </div>
                           <div className="text-xs text-[#541719] font-medium font-sans">
                             Design Systems Architect • Ex-Stripe / Meta
@@ -214,7 +214,7 @@ export const PlatformPreview: React.FC = () => {
 
                       <div className="flex items-center gap-3">
                         <div className="text-right">
-                          <div className="text-xs font-mono font-bold text-[#38241F]">$160/hr</div>
+                          <div className="text-xs font-mono font-bold text-[#38241F]">$175/hr</div>
                           <div className="text-[10px] text-[#541719] font-sans font-medium">Available</div>
                         </div>
                         <span className="px-3 py-1.5 rounded-full bg-[#541719]/10 text-[#541719] border border-[#541719]/20 text-xs font-bold font-sans">
@@ -241,30 +241,45 @@ export const PlatformPreview: React.FC = () => {
                 {/* Left: Squad Assembly Tray */}
                 <div className="lg:col-span-4 space-y-4">
                   <div className="p-4 rounded-xl bg-white border border-[#E6D8CF] shadow-subtle">
-                    <div className="text-xs font-bold text-[#76665F] uppercase tracking-wider mb-3 font-sans">
-                      Selected Squad Pod (3/4)
+                    <div className="text-xs font-bold text-[#76665F] uppercase tracking-wider mb-3 font-sans flex items-center justify-between">
+                      <span>5-Specialist Squad</span>
+                      <span className="text-[#541719] font-mono">5/5 Ready</span>
                     </div>
-                    <div className="space-y-2">
-                      <div className="p-2.5 rounded-lg bg-[#FFF9F3] border border-[#E6D8CF] flex items-center justify-between">
+                    <div className="space-y-1.5">
+                      <div className="p-2 rounded-lg bg-[#FFF9F3] border border-[#E6D8CF] flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <CheckCircle className="w-4 h-4 text-[#541719]" />
+                          <CheckCircle className="w-3.5 h-3.5 text-[#541719]" />
                           <span className="text-xs font-bold text-[#38241F]">Elena Rostova</span>
                         </div>
-                        <span className="text-[10px] font-sans text-[#541719] font-semibold">Strategy</span>
+                        <span className="text-[10px] font-sans text-[#541719] font-semibold">Strategy · $165/hr</span>
                       </div>
-                      <div className="p-2.5 rounded-lg bg-[#FFF9F3] border border-[#E6D8CF] flex items-center justify-between">
+                      <div className="p-2 rounded-lg bg-[#FFF9F3] border border-[#E6D8CF] flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <CheckCircle className="w-4 h-4 text-[#541719]" />
+                          <CheckCircle className="w-3.5 h-3.5 text-[#541719]" />
                           <span className="text-xs font-bold text-[#38241F]">Julian Mercer</span>
                         </div>
-                        <span className="text-[10px] font-sans text-[#541719] font-semibold">Creative Dir</span>
+                        <span className="text-[10px] font-sans text-[#541719] font-semibold">Creative Dir · $210/hr</span>
                       </div>
-                      <div className="p-2.5 rounded-lg bg-[#FFF9F3] border border-[#E6D8CF] flex items-center justify-between">
+                      <div className="p-2 rounded-lg bg-[#FFF9F3] border border-[#E6D8CF] flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <CheckCircle className="w-4 h-4 text-[#541719]" />
+                          <CheckCircle className="w-3.5 h-3.5 text-[#541719]" />
                           <span className="text-xs font-bold text-[#38241F]">Dominic Sterling</span>
                         </div>
-                        <span className="text-[10px] font-sans text-[#541719] font-semibold">Tokens</span>
+                        <span className="text-[10px] font-sans text-[#541719] font-semibold">Design Systems · $175/hr</span>
+                      </div>
+                      <div className="p-2 rounded-lg bg-[#FFF9F3] border border-[#E6D8CF] flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <CheckCircle className="w-3.5 h-3.5 text-[#541719]" />
+                          <span className="text-xs font-bold text-[#38241F]">Mateo Silva</span>
+                        </div>
+                        <span className="text-[10px] font-sans text-[#541719] font-semibold">Art Dir · $165/hr</span>
+                      </div>
+                      <div className="p-2 rounded-lg bg-[#FFF9F3] border border-[#E6D8CF] flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <CheckCircle className="w-3.5 h-3.5 text-[#541719]" />
+                          <span className="text-xs font-bold text-[#38241F]">Camille Dupuis</span>
+                        </div>
+                        <span className="text-[10px] font-sans text-[#541719] font-semibold">Packaging · $185/hr</span>
                       </div>
                     </div>
                   </div>

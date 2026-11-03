@@ -1008,6 +1008,44 @@ export function buildRecommendedTeam(
     "Content Strategist": "Multi-Channel Editorial Content Plan"
   };
 
+  const addSquadMember = (role: string, candidate: ScoredCandidate) => {
+    selectedTalentIds.add(candidate.talent.id);
+
+    const matchedIndustry =
+      candidate.talent.industries.find((ind) =>
+        ind.toLowerCase().includes(requirements.industry.toLowerCase())
+      ) || candidate.talent.industries[0];
+
+    const whyRec = `Specialized in ${
+      candidate.talent.specializations[0] || candidate.talent.role
+    } with proven background in ${matchedIndustry}, directly aligned with your ${
+      requirements.projectTypes[0] || "project"
+    } goals.`;
+
+    const recommendationPoints = [
+      `Specialization: ${candidate.talent.specializations[0] || candidate.talent.role}`,
+      `Direct industry experience in ${matchedIndustry}`,
+      `${candidate.talent.experience} years leadership experience (${candidate.talent.hourlyRate})`,
+      candidate.portfolioEvidence
+        ? `Portfolio evidence: "${candidate.portfolioEvidence.projectTitle}" (${candidate.portfolioEvidence.projectType})`
+        : `Core mastery: ${candidate.talent.skills[0]}`
+    ];
+
+    squad.push({
+      roleTitle: role,
+      talent: candidate.talent,
+      score: candidate.score,
+      reason: whyRec,
+      recommendationPoints,
+      projectRequirementCovered: roleDeliverableMap[role] || "Strategic Creative Execution",
+      matchSignals: candidate.matchSignals,
+      matchedSkills: candidate.matchedSkills,
+      matchedIndustries: candidate.matchedIndustries,
+      portfolioEvidence: candidate.portfolioEvidence
+    });
+  };
+
+  // 1. First priority: Primary required roles
   for (const role of requirements.requiredRoles) {
     if (squad.length >= 5) break;
 
@@ -1016,40 +1054,45 @@ export function buildRecommendedTeam(
     );
 
     if (candidate) {
-      selectedTalentIds.add(candidate.talent.id);
+      addSquadMember(role, candidate);
+    }
+  }
 
-      const matchedIndustry =
-        candidate.talent.industries.find((ind) =>
-          ind.toLowerCase().includes(requirements.industry.toLowerCase())
-        ) || candidate.talent.industries[0];
+  // 2. Second priority: Optional / recommended complementary roles
+  if (squad.length < 5 && requirements.optionalRoles) {
+    for (const role of requirements.optionalRoles) {
+      if (squad.length >= 5) break;
 
-      const whyRec = `Recommended because their specialization in ${
-        candidate.talent.specializations[0]
-      } and proven background in ${matchedIndustry} directly aligns with your ${
-        requirements.projectTypes[0] || "project"
-      } requirements.`;
+      const candidate = scoredTalent.find(
+        (c) => c.talent.role === role && !selectedTalentIds.has(c.talent.id)
+      );
 
-      const recommendationPoints = [
-        `Specialization: ${candidate.talent.specializations[0] || candidate.talent.role}`,
-        `Direct industry experience in ${matchedIndustry}`,
-        `${candidate.talent.experience} years leadership experience (${candidate.talent.hourlyRate})`,
-        candidate.portfolioEvidence
-          ? `Portfolio evidence: "${candidate.portfolioEvidence.projectTitle}" (${candidate.portfolioEvidence.projectType})`
-          : `Core mastery: ${candidate.talent.skills[0]}`
-      ];
+      if (candidate) {
+        addSquadMember(role, candidate);
+      }
+    }
+  }
 
-      squad.push({
-        roleTitle: role,
-        talent: candidate.talent,
-        score: candidate.score,
-        reason: whyRec,
-        recommendationPoints,
-        projectRequirementCovered: roleDeliverableMap[role] || "Strategic Creative Execution",
-        matchSignals: candidate.matchSignals,
-        matchedSkills: candidate.matchedSkills,
-        matchedIndustries: candidate.matchedIndustries,
-        portfolioEvidence: candidate.portfolioEvidence
-      });
+  // 3. Third priority: High-scoring complementary specialists with distinct disciplines
+  if (squad.length < 5) {
+    for (const candidate of scoredTalent) {
+      if (squad.length >= 5) break;
+
+      const roleAlreadyPresent = squad.some((m) => m.roleTitle === candidate.talent.role);
+      if (!selectedTalentIds.has(candidate.talent.id) && !roleAlreadyPresent) {
+        addSquadMember(candidate.talent.role, candidate);
+      }
+    }
+  }
+
+  // 4. Final fallback: Any high-scoring specialist not already on squad
+  if (squad.length < 5) {
+    for (const candidate of scoredTalent) {
+      if (squad.length >= 5) break;
+
+      if (!selectedTalentIds.has(candidate.talent.id)) {
+        addSquadMember(candidate.talent.role, candidate);
+      }
     }
   }
 

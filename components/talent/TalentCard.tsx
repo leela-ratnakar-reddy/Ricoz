@@ -136,7 +136,7 @@ export const TalentCard: React.FC<TalentCardProps> = ({
               >
                 {talent.name}
               </Link>
-              {talent.featured && (
+              {(talent.isCurated ?? talent.featured) && (
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-sans font-semibold uppercase tracking-wider bg-[#541719]/10 text-[#541719] border border-[#541719]/20 shrink-0">
                   <EditorialStar size={8} color="#541719" />
                   Curated
@@ -239,7 +239,7 @@ export const TalentCard: React.FC<TalentCardProps> = ({
           href={`/talent/${talent.id}`}
           className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white hover:bg-[#541719] text-[#38241F] hover:text-[#FFF9F3] border border-[#E6D8CF] font-sans font-semibold text-xs transition-all shadow-subtle group/btn"
         >
-          <span>View Dossier</span>
+          <span>View Profile</span>
           <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
         </Link>
       </div>

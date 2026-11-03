@@ -270,12 +270,13 @@ export default function DesignerProfilePage() {
                   </h3>
                   <div className="flex flex-wrap gap-1.5">
                     {designer.skills.map((skill) => (
-                      <span
+                      <Link
                         key={skill}
-                        className="px-3 py-1 rounded-full text-xs font-sans bg-[#FFF9F3] text-[#76665F] border border-[#E6D8CF]"
+                        href={`/talent?search=${encodeURIComponent(skill)}`}
+                        className="px-3 py-1 rounded-full text-xs font-sans bg-[#FFF9F3] text-[#76665F] border border-[#E6D8CF] hover:border-[#541719] hover:text-[#541719] transition-colors"
                       >
                         {skill}
-                      </span>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -286,12 +287,13 @@ export default function DesignerProfilePage() {
                   </h3>
                   <div className="flex flex-wrap gap-1.5">
                     {designer.industries.map((ind) => (
-                      <span
+                      <Link
                         key={ind}
-                        className="px-3 py-1 rounded-full text-xs font-sans bg-[#FFF9F3] text-[#76665F] border border-[#E6D8CF]"
+                        href={`/talent?industry=${encodeURIComponent(ind)}`}
+                        className="px-3 py-1 rounded-full text-xs font-sans bg-[#FFF9F3] text-[#76665F] border border-[#E6D8CF] hover:border-[#541719] hover:text-[#541719] transition-colors"
                       >
                         {ind}
-                      </span>
+                      </Link>
                     ))}
                   </div>
                 </div>

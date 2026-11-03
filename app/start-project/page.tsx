@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { LandingNavbar } from "@/components/informational/LandingNavbar";
-import { LandingFooter } from "@/components/informational/LandingFooter";
+import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
 import { saveProject, getCurrentUser } from "@/lib/storage";
 import { TALENT_PROFILES } from "@/data/talentProfiles";
 import { TalentProfile } from "@/types/talent";
@@ -155,7 +155,7 @@ export default function StartProjectPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground selection:bg-accent selection:text-[#FFF9F3]">
-      <LandingNavbar />
+      <Navbar />
 
       <main className="flex-1 py-12 sm:py-16 relative overflow-hidden">
         <ContourFlourish className="absolute -top-16 -right-16 w-80 h-80 text-taupe/15 pointer-events-none" />
@@ -599,7 +599,7 @@ export default function StartProjectPage() {
         </div>
       </main>
 
-      <LandingFooter />
+      <Footer />
     </div>
   );
 }

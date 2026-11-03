@@ -22,6 +22,7 @@ export const ProductShowcaseSection: React.FC = () => {
     specialistName: "Mateo Silva & Dominic Sterling",
     specialistRole: "Art Director & Design Systems Architect",
     specialistAvatar: "/images/talent/mateo-silva.jpg",
+    talentId: "talent-020",
     discipline: "Design Systems & Visual Identity",
     deliverables: [
       "Enterprise Identity Mark",
@@ -126,7 +127,7 @@ export const ProductShowcaseSection: React.FC = () => {
                     <span className="inline-block px-2.5 py-1 rounded-full bg-[#541719]/10 text-[#541719] border border-[#541719]/20 text-xs font-sans font-bold">
                       96% Match
                     </span>
-                    <div className="text-[11px] font-mono text-[#38241F] mt-1">$155/hr</div>
+                    <div className="text-[11px] font-mono text-[#38241F] mt-1">$165/hr</div>
                   </div>
                 </div>
 
@@ -149,7 +150,7 @@ export const ProductShowcaseSection: React.FC = () => {
                     <span className="inline-block px-2.5 py-1 rounded-full bg-[#541719]/10 text-[#541719] border border-[#541719]/20 text-xs font-sans font-bold">
                       95% Match
                     </span>
-                    <div className="text-[11px] font-mono text-[#38241F] mt-1">$170/hr</div>
+                    <div className="text-[11px] font-mono text-[#38241F] mt-1">$185/hr</div>
                   </div>
                 </div>
               </div>

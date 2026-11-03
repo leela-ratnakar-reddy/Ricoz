@@ -47,18 +47,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenBriefing }) => {
             <div className="space-y-4">
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-1">
                 <Link
-                  href="/start-project"
+                  href="/talent"
                   className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full bg-[#541719] text-[#FFF9F3] font-sans font-semibold text-base shadow-burgundy hover:bg-[#3E1012] active:scale-95 transition-all group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#541719]"
                 >
-                  <span>Start a Project</span>
+                  <span>Explore Talent (57)</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform motion-reduce:transform-none" />
                 </Link>
 
                 <Link
-                  href="/talent"
+                  href="/start-project"
                   className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-[#FFF9F3] hover:bg-[#FAF2EA] text-[#38241F] border border-[#E6D8CF] font-sans font-semibold text-base shadow-subtle hover:border-[#C7A99A] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#541719]"
                 >
-                  <span>Explore Talent (57)</span>
+                  <span>Start a Project</span>
                 </Link>
               </div>
 
@@ -173,7 +173,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenBriefing }) => {
                           Julian Mercer
                         </div>
                         <span className="text-xs font-mono font-bold text-[#38241F] bg-[#FFF9F3] px-2 py-0.5 rounded-full border border-[#E6D8CF]">
-                          $175/hr
+                          $210/hr
                         </span>
                       </div>
                       <p className="text-xs font-medium text-[#541719] mb-2 font-sans">
@@ -187,7 +187,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenBriefing }) => {
                           Design Tokens
                         </span>
                         <span className="px-2 py-0.5 text-[11px] rounded-full bg-[#FFF9F3] text-[#76665F] border border-[#E6D8CF]">
-                          14 yrs exp
+                          16 yrs exp
                         </span>
                       </div>
                     </div>

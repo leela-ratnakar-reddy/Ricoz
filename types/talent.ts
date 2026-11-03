@@ -35,6 +35,7 @@ export interface TalentProfile {
   portfolio: PortfolioProject[];
   initials?: string;
   featured?: boolean;
+  isCurated?: boolean;
   profileImage?: string;
 }
 

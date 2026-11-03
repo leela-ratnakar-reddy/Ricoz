@@ -451,13 +451,14 @@ export default function TalentProfilePage() {
                   </h3>
                   <div className="space-y-2">
                     {talent.specializations.map((spec) => (
-                      <div
+                      <Link
                         key={spec}
-                        className="flex items-center gap-2.5 text-xs text-[#38241F] font-sans"
+                        href={`/talent?discipline=${encodeURIComponent(spec)}`}
+                        className="flex items-center gap-2.5 text-xs text-[#38241F] hover:text-[#541719] font-sans group transition-colors"
                       >
                         <CheckCircle2 className="w-3.5 h-3.5 text-[#541719] shrink-0" />
-                        <span className="font-semibold">{spec}</span>
-                      </div>
+                        <span className="font-semibold group-hover:underline">{spec}</span>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -469,12 +470,13 @@ export default function TalentProfilePage() {
                   </h3>
                   <div className="flex flex-wrap gap-1.5">
                     {talent.skills.map((skill) => (
-                      <span
+                      <Link
                         key={skill}
-                        className="px-3 py-1 rounded-full text-xs font-sans bg-[#FFF9F3] text-[#76665F] border border-[#E6D8CF]"
+                        href={`/talent?search=${encodeURIComponent(skill)}`}
+                        className="px-3 py-1 rounded-full text-xs font-sans bg-[#FFF9F3] text-[#76665F] border border-[#E6D8CF] hover:border-[#541719] hover:text-[#541719] transition-colors"
                       >
                         {skill}
-                      </span>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -486,12 +488,13 @@ export default function TalentProfilePage() {
                   </h3>
                   <div className="flex flex-wrap gap-1.5">
                     {talent.industries.map((ind) => (
-                      <span
+                      <Link
                         key={ind}
-                        className="px-3 py-1 rounded-full text-xs font-sans bg-[#FFF9F3] text-[#76665F] border border-[#E6D8CF]"
+                        href={`/talent?industry=${encodeURIComponent(ind)}`}
+                        className="px-3 py-1 rounded-full text-xs font-sans bg-[#FFF9F3] text-[#76665F] border border-[#E6D8CF] hover:border-[#541719] hover:text-[#541719] transition-colors"
                       >
                         {ind}
-                      </span>
+                      </Link>
                     ))}
                   </div>
                 </div>

@@ -36,10 +36,9 @@ export const Navbar: React.FC = () => {
   }, [pathname]);
 
   const navLinks = [
-    { label: "Find Talent", href: "/talent" },
+    { label: "Home", href: "/" },
+    { label: "Explore Talent", href: "/talent" },
     { label: "AI Match", href: "/ai-match" },
-    { label: "Designers", href: "/designers" },
-    { label: "How It Works", href: "/how-it-works" },
     { label: "For Companies", href: "/companies" },
     { label: "For Creatives", href: "/creatives" },
   ];
@@ -50,7 +49,7 @@ export const Navbar: React.FC = () => {
         className={`sticky top-0 z-40 w-full transition-all duration-300 ${
           scrolled
             ? "bg-[#FBF6F0]/95 backdrop-blur-md border-b border-[#E6D8CF] shadow-subtle py-3"
-            : "bg-[#FBF6F0]/80 backdrop-blur-sm border-b border-[#E6D8CF]/60 py-4 sm:py-5"
+            : "bg-[#FBF6F0]/85 backdrop-blur-sm border-b border-[#E6D8CF]/60 py-4 sm:py-5"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -63,7 +62,10 @@ export const Navbar: React.FC = () => {
             {/* DESKTOP CENTER NAVIGATION */}
             <nav className="hidden md:flex items-center gap-7">
               {navLinks.map((link) => {
-                const isActive = pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href));
+                const isActive =
+                  link.href === "/"
+                    ? pathname === "/"
+                    : pathname === link.href || pathname.startsWith(link.href);
                 return (
                   <Link
                     key={link.href}
@@ -86,7 +88,7 @@ export const Navbar: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setSearchOpen(true)}
-                className="p-2 text-[#76665F] hover:text-[#38241F] rounded-full hover:bg-[#FFF9F3] border border-transparent hover:border-[#E6D8CF] transition-colors"
+                className="p-2 text-[#76665F] hover:text-[#38241F] rounded-full hover:bg-[#FFF9F3] border border-transparent hover:border-[#E6D8CF] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#541719]"
                 aria-label="Open search dialog"
               >
                 <Search className="w-4 h-4" />
@@ -117,7 +119,7 @@ export const Navbar: React.FC = () => {
               {/* Start a Project CTA */}
               <Link
                 href="/start-project"
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full bg-[#541719] text-[#FFF9F3] hover:bg-[#3E1012] active:scale-95 transition-all shadow-burgundy"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full bg-[#541719] text-[#FFF9F3] hover:bg-[#3E1012] active:scale-95 transition-all shadow-burgundy focus:outline-none focus-visible:ring-2 focus-visible:ring-[#541719]"
               >
                 <span>Start a Project</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -125,11 +127,11 @@ export const Navbar: React.FC = () => {
             </div>
 
             {/* MOBILE MENU TOGGLE */}
-            <div className="flex md:hidden items-center gap-3">
+            <div className="flex md:hidden items-center gap-2">
               <button
                 type="button"
                 onClick={() => setSearchOpen(true)}
-                className="p-2 text-[#76665F] hover:text-[#38241F]"
+                className="p-2 text-[#76665F] hover:text-[#38241F] focus:outline-none"
                 aria-label="Search"
               >
                 <Search className="w-5 h-5" />
@@ -137,7 +139,7 @@ export const Navbar: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 text-[#76665F] hover:text-[#38241F]"
+                className="p-2 text-[#76665F] hover:text-[#38241F] focus:outline-none"
                 aria-label="Toggle menu"
               >
                 {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -149,16 +151,24 @@ export const Navbar: React.FC = () => {
         {/* MOBILE NAVIGATION DRAWER */}
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-[#E6D8CF] bg-[#FFF9F3] px-5 pt-4 pb-6 space-y-4 shadow-card animate-in slide-in-from-top-2 duration-200">
-            <div className="flex flex-col space-y-3">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-sm tracking-wider font-medium text-[#76665F] hover:text-[#541719] py-1.5"
-                >
-                  {link.label}
-                </Link>
-              ))}
+            <div className="flex flex-col space-y-2">
+              {navLinks.map((link) => {
+                const isActive =
+                  link.href === "/"
+                    ? pathname === "/"
+                    : pathname === link.href || pathname.startsWith(link.href);
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`text-sm tracking-wider py-2 font-medium transition-colors ${
+                      isActive ? "text-[#541719] font-bold" : "text-[#76665F] hover:text-[#541719]"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
             </div>
 
             <div className="pt-4 border-t border-[#E6D8CF] space-y-3">
@@ -166,12 +176,14 @@ export const Navbar: React.FC = () => {
                 href={
                   currentUser?.role === "designer"
                     ? "/dashboard/designer"
-                    : "/dashboard/company"
+                    : currentUser
+                    ? "/dashboard/company"
+                    : "/login"
                 }
                 className="flex items-center justify-center gap-2 w-full py-2.5 text-xs tracking-wider font-semibold border border-[#E6D8CF] rounded-full bg-white text-[#38241F]"
               >
                 <LayoutDashboard className="w-4 h-4 text-[#541719]" />
-                <span>Go to Dashboard</span>
+                <span>{currentUser ? "Go to Dashboard" : "Sign In"}</span>
               </Link>
               <Link
                 href="/start-project"
@@ -180,11 +192,6 @@ export const Navbar: React.FC = () => {
                 <span>Start a Project</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
-              <div className="flex justify-center pt-2">
-                <Link href="/login" className="text-xs text-[#9E8E87] hover:text-[#76665F]">
-                  Sign in or switch account
-                </Link>
-              </div>
             </div>
           </div>
         )}

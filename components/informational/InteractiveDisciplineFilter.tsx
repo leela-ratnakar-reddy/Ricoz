@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { Search, ArrowRight, Sparkles, X } from "lucide-react";
-import { TALENT_PROFILES } from "@/data/talentProfiles";
+import { getCanonicalTalentProfiles } from "@/lib/talentData";
 import { TalentProfile } from "@/types/talent";
 import { TalentAvatar } from "@/components/ui/TalentAvatar";
 import { CaseStudyModal, CaseStudyItem } from "@/components/informational/CaseStudyModal";
@@ -27,7 +27,7 @@ export const InteractiveDisciplineFilter: React.FC = () => {
 
   // Filter profiles based on selected discipline & search query
   const filteredTalent = useMemo(() => {
-    return TALENT_PROFILES.filter((t) => {
+    return getCanonicalTalentProfiles().filter((t) => {
       const matchesDiscipline =
         selectedDiscipline === "All" ||
         t.specializations?.some((s) => s.toLowerCase().includes(selectedDiscipline.toLowerCase())) ||
@@ -51,7 +51,7 @@ export const InteractiveDisciplineFilter: React.FC = () => {
       title: portfolioItem?.title || `${talent.name} // Featured Project Work`,
       client: portfolioItem?.client || `${talent.name} Studio Mandate`,
       specialistName: talent.name,
-      specialistRole: talent.specializations?.[0] || "Creative Specialist",
+      specialistRole: talent.specializations?.[0] || talent.role,
       specialistAvatar: talent.profileImage || `/images/talent/${talent.name.toLowerCase().replace(/[\s\.]+/g, "-")}.jpg`,
       discipline: selectedDiscipline === "All" ? talent.specializations?.[0] || "Creative Direction" : selectedDiscipline,
       deliverables: portfolioItem?.deliverables || talent.skills.slice(0, 4),
@@ -64,6 +64,7 @@ export const InteractiveDisciplineFilter: React.FC = () => {
       image: portfolioItem?.image,
       timeline: portfolioItem?.year ? `${portfolioItem.year}` : "4-6 weeks",
       palette: ["#38241F", "#541719", "#C7A99A", "#FBF6F0"],
+      talentId: talent.id,
     };
     setActiveModalCase(caseItem);
   };

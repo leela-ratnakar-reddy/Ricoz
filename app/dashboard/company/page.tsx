@@ -105,8 +105,8 @@ export default function CompanyDashboardPage() {
                 <span className="text-xs font-mono uppercase tracking-wider font-semibold">Active Projects</span>
                 <FolderKanban className="w-4 h-4 text-taupe group-hover:text-accent transition-colors" />
               </div>
-              <div className="text-3xl font-serif font-normal text-espresso">
-                {projects.length}
+              <div className="text-2xl sm:text-3xl font-serif font-normal text-espresso">
+                {projects.length > 0 ? projects.length : "Pipeline Active"}
               </div>
             </Link>
 
@@ -118,8 +118,8 @@ export default function CompanyDashboardPage() {
                 <span className="text-xs font-mono uppercase tracking-wider font-semibold">Matched Talent</span>
                 <Sparkles className="w-4 h-4 text-accent" />
               </div>
-              <div className="text-3xl font-serif font-normal text-espresso">
-                {recommendedTalent.length > 0 ? "12" : "0"}
+              <div className="text-2xl sm:text-3xl font-serif font-normal text-espresso">
+                {recommendedTalent.length > 0 ? `${recommendedTalent.length} Matched` : "57 Curated"}
               </div>
             </Link>
 
@@ -131,8 +131,8 @@ export default function CompanyDashboardPage() {
                 <span className="text-xs font-mono uppercase tracking-wider font-semibold">Shortlisted</span>
                 <Heart className="w-4 h-4 text-accent" />
               </div>
-              <div className="text-3xl font-serif font-normal text-espresso">
-                {shortlistCount}
+              <div className="text-2xl sm:text-3xl font-serif font-normal text-espresso">
+                {shortlistCount > 0 ? shortlistCount : "Pipeline Ready"}
               </div>
             </Link>
 
@@ -144,8 +144,8 @@ export default function CompanyDashboardPage() {
                 <span className="text-xs font-mono uppercase tracking-wider font-semibold">Messages</span>
                 <MessageSquare className="w-4 h-4 text-taupe group-hover:text-accent transition-colors" />
               </div>
-              <div className="text-3xl font-serif font-normal text-espresso">
-                {unreadMsgCount}
+              <div className="text-2xl sm:text-3xl font-serif font-normal text-espresso">
+                {unreadMsgCount > 0 ? unreadMsgCount : "0 Active"}
               </div>
             </Link>
           </div>
@@ -297,7 +297,7 @@ export default function CompanyDashboardPage() {
             <div className="bg-white border border-[#E6D8CF] rounded-2xl p-6 divide-y divide-[#E6D8CF] shadow-2xs">
               {[
                 {
-                  text: "You shortlisted Emma Carter (Brand Identity Lead).",
+                  text: "You shortlisted Elena Rostova (Principal Brand Strategist).",
                   time: "Today, 11:20 AM",
                   icon: Heart,
                 },

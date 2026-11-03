@@ -22,6 +22,7 @@ export interface CaseStudyItem {
   image?: string;
   timeline?: string;
   palette?: string[];
+  talentId?: string;
 }
 
 interface CaseStudyModalProps {
@@ -122,8 +123,11 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
 
           {/* LEAD SPECIALIST INFO */}
           <div className="p-4 rounded-2xl bg-[#FFF9F3] border border-[#E6D8CF] flex items-center justify-between">
-            <div className="flex items-center gap-3.5">
-              <div className="relative w-12 h-12 rounded-full overflow-hidden bg-[#E0CEC3] border border-[#C7A99A] shrink-0">
+            <Link
+              href={caseStudy.talentId ? `/talent/${caseStudy.talentId}` : "/talent"}
+              className="flex items-center gap-3.5 group/talent hover:opacity-90 transition-opacity"
+            >
+              <div className="relative w-12 h-12 rounded-full overflow-hidden bg-[#E0CEC3] border border-[#C7A99A] shrink-0 group-hover/talent:ring-2 group-hover/talent:ring-[#541719] transition-all">
                 <Image
                   src={caseStudy.specialistAvatar || "/images/talent/elena-rostova.jpg"}
                   alt={caseStudy.specialistName}
@@ -132,14 +136,15 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
                 />
               </div>
               <div>
-                <div className="font-serif font-bold text-[#38241F] text-sm">
-                  {caseStudy.specialistName}
+                <div className="font-serif font-bold text-[#38241F] text-sm group-hover/talent:text-[#541719] transition-colors flex items-center gap-1.5">
+                  <span>{caseStudy.specialistName}</span>
+                  <span className="text-[10px] font-sans text-[#76665F] font-normal underline">(View Profile)</span>
                 </div>
                 <div className="text-xs text-[#541719] font-medium font-sans">
                   {caseStudy.specialistRole}
                 </div>
               </div>
-            </div>
+            </Link>
 
             {caseStudy.timeline && (
               <div className="text-right">
