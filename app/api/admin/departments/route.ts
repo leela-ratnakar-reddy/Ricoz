@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAdminUserFromRequest } from "@/lib/admin/auth";
+import { requirePermission } from "@/lib/admin/auth";
 import { getDb } from "@/lib/admin/db";
+import { recordAuditLog } from "@/lib/admin/audit";
 
 export async function GET(req: NextRequest) {
   try {
-    const user = getAdminUserFromRequest(req);
-    if (!user) {
-      return NextResponse.json({ success: false, error: "Unauthenticated" }, { status: 401 });
-    }
+    const auth = await requirePermission("departments.view", req);
+    if ("errorResponse" in auth) return auth.errorResponse;
 
     const db = getDb();
     const today = new Date().toISOString().split("T")[0];
@@ -31,5 +30,53 @@ export async function GET(req: NextRequest) {
   } catch (error) {
     console.error("Departments GET error:", error);
     return NextResponse.json({ success: false, error: "Failed to fetch departments" }, { status: 500 });
+  }
+}
+
+export async function POST(req: NextRequest) {
+  try {
+    const auth = await requirePermission("departments.create", req);
+    if ("errorResponse" in auth) return auth.errorResponse;
+    const { user } = auth;
+
+    const body = await req.json();
+    const { name, description, slug } = body;
+
+    if (!name || !description) {
+      return NextResponse.json({ success: false, error: "Department name and description are required." }, { status: 422 });
+    }
+
+    const cleanSlug = (slug || name).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    const deptId = `dept-${cleanSlug}`;
+    const now = new Date().toISOString();
+
+    const db = getDb();
+    const existing = db.prepare("SELECT id FROM departments WHERE slug = ? OR name = ?").get(cleanSlug, name);
+    if (existing) {
+      return NextResponse.json({ success: false, error: "A department with this name or slug already exists." }, { status: 409 });
+    }
+
+    db.prepare(`
+      INSERT INTO departments (id, name, slug, description, created_at)
+      VALUES (?, ?, ?, ?, ?)
+    `).run(deptId, name.trim(), cleanSlug, description.trim(), now);
+
+    recordAuditLog({
+      actor: user,
+      action: "DEPARTMENT_CREATED",
+      entityType: "department",
+      entityId: deptId,
+      changeSummary: `Created department "${name}" (${cleanSlug}).`,
+      ipAddress: req.headers.get("x-forwarded-for") || "127.0.0.1",
+    });
+
+    return NextResponse.json({
+      success: true,
+      message: "Department created successfully.",
+      department: { id: deptId, name, slug: cleanSlug, description },
+    });
+  } catch (error) {
+    console.error("Departments POST error:", error);
+    return NextResponse.json({ success: false, error: "Failed to create department" }, { status: 500 });
   }
 }

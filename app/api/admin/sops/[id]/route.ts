@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAdminUserFromRequest, hasPermission } from "@/lib/admin/auth";
+import { requirePermission } from "@/lib/admin/auth";
 import { getDb } from "@/lib/admin/db";
 import { recordAuditLog } from "@/lib/admin/audit";
 
@@ -8,10 +8,8 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const user = getAdminUserFromRequest(req);
-    if (!user) {
-      return NextResponse.json({ success: false, error: "Unauthenticated" }, { status: 401 });
-    }
+    const auth = await requirePermission("sops.view", req);
+    if ("errorResponse" in auth) return auth.errorResponse;
 
     const { id } = await params;
     const db = getDb();
@@ -45,14 +43,9 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const user = getAdminUserFromRequest(req);
-    if (!user) {
-      return NextResponse.json({ success: false, error: "Unauthenticated" }, { status: 401 });
-    }
-
-    if (!hasPermission(user.role, "manage_sops")) {
-      return NextResponse.json({ success: false, error: "Permission denied." }, { status: 403 });
-    }
+    const auth = await requirePermission("sops.edit", req);
+    if ("errorResponse" in auth) return auth.errorResponse;
+    const { user } = auth;
 
     const { id } = await params;
     const db = getDb();
@@ -98,5 +91,40 @@ export async function PATCH(
   } catch (error) {
     console.error("SOP PATCH error:", error);
     return NextResponse.json({ success: false, error: "Failed to update SOP" }, { status: 500 });
+  }
+}
+
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const auth = await requirePermission("sops.delete", req);
+    if ("errorResponse" in auth) return auth.errorResponse;
+    const { user } = auth;
+
+    const { id } = await params;
+    const db = getDb();
+
+    const existing = db.prepare("SELECT title FROM sops WHERE id = ?").get(id) as { title: string } | undefined;
+    if (!existing) {
+      return NextResponse.json({ success: false, error: "SOP not found" }, { status: 404 });
+    }
+
+    db.prepare("DELETE FROM sops WHERE id = ?").run(id);
+
+    recordAuditLog({
+      actor: user,
+      action: "SOP_DELETED",
+      entityType: "sop",
+      entityId: id,
+      changeSummary: `Deleted SOP "${existing.title}".`,
+      ipAddress: req.headers.get("x-forwarded-for") || "127.0.0.1",
+    });
+
+    return NextResponse.json({ success: true, message: "SOP deleted successfully." });
+  } catch (error) {
+    console.error("SOP DELETE error:", error);
+    return NextResponse.json({ success: false, error: "Failed to delete SOP" }, { status: 500 });
   }
 }

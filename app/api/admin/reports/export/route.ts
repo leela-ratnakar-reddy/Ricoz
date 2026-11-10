@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAdminUserFromRequest, hasPermission } from "@/lib/admin/auth";
+import { requirePermission } from "@/lib/admin/auth";
 import { getDb } from "@/lib/admin/db";
 import { recordAuditLog } from "@/lib/admin/audit";
 
@@ -11,14 +11,9 @@ function escapeCSV(val: unknown): string {
 
 export async function GET(req: NextRequest) {
   try {
-    const user = getAdminUserFromRequest(req);
-    if (!user) {
-      return NextResponse.json({ success: false, error: "Unauthenticated" }, { status: 401 });
-    }
-
-    if (!hasPermission(user.role, "export_reports")) {
-      return NextResponse.json({ success: false, error: "Permission denied to export data." }, { status: 403 });
-    }
+    const auth = await requirePermission("reports.export", req);
+    if ("errorResponse" in auth) return auth.errorResponse;
+    const { user } = auth;
 
     const { searchParams } = new URL(req.url);
     const type = searchParams.get("type") || "tasks";

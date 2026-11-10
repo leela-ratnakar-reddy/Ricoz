@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAdminUserFromRequest } from "@/lib/admin/auth";
+import { requirePermission } from "@/lib/admin/auth";
 import { getDb } from "@/lib/admin/db";
 
 export async function GET(req: NextRequest) {
   try {
-    const user = getAdminUserFromRequest(req);
-    if (!user) {
-      return NextResponse.json({ success: false, error: "Unauthenticated" }, { status: 401 });
-    }
+    const auth = await requirePermission("dashboard.view", req);
+    if ("errorResponse" in auth) return auth.errorResponse;
+    const { user } = auth;
 
     const db = getDb();
     const { searchParams } = new URL(req.url);

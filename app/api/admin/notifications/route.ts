@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAdminUserFromRequest } from "@/lib/admin/auth";
+import { requirePermission } from "@/lib/admin/auth";
 import { getDb } from "@/lib/admin/db";
 
 export async function GET(req: NextRequest) {
   try {
-    const user = getAdminUserFromRequest(req);
-    if (!user) {
-      return NextResponse.json({ success: false, error: "Unauthenticated" }, { status: 401 });
-    }
+    const auth = await requirePermission("notifications.view", req);
+    if ("errorResponse" in auth) return auth.errorResponse;
+    const { user } = auth;
 
     const db = getDb();
     const notifications = db.prepare(`
@@ -30,10 +29,9 @@ export async function GET(req: NextRequest) {
 
 export async function PATCH(req: NextRequest) {
   try {
-    const user = getAdminUserFromRequest(req);
-    if (!user) {
-      return NextResponse.json({ success: false, error: "Unauthenticated" }, { status: 401 });
-    }
+    const auth = await requirePermission("notifications.manage", req);
+    if ("errorResponse" in auth) return auth.errorResponse;
+    const { user } = auth;
 
     const db = getDb();
     const body = await req.json();

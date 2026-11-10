@@ -37,7 +37,7 @@ export const AdminLayoutShell: React.FC<AdminLayoutShellProps> = ({ children }) 
         const res = await fetch("/api/admin/auth/me");
         if (!res.ok) {
           if (!isLoginPage) {
-            router.push("/admin/login");
+            router.push(`/admin/login?from=${encodeURIComponent(pathname)}`);
           }
           setLoading(false);
           return;
@@ -60,11 +60,11 @@ export const AdminLayoutShell: React.FC<AdminLayoutShellProps> = ({ children }) 
             // Non-blocking
           }
         } else if (!isLoginPage) {
-          router.push("/admin/login");
+          router.push(`/admin/login?from=${encodeURIComponent(pathname)}`);
         }
       } catch {
         if (!isLoginPage) {
-          router.push("/admin/login");
+          router.push(`/admin/login?from=${encodeURIComponent(pathname)}`);
         }
       } finally {
         setLoading(false);

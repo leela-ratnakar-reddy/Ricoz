@@ -17,6 +17,8 @@ import {
   LogOut,
   ChevronRight,
   Shield,
+  ShieldCheck,
+  UserCheck,
   X,
 } from "lucide-react";
 import { AdminUser, AdminRole } from "@/lib/admin/types";
@@ -52,12 +54,13 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
     }
   };
 
-  const navItems = [
+  const allNavItems = [
     {
       label: "Operations Dashboard",
       href: "/admin",
       icon: LayoutDashboard,
       exact: true,
+      permission: "dashboard.view",
     },
     {
       label: "Tasks & Workflows",
@@ -65,11 +68,13 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
       icon: CheckSquare,
       badge: badgeCounts.overdueTasks && badgeCounts.overdueTasks > 0 ? `${badgeCounts.overdueTasks} overdue` : undefined,
       badgeVariant: "urgent",
+      permission: "tasks.view",
     },
     {
       label: "Client Management",
       href: "/admin/clients",
       icon: Building2,
+      permission: "clients.view",
     },
     {
       label: "Vendor Network",
@@ -77,11 +82,19 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
       icon: Handshake,
       badge: badgeCounts.pendingVendors && badgeCounts.pendingVendors > 0 ? `${badgeCounts.pendingVendors} pending` : undefined,
       badgeVariant: "warning",
+      permission: "vendors.view",
     },
     {
-      label: "Teams & Departments",
+      label: "Teams & Access",
+      href: "/admin/team",
+      icon: UserCheck,
+      permission: "users.view",
+    },
+    {
+      label: "Departments",
       href: "/admin/departments",
       icon: Users2,
+      permission: "departments.view",
     },
     {
       label: "Support & Complaints",
@@ -89,16 +102,19 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
       icon: LifeBuoy,
       badge: badgeCounts.openTickets && badgeCounts.openTickets > 0 ? `${badgeCounts.openTickets}` : undefined,
       badgeVariant: "default",
+      permission: "support.view",
     },
     {
       label: "SOPs & Knowledge",
       href: "/admin/sops",
       icon: FileText,
+      permission: "sops.view",
     },
     {
       label: "Reports & Analytics",
       href: "/admin/reports",
       icon: BarChart3,
+      permission: "reports.view",
     },
     {
       label: "Notifications",
@@ -106,32 +122,62 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
       icon: Bell,
       badge: badgeCounts.unreadNotifications && badgeCounts.unreadNotifications > 0 ? `${badgeCounts.unreadNotifications}` : undefined,
       badgeVariant: "urgent",
+      permission: "notifications.view",
     },
-  ];
-
-  // Restrict Audit Log to authorized roles
-  if (["super_admin", "ops_admin", "auditor"].includes(user.role)) {
-    navItems.push({
+    {
       label: "Security Audit Log",
       href: "/admin/audit-log",
       icon: ShieldAlert,
-    });
-  }
+      permission: "audit_logs.view",
+    },
+  ];
+
+  // Role-aware navigation: Filter items according to permissions
+  const navItems = allNavItems.filter((item) => {
+    if (user.role === "super_admin") return true;
+    if (!item.permission) return true;
+    if (user.permissions && Array.isArray(user.permissions)) {
+      return user.permissions.includes(item.permission);
+    }
+    return true; // Fallback to permissive client rendering (backend strictly enforces authorization)
+  });
 
   const roleLabels: Record<AdminRole, string> = {
-    super_admin: "Super Admin",
-    ops_admin: "Operations Admin",
-    dept_manager: "Dept Manager",
+    super_admin: "Owner / Super Admin",
+    exec_director: "Executive Director",
+    coo: "Chief Operations Officer",
+    dept_head: "Department Head",
+    ops_manager: "Operations Manager",
+    finance_manager: "Finance Manager",
+    hr_manager: "HR Manager",
+    sales_manager: "Sales Manager",
+    marketing_manager: "Marketing Manager",
+    tech_manager: "Tech Manager",
+    ai_manager: "AI & Automation Lead",
+    qa_manager: "QA Manager",
     team_member: "Team Member",
     auditor: "Auditor",
+    ops_admin: "Operations Admin",
+    dept_manager: "Department Manager",
   };
 
   const roleColors: Record<AdminRole, string> = {
     super_admin: "bg-red-950/70 text-red-400 border-red-800/60",
+    exec_director: "bg-purple-950/70 text-purple-400 border-purple-800/60",
+    coo: "bg-orange-950/70 text-orange-400 border-orange-800/60",
+    dept_head: "bg-indigo-950/70 text-indigo-400 border-indigo-800/60",
+    ops_manager: "bg-amber-950/70 text-amber-400 border-amber-800/60",
+    finance_manager: "bg-emerald-950/70 text-emerald-400 border-emerald-800/60",
+    hr_manager: "bg-pink-950/70 text-pink-400 border-pink-800/60",
+    sales_manager: "bg-cyan-950/70 text-cyan-400 border-cyan-800/60",
+    marketing_manager: "bg-rose-950/70 text-rose-400 border-rose-800/60",
+    tech_manager: "bg-blue-950/70 text-blue-400 border-blue-800/60",
+    ai_manager: "bg-violet-950/70 text-violet-400 border-violet-800/60",
+    qa_manager: "bg-teal-950/70 text-teal-400 border-teal-800/60",
+    team_member: "bg-slate-800/70 text-slate-300 border-slate-700/60",
+    auditor: "bg-purple-950/70 text-purple-400 border-purple-800/60",
     ops_admin: "bg-amber-950/70 text-amber-400 border-amber-800/60",
     dept_manager: "bg-blue-950/70 text-blue-400 border-blue-800/60",
-    team_member: "bg-emerald-950/70 text-emerald-400 border-emerald-800/60",
-    auditor: "bg-purple-950/70 text-purple-400 border-purple-800/60",
   };
 
   return (

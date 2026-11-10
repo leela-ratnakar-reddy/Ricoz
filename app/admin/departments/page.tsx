@@ -99,10 +99,21 @@ export default function AdminDepartmentsPage() {
 
   const roleBadges: Record<string, { label: string; color: string }> = {
     super_admin: { label: "Super Admin", color: "bg-red-950/80 text-red-400 border-red-800/60" },
-    ops_admin: { label: "Operations Admin", color: "bg-amber-950/80 text-amber-400 border-amber-800/60" },
-    dept_manager: { label: "Dept Manager", color: "bg-blue-950/80 text-blue-400 border-blue-800/60" },
-    team_member: { label: "Team Member", color: "bg-emerald-950/80 text-emerald-400 border-emerald-800/60" },
+    exec_director: { label: "Executive Director", color: "bg-purple-950/80 text-purple-400 border-purple-800/60" },
+    coo: { label: "COO", color: "bg-orange-950/80 text-orange-400 border-orange-800/60" },
+    dept_head: { label: "Dept Head", color: "bg-indigo-950/80 text-indigo-400 border-indigo-800/60" },
+    ops_manager: { label: "Ops Manager", color: "bg-amber-950/80 text-amber-400 border-amber-800/60" },
+    finance_manager: { label: "Finance Manager", color: "bg-emerald-950/80 text-emerald-400 border-emerald-800/60" },
+    hr_manager: { label: "HR Manager", color: "bg-pink-950/80 text-pink-400 border-pink-800/60" },
+    sales_manager: { label: "Sales Manager", color: "bg-cyan-950/80 text-cyan-400 border-cyan-800/60" },
+    marketing_manager: { label: "Marketing Manager", color: "bg-rose-950/80 text-rose-400 border-rose-800/60" },
+    tech_manager: { label: "Tech Manager", color: "bg-blue-950/80 text-blue-400 border-blue-800/60" },
+    ai_manager: { label: "AI Lead", color: "bg-violet-950/80 text-violet-400 border-violet-800/60" },
+    qa_manager: { label: "QA Manager", color: "bg-teal-950/80 text-teal-400 border-teal-800/60" },
+    team_member: { label: "Team Member", color: "bg-slate-800/80 text-slate-300 border-slate-700/60" },
     auditor: { label: "Auditor", color: "bg-purple-950/80 text-purple-400 border-purple-800/60" },
+    ops_admin: { label: "Ops Admin", color: "bg-amber-950/80 text-amber-400 border-amber-800/60" },
+    dept_manager: { label: "Dept Manager", color: "bg-blue-950/80 text-blue-400 border-blue-800/60" },
   };
 
   if (loading) {

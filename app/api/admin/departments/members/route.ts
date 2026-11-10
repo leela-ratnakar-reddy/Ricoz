@@ -1,15 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAdminUserFromRequest, hasPermission } from "@/lib/admin/auth";
+import { requirePermission } from "@/lib/admin/auth";
 import { getDb, hashPassword } from "@/lib/admin/db";
 import { recordAuditLog } from "@/lib/admin/audit";
 import crypto from "node:crypto";
 
 export async function GET(req: NextRequest) {
   try {
-    const user = getAdminUserFromRequest(req);
-    if (!user) {
-      return NextResponse.json({ success: false, error: "Unauthenticated" }, { status: 401 });
-    }
+    const auth = await requirePermission("departments.view", req);
+    if ("errorResponse" in auth) return auth.errorResponse;
 
     const db = getDb();
     const today = new Date().toISOString().split("T")[0];
@@ -38,14 +36,9 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const user = getAdminUserFromRequest(req);
-    if (!user) {
-      return NextResponse.json({ success: false, error: "Unauthenticated" }, { status: 401 });
-    }
-
-    if (!hasPermission(user.role, "manage_users")) {
-      return NextResponse.json({ success: false, error: "Only Super Admin can provision new team members." }, { status: 403 });
-    }
+    const auth = await requirePermission("users.create", req);
+    if ("errorResponse" in auth) return auth.errorResponse;
+    const { user } = auth;
 
     const body = await req.json();
     const { email, fullName, role, departmentId, password } = body;
@@ -70,30 +63,37 @@ export async function POST(req: NextRequest) {
     db.prepare(`
       INSERT INTO admin_users (id, email, password_hash, salt, full_name, role, department_id, status, avatar, created_at)
       VALUES (?, ?, ?, ?, ?, ?, ?, 'active', ?, ?)
-    `).run(
-      userId,
-      email.trim().toLowerCase(),
-      hash,
-      salt,
-      fullName.trim(),
-      role,
-      departmentId || null,
-      initials,
-      now
-    );
+    `).run(userId, email.trim().toLowerCase(), hash, salt, fullName.trim(), role, departmentId || null, initials, now);
+
+    if (departmentId) {
+      db.prepare(`
+        INSERT INTO admin_department_members (id, admin_user_id, department_id, membership_role, is_primary, created_at)
+        VALUES (?, ?, ?, 'member', 1, ?)
+      `).run(`dmem-${userId}-${departmentId}`, userId, departmentId, now);
+    }
 
     recordAuditLog({
       actor: user,
       action: "USER_PROVISIONED",
       entityType: "admin_user",
       entityId: userId,
-      changeSummary: `Provisioned user ${fullName} (${email}) as ${role}`,
+      changeSummary: `Provisioned user ${fullName} (${role}) in department ${departmentId || "unassigned"}`,
       ipAddress: req.headers.get("x-forwarded-for") || "127.0.0.1",
     });
 
-    return NextResponse.json({ success: true, message: "Team member provisioned successfully." });
+    return NextResponse.json({
+      success: true,
+      message: "Team member provisioned successfully.",
+      user: {
+        id: userId,
+        email: email.trim().toLowerCase(),
+        fullName,
+        role,
+        departmentId,
+      },
+    });
   } catch (error) {
     console.error("Team member POST error:", error);
-    return NextResponse.json({ success: false, error: "Failed to provision team member" }, { status: 500 });
+    return NextResponse.json({ success: false, error: "Failed to provision user" }, { status: 500 });
   }
 }

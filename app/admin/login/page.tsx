@@ -1,16 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { Shield, Lock, Mail, ArrowRight, AlertCircle, Sparkles, CheckCircle2 } from "lucide-react";
+import React, { useState, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Shield, Lock, Mail, AlertCircle, Sparkles } from "lucide-react";
 
-export default function AdminLoginPage() {
+function AdminLoginForm() {
   const router = useRouter();
-  const [email, setEmail] = useState("admin@ricoz.io");
-  const [password, setPassword] = useState("AdminRicoz2026!");
+  const searchParams = useSearchParams();
+  const fromParam = searchParams.get("from");
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // In production, development role shortcuts are strictly disabled
+  const showDevShortcuts =
+    process.env.NODE_ENV === "development" &&
+    process.env.NEXT_PUBLIC_ENABLE_DEV_LOGIN_SHORTCUTS === "true";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,9 +38,10 @@ export default function AdminLoginPage() {
         return;
       }
 
-      router.push("/admin");
+      const targetDestination = fromParam && fromParam.startsWith("/admin") ? fromParam : "/admin";
+      router.push(targetDestination);
       router.refresh();
-    } catch (err) {
+    } catch {
       setError("Network or server connection failed. Please try again.");
       setLoading(false);
     }
@@ -77,47 +85,49 @@ export default function AdminLoginPage() {
             </div>
           )}
 
-          {/* Quick Role Fill Presets for Local Testing / Operations */}
-          <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5 space-y-2">
-            <div className="flex items-center gap-1.5 text-[10px] font-mono font-semibold uppercase tracking-wider text-slate-400">
-              <Sparkles className="w-3 h-3 text-red-400" />
-              <span>Authorized Profiles</span>
+          {/* Development role presets - strictly guarded behind development configuration */}
+          {showDevShortcuts && (
+            <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5 space-y-2">
+              <div className="flex items-center gap-1.5 text-[10px] font-mono font-semibold uppercase tracking-wider text-amber-400">
+                <Sparkles className="w-3 h-3 text-amber-400" />
+                <span>Development Testing Presets (Dev Mode Only)</span>
+              </div>
+              <div className="grid grid-cols-2 gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => handleQuickFill("admin@ricoz.io")}
+                  className="text-left p-2 rounded bg-white/[0.04] hover:bg-white/[0.08] border border-white/5 transition-colors"
+                >
+                  <div className="text-[11px] font-semibold text-slate-200">Super Admin</div>
+                  <div className="text-[9px] text-slate-400 font-mono truncate">admin@ricoz.io</div>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleQuickFill("elena.ramos@ricoz.io")}
+                  className="text-left p-2 rounded bg-white/[0.04] hover:bg-white/[0.08] border border-white/5 transition-colors"
+                >
+                  <div className="text-[11px] font-semibold text-slate-200">Ops Admin</div>
+                  <div className="text-[9px] text-slate-400 font-mono truncate">elena.ramos@ricoz.io</div>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleQuickFill("kai.chen@ricoz.io")}
+                  className="text-left p-2 rounded bg-white/[0.04] hover:bg-white/[0.08] border border-white/5 transition-colors"
+                >
+                  <div className="text-[11px] font-semibold text-slate-200">Tech Lead</div>
+                  <div className="text-[9px] text-slate-400 font-mono truncate">kai.chen@ricoz.io</div>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleQuickFill("audit@ricoz.io")}
+                  className="text-left p-2 rounded bg-white/[0.04] hover:bg-white/[0.08] border border-white/5 transition-colors"
+                >
+                  <div className="text-[11px] font-semibold text-slate-200">Auditor</div>
+                  <div className="text-[9px] text-slate-400 font-mono truncate">audit@ricoz.io</div>
+                </button>
+              </div>
             </div>
-            <div className="grid grid-cols-2 gap-1.5">
-              <button
-                type="button"
-                onClick={() => handleQuickFill("admin@ricoz.io")}
-                className="text-left p-2 rounded bg-white/[0.04] hover:bg-white/[0.08] border border-white/5 transition-colors"
-              >
-                <div className="text-[11px] font-semibold text-slate-200">Super Admin</div>
-                <div className="text-[9px] text-slate-400 font-mono truncate">admin@ricoz.io</div>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickFill("elena.ramos@ricoz.io")}
-                className="text-left p-2 rounded bg-white/[0.04] hover:bg-white/[0.08] border border-white/5 transition-colors"
-              >
-                <div className="text-[11px] font-semibold text-slate-200">Ops Admin</div>
-                <div className="text-[9px] text-slate-400 font-mono truncate">elena.ramos@ricoz.io</div>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickFill("kai.chen@ricoz.io")}
-                className="text-left p-2 rounded bg-white/[0.04] hover:bg-white/[0.08] border border-white/5 transition-colors"
-              >
-                <div className="text-[11px] font-semibold text-slate-200">Tech Lead</div>
-                <div className="text-[9px] text-slate-400 font-mono truncate">kai.chen@ricoz.io</div>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickFill("audit@ricoz.io")}
-                className="text-left p-2 rounded bg-white/[0.04] hover:bg-white/[0.08] border border-white/5 transition-colors"
-              >
-                <div className="text-[11px] font-semibold text-slate-200">Auditor</div>
-                <div className="text-[9px] text-slate-400 font-mono truncate">audit@ricoz.io</div>
-              </button>
-            </div>
-          </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
@@ -132,7 +142,8 @@ export default function AdminLoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-9 pr-3 py-2.5 rounded-lg bg-white/[0.04] border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 font-mono"
-                  placeholder="admin@ricoz.io"
+                  placeholder="name@ricoz.io"
+                  autoComplete="email"
                 />
               </div>
             </div>
@@ -150,6 +161,7 @@ export default function AdminLoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full pl-9 pr-3 py-2.5 rounded-lg bg-white/[0.04] border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 font-mono"
                   placeholder="••••••••••••"
+                  autoComplete="current-password"
                 />
               </div>
             </div>
@@ -157,29 +169,40 @@ export default function AdminLoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-2 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-red-600 hover:bg-red-700 active:bg-red-800 disabled:opacity-50 text-white text-xs font-bold uppercase tracking-wider transition-all shadow-lg shadow-red-900/30"
+              className="w-full py-2.5 px-4 rounded-lg bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-medium text-xs shadow-lg shadow-red-900/30 transition-all flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed uppercase font-mono tracking-wider"
             >
               {loading ? (
-                <span>Authenticating Credentials...</span>
-              ) : (
                 <>
-                  <span>Sign In To Admin Portal</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <span>Authenticating...</span>
                 </>
+              ) : (
+                <span>Access Management Console</span>
               )}
             </button>
           </form>
 
-          <div className="pt-2 text-center border-t border-white/5">
-            <Link
-              href="/"
-              className="text-[11px] text-slate-400 hover:text-slate-200 transition-colors"
-            >
-              &larr; Return to RICOZ Public Platform
-            </Link>
+          <div className="pt-4 border-t border-white/5 text-center">
+            <p className="text-[11px] text-slate-500">
+              RICOZ Enterprise Security &bull; Session timeout in 60 minutes
+            </p>
           </div>
         </div>
       </div>
     </div>
+  );
+}
+
+export default function AdminLoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#07080C] text-slate-400 flex items-center justify-center">
+          <div className="w-6 h-6 border-2 border-red-600 border-t-transparent rounded-full animate-spin" />
+        </div>
+      }
+    >
+      <AdminLoginForm />
+    </Suspense>
   );
 }

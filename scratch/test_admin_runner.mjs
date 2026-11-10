@@ -40,7 +40,7 @@ async function runTests() {
 
   // 2. Department counts
   const depts = db.prepare("SELECT count(*) as count FROM departments").get();
-  assert(depts.count === 6, `All 6 departments present (found ${depts.count})`);
+  assert(depts.count === 10, `All 10 departments present (found ${depts.count})`);
 
   // 3. User verification & scrypt password check
   const superAdmin = db.prepare("SELECT * FROM admin_users WHERE role = 'super_admin'").get();

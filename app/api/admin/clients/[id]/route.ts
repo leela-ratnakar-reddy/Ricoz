@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAdminUserFromRequest, hasPermission } from "@/lib/admin/auth";
+import { requirePermission } from "@/lib/admin/auth";
 import { getDb } from "@/lib/admin/db";
 import { recordAuditLog } from "@/lib/admin/audit";
 
@@ -8,10 +8,8 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const user = getAdminUserFromRequest(req);
-    if (!user) {
-      return NextResponse.json({ success: false, error: "Unauthenticated" }, { status: 401 });
-    }
+    const auth = await requirePermission("clients.view", req);
+    if ("errorResponse" in auth) return auth.errorResponse;
 
     const { id } = await params;
     const db = getDb();
@@ -56,14 +54,9 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const user = getAdminUserFromRequest(req);
-    if (!user) {
-      return NextResponse.json({ success: false, error: "Unauthenticated" }, { status: 401 });
-    }
-
-    if (!hasPermission(user.role, "edit_clients")) {
-      return NextResponse.json({ success: false, error: "Permission denied." }, { status: 403 });
-    }
+    const auth = await requirePermission("clients.edit", req);
+    if ("errorResponse" in auth) return auth.errorResponse;
+    const { user } = auth;
 
     const { id } = await params;
     const db = getDb();
@@ -78,11 +71,11 @@ export async function PATCH(
 
     const stage = body.onboardingStage !== undefined ? body.onboardingStage : existing.onboarding_stage;
     const notes = body.notes !== undefined ? body.notes : existing.notes;
-    const assignedOwnerId = body.assignedOwnerId !== undefined ? body.assignedOwnerId : existing.assigned_owner_id;
-    const nextFollowUp = body.nextFollowUp !== undefined ? body.nextFollowUp : existing.next_follow_up;
-    const phone = body.phone !== undefined ? body.phone : existing.phone;
-    const contactName = body.contactName !== undefined ? body.contactName : existing.contact_name;
-    const contactEmail = body.contactEmail !== undefined ? body.contactEmail : existing.contact_email;
+    const assignedOwnerId = body.assignedOwnerId !== undefined ? (body.assignedOwnerId ? String(body.assignedOwnerId) : null) : (existing.assigned_owner_id ? String(existing.assigned_owner_id) : null);
+    const nextFollowUp = body.nextFollowUp !== undefined ? (body.nextFollowUp ? String(body.nextFollowUp) : null) : (existing.next_follow_up ? String(existing.next_follow_up) : null);
+    const phone = body.phone !== undefined ? String(body.phone) : String(existing.phone);
+    const contactName = body.contactName !== undefined ? String(body.contactName) : String(existing.contact_name);
+    const contactEmail = body.contactEmail !== undefined ? String(body.contactEmail) : String(existing.contact_email);
 
     db.prepare(`
       UPDATE clients SET
@@ -128,5 +121,40 @@ export async function PATCH(
   } catch (error) {
     console.error("Client PATCH error:", error);
     return NextResponse.json({ success: false, error: "Failed to update client" }, { status: 500 });
+  }
+}
+
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const auth = await requirePermission("clients.delete", req);
+    if ("errorResponse" in auth) return auth.errorResponse;
+    const { user } = auth;
+
+    const { id } = await params;
+    const db = getDb();
+
+    const existing = db.prepare("SELECT name FROM clients WHERE id = ?").get(id) as { name: string } | undefined;
+    if (!existing) {
+      return NextResponse.json({ success: false, error: "Client not found" }, { status: 404 });
+    }
+
+    db.prepare("DELETE FROM clients WHERE id = ?").run(id);
+
+    recordAuditLog({
+      actor: user,
+      action: "CLIENT_DELETED",
+      entityType: "client",
+      entityId: id,
+      changeSummary: `Deleted client "${existing.name}".`,
+      ipAddress: req.headers.get("x-forwarded-for") || "127.0.0.1",
+    });
+
+    return NextResponse.json({ success: true, message: "Client deleted successfully." });
+  } catch (error) {
+    console.error("Client DELETE error:", error);
+    return NextResponse.json({ success: false, error: "Failed to delete client" }, { status: 500 });
   }
 }

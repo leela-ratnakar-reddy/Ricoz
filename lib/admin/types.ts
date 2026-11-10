@@ -1,9 +1,96 @@
 export type AdminRole =
   | "super_admin"
-  | "ops_admin"
-  | "dept_manager"
+  | "exec_director"
+  | "coo"
+  | "dept_head"
+  | "ops_manager"
+  | "finance_manager"
+  | "hr_manager"
+  | "sales_manager"
+  | "marketing_manager"
+  | "tech_manager"
+  | "ai_manager"
+  | "qa_manager"
   | "team_member"
-  | "auditor";
+  | "auditor"
+  // Legacy aliases
+  | "ops_admin"
+  | "dept_manager";
+
+export interface AdminPermission {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  module: string;
+  action: string;
+  createdAt?: string;
+  created_at?: string;
+}
+
+export interface AdminRoleDef {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  hierarchyLevel: number;
+  hierarchy_level?: number;
+  isSystemRole: boolean | number;
+  is_system_role?: boolean | number;
+  isActive: boolean | number;
+  is_active?: boolean | number;
+  permissions?: string[];
+  permissionCount?: number;
+  userCount?: number;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface AdminUserPermissionOverride {
+  id: string;
+  adminUserId: string;
+  admin_user_id?: string;
+  permissionId: string;
+  permission_id?: string;
+  permissionSlug?: string;
+  permission_slug?: string;
+  permissionName?: string;
+  permission_name?: string;
+  module?: string;
+  action?: string;
+  effect: "allow" | "deny";
+  grantedBy?: string | null;
+  granted_by?: string | null;
+  grantedByName?: string;
+  granted_by_name?: string;
+  reason: string;
+  expiresAt?: string | null;
+  expires_at?: string | null;
+  createdAt?: string;
+  created_at?: string;
+}
+
+export interface AdminDepartmentMember {
+  id: string;
+  adminUserId: string;
+  admin_user_id?: string;
+  departmentId: string;
+  department_id?: string;
+  membershipRole: "head" | "manager" | "member" | "observer";
+  membership_role?: string;
+  isPrimary: boolean | number;
+  is_primary?: boolean | number;
+  userName?: string;
+  user_name?: string;
+  userEmail?: string;
+  user_email?: string;
+  userRole?: string;
+  user_role?: string;
+  departmentName?: string;
+  department_name?: string;
+  createdAt?: string;
+  created_at?: string;
+}
 
 export interface AdminUser {
   id: string;
@@ -16,6 +103,9 @@ export interface AdminUser {
   avatar: string;
   lastLoginAt: string | null;
   createdAt: string;
+  permissions?: string[];
+  departmentMemberships?: AdminDepartmentMember[];
+  permissionOverrides?: AdminUserPermissionOverride[];
 }
 
 export interface AdminSession {
@@ -23,6 +113,8 @@ export interface AdminSession {
   userId: string;
   sessionToken: string;
   expiresAt: string;
+  lastActivityAt?: string | null;
+  last_activity_at?: string | null;
   ipAddress: string;
   userAgent: string;
   createdAt: string;

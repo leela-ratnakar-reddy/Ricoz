@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
         entityType: "admin_user",
         entityId: user.id,
         changeSummary: `User ${user.fullName} logged out.`,
-        ipAddress: req.headers.get("x-forwarded-for") || "127.0.0.1",
+        ipAddress: req.headers.get("x-forwarded-for")?.split(",")[0].trim() || "127.0.0.1",
       });
     }
 

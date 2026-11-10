@@ -2,6 +2,7 @@ import { DatabaseSync } from "node:sqlite";
 import path from "node:path";
 import fs from "node:fs";
 import crypto from "node:crypto";
+import { runMigrations } from "./migrations/runner";
 
 let dbInstance: DatabaseSync | null = null;
 
@@ -45,6 +46,7 @@ export function getDb(): DatabaseSync {
 
   initSchema(db);
   seedInitialData(db);
+  runMigrations(db);
 
   dbInstance = db;
   return dbInstance;

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAdminUserFromRequest, hasPermission } from "@/lib/admin/auth";
+import { requirePermission } from "@/lib/admin/auth";
 import { getDb } from "@/lib/admin/db";
 import { recordAuditLog } from "@/lib/admin/audit";
 
@@ -8,10 +8,8 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const user = getAdminUserFromRequest(req);
-    if (!user) {
-      return NextResponse.json({ success: false, error: "Unauthenticated" }, { status: 401 });
-    }
+    const auth = await requirePermission("tasks.view", req);
+    if ("errorResponse" in auth) return auth.errorResponse;
 
     const { id } = await params;
     const db = getDb();
@@ -61,10 +59,9 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const user = getAdminUserFromRequest(req);
-    if (!user) {
-      return NextResponse.json({ success: false, error: "Unauthenticated" }, { status: 401 });
-    }
+    const auth = await requirePermission("tasks.edit", req);
+    if ("errorResponse" in auth) return auth.errorResponse;
+    const { user } = auth;
 
     const { id } = await params;
     const db = getDb();
@@ -74,9 +71,9 @@ export async function PATCH(
       return NextResponse.json({ success: false, error: "Task not found" }, { status: 404 });
     }
 
-    // RBAC: Team members can only update status, comments or blocker notes on assigned tasks
-    if (user.role === "team_member" && existing.assignee_id !== user.id) {
-      return NextResponse.json({ success: false, error: "You can only update tasks assigned to you." }, { status: 403 });
+    // RBAC: Team members can only update tasks assigned to them or created by them
+    if (user.role === "team_member" && existing.assignee_id !== user.id && existing.creator_id !== user.id) {
+      return NextResponse.json({ success: false, error: "You can only update tasks assigned to or created by you." }, { status: 403 });
     }
 
     const body = await req.json();
@@ -147,14 +144,9 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const user = getAdminUserFromRequest(req);
-    if (!user) {
-      return NextResponse.json({ success: false, error: "Unauthenticated" }, { status: 401 });
-    }
-
-    if (!hasPermission(user.role, "delete_tasks")) {
-      return NextResponse.json({ success: false, error: "Only Super Admin and Ops Admin can delete tasks." }, { status: 403 });
-    }
+    const auth = await requirePermission("tasks.delete", req);
+    if ("errorResponse" in auth) return auth.errorResponse;
+    const { user } = auth;
 
     const { id } = await params;
     const db = getDb();

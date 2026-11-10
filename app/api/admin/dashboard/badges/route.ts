@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAdminUserFromRequest } from "@/lib/admin/auth";
+import { requireAdmin } from "@/lib/admin/auth";
 import { getDb } from "@/lib/admin/db";
 
 export async function GET(req: NextRequest) {
   try {
-    const user = getAdminUserFromRequest(req);
-    if (!user) {
-      return NextResponse.json({ success: false, error: "Unauthenticated" }, { status: 401 });
-    }
+    const auth = await requireAdmin(req);
+    if ("errorResponse" in auth) return auth.errorResponse;
+    const { user } = auth;
 
     const db = getDb();
     const today = new Date().toISOString().split("T")[0];

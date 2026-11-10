@@ -1,15 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAdminUserFromRequest, hasPermission } from "@/lib/admin/auth";
+import { requirePermission } from "@/lib/admin/auth";
 import { getDb } from "@/lib/admin/db";
 import { recordAuditLog } from "@/lib/admin/audit";
 import crypto from "node:crypto";
 
 export async function GET(req: NextRequest) {
   try {
-    const user = getAdminUserFromRequest(req);
-    if (!user) {
-      return NextResponse.json({ success: false, error: "Unauthenticated" }, { status: 401 });
-    }
+    const auth = await requirePermission("vendors.view", req);
+    if ("errorResponse" in auth) return auth.errorResponse;
 
     const db = getDb();
     const { searchParams } = new URL(req.url);
@@ -63,14 +61,9 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const user = getAdminUserFromRequest(req);
-    if (!user) {
-      return NextResponse.json({ success: false, error: "Unauthenticated" }, { status: 401 });
-    }
-
-    if (!hasPermission(user.role, "edit_vendors")) {
-      return NextResponse.json({ success: false, error: "Permission denied." }, { status: 403 });
-    }
+    const auth = await requirePermission("vendors.create", req);
+    if ("errorResponse" in auth) return auth.errorResponse;
+    const { user } = auth;
 
     const body = await req.json();
     const { name, serviceCategory, contactName, contactEmail, phone, coordinatorId, notes } = body;
