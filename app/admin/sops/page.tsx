@@ -16,6 +16,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { SOP, Department } from "@/lib/admin/types";
+import { getSOPs, getSOPById, createSOP, updateSOP, deleteSOP, getDepartments } from "@/lib/demo";
 
 export default function AdminSOPsPage() {
   const [sops, setSops] = useState<SOP[]>([]);
@@ -36,37 +37,28 @@ export default function AdminSOPsPage() {
   const [newContent, setNewContent] = useState("");
   const [formError, setFormError] = useState<string | null>(null);
 
-  const fetchSops = async () => {
+  const fetchSops = () => {
     try {
       setLoading(true);
-      const params = new URLSearchParams();
-      if (selectedDept) params.append("departmentId", selectedDept);
-      if (search) params.append("search", search);
-
-      const res = await fetch(`/api/admin/sops?${params.toString()}`);
-      if (res.ok) {
-        const d = await res.json();
-        if (d.success) {
-          setSops(d.sops);
-          if (d.sops.length > 0 && !activeSop) {
-            setActiveSop(d.sops[0]);
-          }
-        }
+      const data = getSOPs({
+        departmentId: selectedDept || undefined,
+        search: search || undefined,
+      });
+      setSops(data);
+      if (data.length > 0 && !activeSop) {
+        setActiveSop(data[0]);
       }
     } catch (err) {
-      console.error("Error loading SOPs:", err);
+      console.error("Error loading demo SOPs:", err);
     } finally {
       setLoading(false);
     }
   };
 
-  const fetchDepts = async () => {
+  const fetchDepts = () => {
     try {
-      const res = await fetch("/api/admin/departments");
-      if (res.ok) {
-        const d = await res.json();
-        if (d.success) setDepartments(d.departments);
-      }
+      const d = getDepartments();
+      setDepartments(d);
     } catch {
       // Non-blocking
     }
@@ -80,39 +72,29 @@ export default function AdminSOPsPage() {
     fetchSops();
   }, [selectedDept, search]);
 
-  const handleCreateSop = async (e: React.FormEvent) => {
+  const handleCreateSop = (e: React.FormEvent) => {
     e.preventDefault();
     setFormError(null);
     setSaving(true);
 
     try {
-      const res = await fetch("/api/admin/sops", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: newTitle,
-          departmentId: newDept,
-          category: newCategory,
-          version: newVersion,
-          summary: newSummary,
-          contentMarkdown: newContent,
-        }),
+      const newCreated = createSOP({
+        title: newTitle,
+        departmentId: newDept,
+        category: newCategory,
+        version: newVersion,
+        summary: newSummary,
+        contentMarkdown: newContent,
       });
-
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        setFormError(data.error || "Failed to create SOP");
-        setSaving(false);
-        return;
-      }
 
       setCreateModalOpen(false);
       setNewTitle("");
       setNewSummary("");
       setNewContent("");
+      setActiveSop(newCreated);
       fetchSops();
     } catch {
-      setFormError("Server connection error");
+      setFormError("Error creating SOP in demo mode");
     } finally {
       setSaving(false);
     }

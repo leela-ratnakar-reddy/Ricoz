@@ -21,6 +21,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { Department } from "@/lib/admin/types";
+import { getDashboardStats, getDepartments } from "@/lib/demo";
 
 export default function AdminDashboardPage() {
   const [data, setData] = useState<any>(null);
@@ -30,29 +31,15 @@ export default function AdminDashboardPage() {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
-  const fetchData = async () => {
+  const fetchData = () => {
     try {
       setRefreshing(true);
-      const params = new URLSearchParams();
-      if (selectedDept) params.append("departmentId", selectedDept);
-      if (selectedRange) params.append("range", selectedRange);
-
-      const [dashRes, deptRes] = await Promise.all([
-        fetch(`/api/admin/dashboard?${params.toString()}`),
-        fetch("/api/admin/departments"),
-      ]);
-
-      if (dashRes.ok) {
-        const dJson = await dashRes.json();
-        if (dJson.success) setData(dJson.data);
-      }
-
-      if (deptRes.ok) {
-        const deptJson = await deptRes.json();
-        if (deptJson.success) setDepartments(deptJson.departments);
-      }
+      const dashData = getDashboardStats(selectedDept || undefined, selectedRange);
+      const depts = getDepartments();
+      setData(dashData);
+      setDepartments(depts);
     } catch (err) {
-      console.error("Error loading dashboard:", err);
+      console.error("Error loading demo dashboard:", err);
     } finally {
       setLoading(false);
       setRefreshing(false);

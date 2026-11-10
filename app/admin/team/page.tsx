@@ -2,6 +2,19 @@
 
 import React, { useEffect, useState } from "react";
 import {
+  getUsers,
+  getDepartments,
+  getRoles,
+  getPermissions,
+  getUserOverrides,
+  createUser,
+  updateUser,
+  revokeUserSessions,
+  addOverride,
+  deleteOverride,
+  assignDepartmentHead,
+} from "@/lib/demo";
+import {
   Users2,
   Shield,
   ShieldCheck,
@@ -120,38 +133,42 @@ export default function AdminTeamPage() {
   const [reassignHeadDept, setReassignHeadDept] = useState<Department | null>(null);
   const [selectedHeadUserId, setSelectedHeadUserId] = useState("");
 
-  const fetchData = async () => {
+  const fetchData = () => {
     setLoading(true);
     setError(null);
     try {
-      const [uRes, dRes, rRes, pRes, oRes] = await Promise.all([
-        fetch("/api/admin/team/users"),
-        fetch("/api/admin/departments"),
-        fetch("/api/admin/team/roles"),
-        fetch("/api/admin/team/permissions"),
-        fetch("/api/admin/team/overrides"),
-      ]);
+      const uList = getUsers();
+      const dList = getDepartments();
+      const rList = getRoles();
+      const pList = getPermissions();
+      const oList = getUserOverrides();
 
-      if (uRes.ok) {
-        const uData = await uRes.json();
-        setUsers(uData.users || []);
-      }
-      if (dRes.ok) {
-        const dData = await dRes.json();
-        setDepartments(dData.departments || []);
-      }
-      if (rRes.ok) {
-        const rData = await rRes.json();
-        setRoles(rData.roles || []);
-      }
-      if (pRes.ok) {
-        const pData = await pRes.json();
-        setPermissions(pData.permissions || []);
-      }
-      if (oRes.ok) {
-        const oData = await oRes.json();
-        setOverrides(oData.overrides || []);
-      }
+      const mappedUsers: TeamMember[] = uList.map((u) => {
+        const r = rList.find((role) => role.slug === u.role);
+        const userOverrides = oList.filter((o) => o.adminUserId === u.id);
+        return {
+          id: u.id,
+          email: u.email,
+          fullName: u.fullName,
+          role: u.role,
+          roleName: r ? r.name : u.role,
+          hierarchyLevel: r ? r.hierarchyLevel : 13,
+          departmentId: u.departmentId,
+          departmentName: u.departmentName || "Unassigned",
+          status: u.status,
+          avatar: u.avatar,
+          lastLoginAt: u.lastLoginAt,
+          createdAt: u.createdAt,
+          activeSessionsCount: 1,
+          overridesCount: userOverrides.length,
+        };
+      });
+
+      setUsers(mappedUsers);
+      setDepartments(dList as any);
+      setRoles(rList as any);
+      setPermissions(pList as any);
+      setOverrides(oList as any);
     } catch {
       setError("Failed to load team and access governance data.");
     } finally {
@@ -163,52 +180,34 @@ export default function AdminTeamPage() {
     fetchData();
   }, []);
 
-  const handleCreateUser = async (e: React.FormEvent) => {
+  const handleCreateUser = (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     try {
-      const res = await fetch("/api/admin/team/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: newUserEmail,
-          fullName: newUserName,
-          role: newUserRole,
-          departmentId: newUserDept || null,
-          password: newUserPassword,
-        }),
+      createUser({
+        email: newUserEmail,
+        fullName: newUserName,
+        role: newUserRole as any,
+        departmentId: newUserDept || null,
+        password: newUserPassword,
       });
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        setError(data.error || "Failed to provision user.");
-        return;
-      }
-      setSuccessMsg("Team member provisioned successfully.");
+      setSuccessMsg("Team member provisioned successfully (Demo Mode).");
       setShowAddUserModal(false);
       setNewUserEmail("");
       setNewUserName("");
       setNewUserPassword("");
       fetchData();
     } catch {
-      setError("Network error while creating user.");
+      setError("Error while creating user.");
     }
   };
 
-  const handleToggleUserStatus = async (user: TeamMember) => {
+  const handleToggleUserStatus = (user: TeamMember) => {
     const nextStatus = user.status === "active" ? "suspended" : "active";
     if (!confirm(`Are you sure you want to ${nextStatus.toUpperCase()} ${user.fullName}?`)) return;
 
     try {
-      const res = await fetch(`/api/admin/team/users/${user.id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: nextStatus }),
-      });
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        setError(data.error || "Failed to update user status.");
-        return;
-      }
+      updateUser(user.id, { status: nextStatus });
       setSuccessMsg(`User status updated to ${nextStatus}.`);
       fetchData();
     } catch {
@@ -216,66 +215,41 @@ export default function AdminTeamPage() {
     }
   };
 
-  const handleRevokeAllSessions = async (userId: string, userName: string) => {
+  const handleRevokeAllSessions = (userId: string, userName: string) => {
     if (!confirm(`Revoke all active sessions for ${userName}?`)) return;
     try {
-      const res = await fetch(`/api/admin/team/users/${userId}/sessions`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ revokeAll: true }),
-      });
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        setError(data.error || "Failed to revoke sessions.");
-        return;
-      }
-      setSuccessMsg(`All active sessions for ${userName} terminated.`);
+      revokeUserSessions(userId);
+      setSuccessMsg(`All active sessions for ${userName} terminated (Demo Mode).`);
       fetchData();
     } catch {
-      setError("Network error during session revocation.");
+      setError("Error during session revocation.");
     }
   };
 
-  const handleCreateOverride = async (e: React.FormEvent) => {
+  const handleCreateOverride = (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     try {
-      const res = await fetch("/api/admin/team/overrides", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          adminUserId: overrideUser,
-          permissionSlug: overridePerm,
-          effect: overrideEffect,
-          reason: overrideReason,
-          expiresAt: overrideExpires || null,
-        }),
+      addOverride({
+        userId: overrideUser,
+        permissionId: overridePerm,
+        effect: overrideEffect,
+        reason: overrideReason,
+        expiresAt: overrideExpires || null,
       });
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        setError(data.error || "Failed to apply permission override.");
-        return;
-      }
-      setSuccessMsg("Permission override applied.");
+      setSuccessMsg("Permission override applied (Demo Mode).");
       setShowOverrideModal(false);
       setOverrideReason("");
       fetchData();
     } catch {
-      setError("Network error during override assignment.");
+      setError("Error during override assignment.");
     }
   };
 
-  const handleDeleteOverride = async (overrideId: string) => {
+  const handleDeleteOverride = (overrideId: string) => {
     if (!confirm("Are you sure you want to remove this permission override?")) return;
     try {
-      const res = await fetch(`/api/admin/team/overrides?id=${overrideId}`, {
-        method: "DELETE",
-      });
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        setError(data.error || "Failed to remove override.");
-        return;
-      }
+      deleteOverride(overrideId);
       setSuccessMsg("Override removed successfully.");
       fetchData();
     } catch {
@@ -283,20 +257,11 @@ export default function AdminTeamPage() {
     }
   };
 
-  const handleReassignHead = async (e: React.FormEvent) => {
+  const handleReassignHead = (e: React.FormEvent) => {
     e.preventDefault();
     if (!reassignHeadDept) return;
     try {
-      const res = await fetch(`/api/admin/departments/${reassignHeadDept.id}/head`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ headUserId: selectedHeadUserId || null }),
-      });
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        setError(data.error || "Failed to reassign department head.");
-        return;
-      }
+      assignDepartmentHead(reassignHeadDept.id, selectedHeadUserId || null);
       setSuccessMsg("Department Head reassigned successfully.");
       setReassignHeadDept(null);
       fetchData();

@@ -50,15 +50,15 @@ async function runTestSuite() {
   assert(verifyPassword("WrongPassword!", hash, salt) === false, "Incorrect password fails verification");
 
   // Test 3: Authenticate Seed Admin Credentials
-  const superAdmin = authenticateAdminCredentials("admin@ricoz.io", "AdminRicoz2026!");
+  const superAdmin = authenticateAdminCredentials("aadinathachary@gmail.com", "Ricozhoo@123");
   assert(superAdmin !== null, "Seed super admin authenticates successfully");
   assert(superAdmin?.role === "super_admin", "Super admin has super_admin role");
 
-  const opsAdmin = authenticateAdminCredentials("elena.ramos@ricoz.io", "AdminRicoz2026!");
+  const opsAdmin = authenticateAdminCredentials("elena.ramos@ricoz.io", "Ricozhoo@123");
   assert(opsAdmin !== null, "Seed ops admin authenticates successfully");
   assert(opsAdmin?.role === "ops_admin", "Ops admin has ops_admin role");
 
-  const badAuth = authenticateAdminCredentials("admin@ricoz.io", "WrongPassword");
+  const badAuth = authenticateAdminCredentials("aadinathachary@gmail.com", "WrongPassword");
   assert(badAuth === null, "Bad password rejected");
 
   // Test 4: Session Creation & Validation

@@ -12,20 +12,19 @@ import {
   Check,
   UserCheck,
   Handshake,
+  Trash2,
 } from "lucide-react";
+import { getNotifications, markNotificationAsRead, markAllNotificationsAsRead, deleteNotification } from "@/lib/demo";
 
 export default function AdminNotificationsPage() {
   const [notifications, setNotifications] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchNotifications = async () => {
+  const fetchNotifications = () => {
     try {
       setLoading(true);
-      const res = await fetch("/api/admin/notifications");
-      if (res.ok) {
-        const data = await res.json();
-        if (data.success) setNotifications(data.notifications);
-      }
+      const data = getNotifications();
+      setNotifications(data);
     } catch (err) {
       console.error("Notifications fetch error:", err);
     } finally {
@@ -37,34 +36,19 @@ export default function AdminNotificationsPage() {
     fetchNotifications();
   }, []);
 
-  const handleMarkAllRead = async () => {
-    try {
-      const res = await fetch("/api/admin/notifications", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ markAll: true }),
-      });
-      if (res.ok) {
-        setNotifications((prev) => prev.map((n) => ({ ...n, is_read: 1 })));
-      }
-    } catch {
-      // Non-blocking
-    }
+  const handleMarkAllRead = () => {
+    markAllNotificationsAsRead();
+    fetchNotifications();
   };
 
-  const handleMarkSingleRead = async (id: string) => {
-    try {
-      await fetch("/api/admin/notifications", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ notificationId: id }),
-      });
-      setNotifications((prev) =>
-        prev.map((n) => (n.id === id ? { ...n, is_read: 1 } : n))
-      );
-    } catch {
-      // Non-blocking
-    }
+  const handleMarkSingleRead = (id: string) => {
+    markNotificationAsRead(id);
+    fetchNotifications();
+  };
+
+  const handleDeleteNotification = (id: string) => {
+    deleteNotification(id);
+    fetchNotifications();
   };
 
   const typeIcons: Record<string, any> = {
@@ -113,7 +97,7 @@ export default function AdminNotificationsPage() {
         <div className="bg-[#0E1118] border border-white/10 rounded-2xl overflow-hidden shadow-xl divide-y divide-white/5">
           {notifications.map((n) => {
             const Icon = typeIcons[n.type] || Bell;
-            const isUnread = n.is_read === 0;
+            const isUnread = !n.isRead && n.is_read !== 1;
 
             return (
               <div
@@ -144,7 +128,7 @@ export default function AdminNotificationsPage() {
                       {n.message}
                     </p>
                     <div className="text-[10px] font-mono text-slate-500 pt-0.5">
-                      {new Date(n.created_at).toLocaleString()}
+                      {new Date(n.createdAt || n.created_at || Date.now()).toLocaleString()}
                     </div>
                   </div>
                 </div>
@@ -168,6 +152,13 @@ export default function AdminNotificationsPage() {
                       <Check className="w-4 h-4" />
                     </button>
                   )}
+                  <button
+                    onClick={() => handleDeleteNotification(n.id)}
+                    className="p-1.5 rounded-lg text-slate-500 hover:text-red-400 hover:bg-white/5 transition-colors"
+                    title="Delete notification"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
             );

@@ -292,17 +292,17 @@ function seedInitialData(db: DatabaseSync) {
 
   // 2. Admin Users
   // Passwords can be customized via INITIAL_ADMIN_PASSWORD; default provided for standard local environment
-  const defaultPassword = process.env.INITIAL_ADMIN_PASSWORD || "AdminRicoz2026!";
+  const defaultPassword = process.env.INITIAL_ADMIN_PASSWORD || "Ricozhoo@123";
   const { hash, salt } = hashPassword(defaultPassword);
 
   const users = [
     {
       id: "usr-super",
-      email: process.env.INITIAL_ADMIN_EMAIL || "admin@ricoz.io",
-      name: "Marcus Vance",
+      email: process.env.INITIAL_ADMIN_EMAIL || "aadinathachary@gmail.com",
+      name: "Aadinath Achary",
       role: "super_admin",
       deptId: "dept-ops",
-      avatar: "MV",
+      avatar: "AA",
     },
     {
       id: "usr-ops-lead",

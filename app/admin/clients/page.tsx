@@ -17,8 +17,18 @@ import {
   AlertCircle,
   ExternalLink,
   ChevronRight,
+  Trash2,
 } from "lucide-react";
 import { Client, ClientOnboardingStage, AdminUser } from "@/lib/admin/types";
+import {
+  getClients,
+  getClientById,
+  createClient,
+  updateClient,
+  deleteClient,
+  toggleClientChecklistItem,
+  getDepartmentMembers,
+} from "@/lib/demo";
 
 export default function AdminClientsPage() {
   const [clients, setClients] = useState<Client[]>([]);
@@ -48,32 +58,25 @@ export default function AdminClientsPage() {
   const [newFollowUp, setNewFollowUp] = useState("");
   const [formError, setFormError] = useState<string | null>(null);
 
-  const fetchClients = async () => {
+  const fetchClients = () => {
     try {
       setLoading(true);
-      const params = new URLSearchParams();
-      if (stageFilter) params.append("stage", stageFilter);
-      if (search) params.append("search", search);
-
-      const res = await fetch(`/api/admin/clients?${params.toString()}`);
-      if (res.ok) {
-        const data = await res.json();
-        if (data.success) setClients(data.clients);
-      }
+      const data = getClients({
+        stage: stageFilter || undefined,
+        search: search || undefined,
+      });
+      setClients(data);
     } catch (err) {
-      console.error("Error fetching clients:", err);
+      console.error("Error fetching demo clients:", err);
     } finally {
       setLoading(false);
     }
   };
 
-  const fetchTeam = async () => {
+  const fetchTeam = () => {
     try {
-      const res = await fetch("/api/admin/departments/members");
-      if (res.ok) {
-        const d = await res.json();
-        if (d.success) setTeamMembers(d.members);
-      }
+      const members = getDepartmentMembers();
+      setTeamMembers(members as any);
     } catch {
       // Non-blocking
     }
@@ -87,53 +90,39 @@ export default function AdminClientsPage() {
     fetchClients();
   }, [stageFilter, search]);
 
-  const openClientDetail = async (c: Client) => {
+  const openClientDetail = (c: Client) => {
     setSelectedClient(c);
     setNotesDraft(c.notes || "");
     setFollowUpDraft(c.nextFollowUp || "");
     try {
-      const res = await fetch(`/api/admin/clients/${c.id}`);
-      if (res.ok) {
-        const data = await res.json();
-        if (data.success) {
-          setSelectedClient(data.client);
-          setChecklist(data.checklist || []);
-        }
+      const res = getClientById(c.id);
+      if (res.client) {
+        setSelectedClient(res.client);
+        setChecklist((res.checklist || []) as any);
       }
     } catch {
       // fallback
     }
   };
 
-  const handleCreateClient = async (e: React.FormEvent) => {
+  const handleCreateClient = (e: React.FormEvent) => {
     e.preventDefault();
     setFormError(null);
     setSaving(true);
 
     try {
-      const res = await fetch("/api/admin/clients", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: newName,
-          industry: newIndustry,
-          contactName: newContactName,
-          contactEmail: newContactEmail,
-          phone: newPhone,
-          companySize: newCompanySize,
-          stage: newStage,
-          assignedOwnerId: newOwnerId || null,
-          notes: newNotes,
-          nextFollowUp: newFollowUp || null,
-        }),
+      createClient({
+        name: newName,
+        industry: newIndustry,
+        contactName: newContactName,
+        contactEmail: newContactEmail,
+        phone: newPhone,
+        companySize: newCompanySize,
+        onboardingStage: newStage,
+        assignedOwnerId: newOwnerId || null,
+        notes: newNotes,
+        nextFollowUp: newFollowUp || null,
       });
-
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        setFormError(data.error || "Failed to create client");
-        setSaving(false);
-        return;
-      }
 
       setCreateModalOpen(false);
       setNewName("");
@@ -141,56 +130,35 @@ export default function AdminClientsPage() {
       setNewContactEmail("");
       fetchClients();
     } catch {
-      setFormError("Server request error");
+      setFormError("Error creating client in demo mode.");
     } finally {
       setSaving(false);
     }
   };
 
-  const handleToggleChecklist = async (itemId: string, currentStatus: boolean) => {
+  const handleToggleChecklist = (itemId: string, currentStatus: boolean) => {
     if (!selectedClient) return;
 
     try {
-      const res = await fetch(`/api/admin/clients/${selectedClient.id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          toggleChecklistId: itemId,
-          isCompleted: !currentStatus,
-        }),
-      });
-
-      if (res.ok) {
-        setChecklist((prev) =>
-          prev.map((item) =>
-            item.id === itemId
-              ? {
-                  ...item,
-                  is_completed: !currentStatus ? 1 : 0,
-                  completed_at: !currentStatus ? new Date().toISOString() : null,
-                }
-              : item
-          )
-        );
-        fetchClients();
+      toggleClientChecklistItem(selectedClient.id, itemId, !currentStatus);
+      const detail = getClientById(selectedClient.id);
+      if (detail.client) {
+        setSelectedClient(detail.client);
+        setChecklist(detail.checklist as any);
       }
+      fetchClients();
     } catch (err) {
       console.error("Toggle checklist error:", err);
     }
   };
 
-  const handleUpdateStage = async (stage: ClientOnboardingStage) => {
+  const handleUpdateStage = (stage: ClientOnboardingStage) => {
     if (!selectedClient) return;
 
     try {
-      const res = await fetch(`/api/admin/clients/${selectedClient.id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ onboardingStage: stage }),
-      });
-
-      if (res.ok) {
-        setSelectedClient((prev: any) => (prev ? { ...prev, onboarding_stage: stage } : null));
+      const updated = updateClient(selectedClient.id, { onboardingStage: stage });
+      if (updated) {
+        setSelectedClient(updated);
         fetchClients();
       }
     } catch (err) {
@@ -198,22 +166,26 @@ export default function AdminClientsPage() {
     }
   };
 
-  const handleSaveNotes = async () => {
+  const handleSaveNotes = () => {
     if (!selectedClient) return;
     try {
       setSaving(true);
-      await fetch(`/api/admin/clients/${selectedClient.id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          notes: notesDraft,
-          nextFollowUp: followUpDraft || null,
-        }),
+      const updated = updateClient(selectedClient.id, {
+        notes: notesDraft,
+        nextFollowUp: followUpDraft || null,
       });
+      if (updated) setSelectedClient(updated);
       fetchClients();
     } finally {
       setSaving(false);
     }
+  };
+
+  const handleDeleteClient = (clientId: string) => {
+    if (!confirm("Are you sure you want to delete this client? This cannot be undone.")) return;
+    deleteClient(clientId);
+    setSelectedClient(null);
+    fetchClients();
   };
 
   const stageBadges: Record<ClientOnboardingStage, { label: string; color: string }> = {
@@ -512,14 +484,25 @@ export default function AdminClientsPage() {
                   />
                 </div>
 
-                <button
-                  type="button"
-                  onClick={handleSaveNotes}
-                  disabled={saving}
-                  className="px-4 py-1.5 rounded-lg bg-white/[0.08] hover:bg-white/[0.15] text-white text-xs font-mono font-bold transition-colors disabled:opacity-50"
-                >
-                  {saving ? "Saving..." : "Save Notes"}
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteClient(selectedClient.id)}
+                    className="px-3 py-1.5 rounded-lg bg-red-950/50 hover:bg-red-900/60 border border-red-800/50 text-red-400 hover:text-red-300 text-xs font-mono transition-colors flex items-center gap-1.5"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>Delete Client</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleSaveNotes}
+                    disabled={saving}
+                    className="px-4 py-1.5 rounded-lg bg-white/[0.08] hover:bg-white/[0.15] text-white text-xs font-mono font-bold transition-colors disabled:opacity-50"
+                  >
+                    {saving ? "Saving..." : "Save Notes"}
+                  </button>
+                </div>
               </div>
             </div>
           </div>

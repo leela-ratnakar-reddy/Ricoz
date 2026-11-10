@@ -37,3 +37,7 @@ data/*.db-shm
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Protect local environment files
+.env*
+!.env.example

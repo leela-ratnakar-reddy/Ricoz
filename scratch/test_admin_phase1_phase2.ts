@@ -95,16 +95,16 @@ async function runTestSuite() {
   console.log("\n>>> [2/5] Authentication & Credential Security");
 
   // 2.1 Authenticate valid credentials
-  const superUser = authenticateAdminCredentials("admin@ricoz.io", "AdminRicoz2026!");
+  const superUser = authenticateAdminCredentials("aadinathachary@gmail.com", "Ricozhoo@123");
   assert(superUser !== null, "Valid admin credentials authenticate successfully");
   assert(superUser?.role === "super_admin", "Super admin user has role 'super_admin'");
 
   // 2.2 Case insensitivity check (email normalization prevents casing bypass)
-  const caseUser = authenticateAdminCredentials("  AdMiN@RiCoZ.Io  ", "AdminRicoz2026!");
+  const caseUser = authenticateAdminCredentials("  AaDiNaThAcHaRy@GmAiL.cOm  ", "Ricozhoo@123");
   assert(caseUser !== null, "Normalized email with mixed casing and whitespace authenticates correctly");
 
   // 2.3 Invalid credentials rejected
-  const invalidUser = authenticateAdminCredentials("admin@ricoz.io", "WrongPassword123!");
+  const invalidUser = authenticateAdminCredentials("aadinathachary@gmail.com", "WrongPassword123!");
   assert(invalidUser === null, "Invalid password returns null");
 
   // 2.4 Suspended account rejected

@@ -17,8 +17,18 @@ import {
   ExternalLink,
   ChevronRight,
   ShieldCheck,
+  Trash2,
 } from "lucide-react";
 import { Vendor, VendorVerificationStatus, VendorOnboardingStage, AdminUser } from "@/lib/admin/types";
+import {
+  getVendors,
+  getVendorById,
+  createVendor,
+  updateVendor,
+  deleteVendor,
+  verifyVendorDocument,
+  getDepartmentMembers,
+} from "@/lib/demo";
 
 export default function AdminVendorsPage() {
   const [vendors, setVendors] = useState<Vendor[]>([]);
@@ -46,33 +56,26 @@ export default function AdminVendorsPage() {
   const [newNotes, setNewNotes] = useState("");
   const [formError, setFormError] = useState<string | null>(null);
 
-  const fetchVendors = async () => {
+  const fetchVendors = () => {
     try {
       setLoading(true);
-      const params = new URLSearchParams();
-      if (statusFilter) params.append("status", statusFilter);
-      if (stageFilter) params.append("stage", stageFilter);
-      if (search) params.append("search", search);
-
-      const res = await fetch(`/api/admin/vendors?${params.toString()}`);
-      if (res.ok) {
-        const data = await res.json();
-        if (data.success) setVendors(data.vendors);
-      }
+      const data = getVendors({
+        status: statusFilter || undefined,
+        stage: stageFilter || undefined,
+        search: search || undefined,
+      });
+      setVendors(data);
     } catch (err) {
-      console.error("Error fetching vendors:", err);
+      console.error("Error fetching demo vendors:", err);
     } finally {
       setLoading(false);
     }
   };
 
-  const fetchTeam = async () => {
+  const fetchTeam = () => {
     try {
-      const res = await fetch("/api/admin/departments/members");
-      if (res.ok) {
-        const d = await res.json();
-        if (d.success) setTeamMembers(d.members);
-      }
+      const members = getDepartmentMembers();
+      setTeamMembers(members as any);
     } catch {
       // Non-blocking
     }
@@ -86,50 +89,36 @@ export default function AdminVendorsPage() {
     fetchVendors();
   }, [statusFilter, stageFilter, search]);
 
-  const openVendorDetail = async (v: Vendor) => {
+  const openVendorDetail = (v: Vendor) => {
     setSelectedVendor(v);
     setNotesDraft(v.notes || "");
     setErrorAlert(null);
     try {
-      const res = await fetch(`/api/admin/vendors/${v.id}`);
-      if (res.ok) {
-        const data = await res.json();
-        if (data.success) {
-          setSelectedVendor(data.vendor);
-          setDocuments(data.documents || []);
-        }
+      const res = getVendorById(v.id);
+      if (res.vendor) {
+        setSelectedVendor(res.vendor);
+        setDocuments(res.documents || []);
       }
     } catch {
       // fallback
     }
   };
 
-  const handleCreateVendor = async (e: React.FormEvent) => {
+  const handleCreateVendor = (e: React.FormEvent) => {
     e.preventDefault();
     setFormError(null);
     setSaving(true);
 
     try {
-      const res = await fetch("/api/admin/vendors", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: newName,
-          serviceCategory: newCategory,
-          contactName: newContactName,
-          contactEmail: newContactEmail,
-          phone: newPhone,
-          coordinatorId: newCoordinatorId || null,
-          notes: newNotes,
-        }),
+      createVendor({
+        name: newName,
+        serviceCategory: newCategory,
+        contactName: newContactName,
+        contactEmail: newContactEmail,
+        phone: newPhone,
+        assignedCoordinatorId: newCoordinatorId || null,
+        notes: newNotes,
       });
-
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        setFormError(data.error || "Failed to create vendor");
-        setSaving(false);
-        return;
-      }
 
       setCreateModalOpen(false);
       setNewName("");
@@ -137,77 +126,51 @@ export default function AdminVendorsPage() {
       setNewContactEmail("");
       fetchVendors();
     } catch {
-      setFormError("Server connection error");
+      setFormError("Error creating vendor in demo mode");
     } finally {
       setSaving(false);
     }
   };
 
-  const handleToggleDocument = async (docId: string, currentStatus: boolean) => {
+  const handleToggleDocument = (docId: string, currentStatus: boolean) => {
     if (!selectedVendor) return;
     setErrorAlert(null);
 
     try {
-      const res = await fetch(`/api/admin/vendors/${selectedVendor.id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          toggleDocId: docId,
-          isVerified: !currentStatus,
-        }),
-      });
-
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        setErrorAlert(data.error || "Failed to update document verification status");
-        return;
+      verifyVendorDocument(selectedVendor.id, docId, !currentStatus);
+      const res = getVendorById(selectedVendor.id);
+      if (res.vendor) {
+        setSelectedVendor(res.vendor);
+        setDocuments(res.documents || []);
       }
-
-      setDocuments((prev) =>
-        prev.map((d) => (d.id === docId ? { ...d, is_verified: !currentStatus ? 1 : 0 } : d))
-      );
       fetchVendors();
     } catch {
-      setErrorAlert("Network failure during verification");
+      setErrorAlert("Failed to update document verification status in demo mode");
     }
   };
 
-  const handleSetVerificationStatus = async (status: VendorVerificationStatus) => {
+  const handleSetVerificationStatus = (status: VendorVerificationStatus) => {
     if (!selectedVendor) return;
     setErrorAlert(null);
 
     try {
-      const res = await fetch(`/api/admin/vendors/${selectedVendor.id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ verificationStatus: status }),
-      });
-
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        setErrorAlert(data.error || "Cannot verify vendor. Ensure all compliance documents are verified first.");
-        return;
+      const updated = updateVendor(selectedVendor.id, { verificationStatus: status });
+      if (updated) {
+        setSelectedVendor(updated);
+        fetchVendors();
       }
-
-      setSelectedVendor((prev: any) => (prev ? { ...prev, verification_status: status } : null));
-      fetchVendors();
     } catch {
       setErrorAlert("Failed to update vendor verification status");
     }
   };
 
-  const handleUpdateStage = async (stage: VendorOnboardingStage) => {
+  const handleUpdateStage = (stage: VendorOnboardingStage) => {
     if (!selectedVendor) return;
 
     try {
-      const res = await fetch(`/api/admin/vendors/${selectedVendor.id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ onboardingStage: stage }),
-      });
-
-      if (res.ok) {
-        setSelectedVendor((prev: any) => (prev ? { ...prev, onboarding_stage: stage } : null));
+      const updated = updateVendor(selectedVendor.id, { onboardingStage: stage });
+      if (updated) {
+        setSelectedVendor(updated);
         fetchVendors();
       }
     } catch (err) {
@@ -215,19 +178,23 @@ export default function AdminVendorsPage() {
     }
   };
 
-  const handleSaveNotes = async () => {
+  const handleSaveNotes = () => {
     if (!selectedVendor) return;
     try {
       setSaving(true);
-      await fetch(`/api/admin/vendors/${selectedVendor.id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ notes: notesDraft }),
-      });
+      const updated = updateVendor(selectedVendor.id, { notes: notesDraft });
+      if (updated) setSelectedVendor(updated);
       fetchVendors();
     } finally {
       setSaving(false);
     }
+  };
+
+  const handleDeleteVendor = (vendorId: string) => {
+    if (!confirm("Are you sure you want to delete this vendor partner?")) return;
+    deleteVendor(vendorId);
+    setSelectedVendor(null);
+    fetchVendors();
   };
 
   const verificationBadges: Record<VendorVerificationStatus, { label: string; color: string }> = {
@@ -509,7 +476,16 @@ export default function AdminVendorsPage() {
                 className="w-full px-3 py-2 rounded-lg bg-white/[0.04] border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-red-500 font-mono"
               />
 
-              <div className="flex justify-end pt-1">
+              <div className="flex items-center justify-between pt-1">
+                <button
+                  type="button"
+                  onClick={() => handleDeleteVendor(selectedVendor.id)}
+                  className="px-3 py-1.5 rounded-lg bg-red-950/50 hover:bg-red-900/60 border border-red-800/50 text-red-400 hover:text-red-300 text-xs font-mono transition-colors flex items-center gap-1.5"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span>Delete Vendor</span>
+                </button>
+
                 <button
                   type="button"
                   onClick={handleSaveNotes}

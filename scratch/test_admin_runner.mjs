@@ -46,7 +46,7 @@ async function runTests() {
   const superAdmin = db.prepare("SELECT * FROM admin_users WHERE role = 'super_admin'").get();
   assert(superAdmin !== undefined, "Super Admin user exists");
 
-  const testHash = crypto.scryptSync("AdminRicoz2026!", superAdmin.salt, 64).toString("hex");
+  const testHash = crypto.scryptSync("Ricozhoo@123", superAdmin.salt, 64).toString("hex");
   const isMatch = crypto.timingSafeEqual(Buffer.from(superAdmin.password_hash, "hex"), Buffer.from(testHash, "hex"));
   assert(isMatch === true, "Password verification passes using constant-time timingSafeEqual");
 

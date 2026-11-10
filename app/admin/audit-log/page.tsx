@@ -12,6 +12,7 @@ import {
   Lock,
 } from "lucide-react";
 import { AuditLog } from "@/lib/admin/types";
+import { getAuditLogs } from "@/lib/demo";
 
 export default function AdminAuditLogPage() {
   const [logs, setLogs] = useState<AuditLog[]>([]);
@@ -19,18 +20,14 @@ export default function AdminAuditLogPage() {
   const [entityFilter, setEntityFilter] = useState("");
   const [search, setSearch] = useState("");
 
-  const fetchLogs = async () => {
+  const fetchLogs = () => {
     try {
       setLoading(true);
-      const params = new URLSearchParams();
-      if (entityFilter) params.append("entityType", entityFilter);
-      if (search) params.append("search", search);
-
-      const res = await fetch(`/api/admin/audit-log?${params.toString()}`);
-      if (res.ok) {
-        const d = await res.json();
-        if (d.success) setLogs(d.logs);
-      }
+      const data = getAuditLogs({
+        entityType: entityFilter || undefined,
+        search: search || undefined,
+      });
+      setLogs(data);
     } catch (err) {
       console.error("Audit log error:", err);
     } finally {

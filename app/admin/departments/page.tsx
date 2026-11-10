@@ -18,6 +18,7 @@ import {
   Layers,
 } from "lucide-react";
 import { Department, AdminRole } from "@/lib/admin/types";
+import { getDepartments, getDepartmentMembers, createUser, addDepartmentMember } from "@/lib/demo";
 
 export default function AdminDepartmentsPage() {
   const [departments, setDepartments] = useState<Department[]>([]);
@@ -34,24 +35,15 @@ export default function AdminDepartmentsPage() {
   const [formError, setFormError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
-  const fetchData = async () => {
+  const fetchData = () => {
     try {
       setLoading(true);
-      const [deptRes, memRes] = await Promise.all([
-        fetch("/api/admin/departments"),
-        fetch("/api/admin/departments/members"),
-      ]);
-
-      if (deptRes.ok) {
-        const d = await deptRes.json();
-        if (d.success) setDepartments(d.departments);
-      }
-      if (memRes.ok) {
-        const m = await memRes.json();
-        if (m.success) setMembers(m.members);
-      }
+      const d = getDepartments();
+      const m = getDepartmentMembers();
+      setDepartments(d);
+      setMembers(m);
     } catch (err) {
-      console.error("Error loading departments data:", err);
+      console.error("Error loading demo departments data:", err);
     } finally {
       setLoading(false);
     }
@@ -61,37 +53,33 @@ export default function AdminDepartmentsPage() {
     fetchData();
   }, []);
 
-  const handleCreateMember = async (e: React.FormEvent) => {
+  const handleCreateMember = (e: React.FormEvent) => {
     e.preventDefault();
     setFormError(null);
     setSaving(true);
 
     try {
-      const res = await fetch("/api/admin/departments/members", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: newEmail,
-          fullName: newName,
-          role: newRole,
-          departmentId: newDeptId,
-          password: newPassword,
-        }),
+      const newUser = createUser({
+        email: newEmail,
+        fullName: newName,
+        role: newRole,
+        departmentId: newDeptId,
+        password: newPassword,
       });
 
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        setFormError(data.error || "Failed to create team member");
-        setSaving(false);
-        return;
-      }
+      addDepartmentMember({
+        adminUserId: newUser.id,
+        departmentId: newDeptId,
+        membershipRole: "member",
+        isPrimary: true,
+      });
 
       setAddModalOpen(false);
       setNewEmail("");
       setNewName("");
       fetchData();
     } catch {
-      setFormError("Server error while provisioning user.");
+      setFormError("Error while provisioning user in demo mode.");
     } finally {
       setSaving(false);
     }

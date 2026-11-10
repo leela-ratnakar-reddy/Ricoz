@@ -16,6 +16,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { Department } from "@/lib/admin/types";
+import { getReports, getDepartments, exportReportsToCsv } from "@/lib/demo";
 
 export default function AdminReportsPage() {
   const [data, setData] = useState<any>(null);
@@ -24,28 +25,15 @@ export default function AdminReportsPage() {
   const [selectedRange, setSelectedRange] = useState("30d");
   const [loading, setLoading] = useState(true);
 
-  const fetchReports = async () => {
+  const fetchReports = () => {
     try {
       setLoading(true);
-      const params = new URLSearchParams();
-      if (selectedDept) params.append("departmentId", selectedDept);
-      if (selectedRange) params.append("range", selectedRange);
-
-      const [repRes, deptRes] = await Promise.all([
-        fetch(`/api/admin/reports?${params.toString()}`),
-        fetch("/api/admin/departments"),
-      ]);
-
-      if (repRes.ok) {
-        const d = await repRes.json();
-        if (d.success) setData(d.reports);
-      }
-      if (deptRes.ok) {
-        const deptJson = await deptRes.json();
-        if (deptJson.success) setDepartments(deptJson.departments);
-      }
+      const reports = getReports(selectedDept || undefined, selectedRange);
+      const depts = getDepartments();
+      setData(reports);
+      setDepartments(depts);
     } catch (err) {
-      console.error("Reports error:", err);
+      console.error("Reports error in demo mode:", err);
     } finally {
       setLoading(false);
     }
@@ -56,7 +44,7 @@ export default function AdminReportsPage() {
   }, [selectedDept, selectedRange]);
 
   const handleExport = (type: string) => {
-    window.location.href = `/api/admin/reports/export?type=${type}`;
+    exportReportsToCsv(type);
   };
 
   if (loading) {

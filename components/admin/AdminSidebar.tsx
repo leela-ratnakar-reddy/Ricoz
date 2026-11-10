@@ -22,6 +22,7 @@ import {
   X,
 } from "lucide-react";
 import { AdminUser, AdminRole } from "@/lib/admin/types";
+import { demoLogout } from "@/lib/demo";
 
 interface AdminSidebarProps {
   user: AdminUser;
@@ -44,9 +45,9 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
   const pathname = usePathname();
   const router = useRouter();
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
     try {
-      await fetch("/api/admin/auth/logout", { method: "POST" });
+      demoLogout();
       router.push("/admin/login");
       router.refresh();
     } catch {
