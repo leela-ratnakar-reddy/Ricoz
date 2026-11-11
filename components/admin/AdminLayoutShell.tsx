@@ -27,7 +27,7 @@ export const AdminLayoutShell: React.FC<AdminLayoutShellProps> = ({ children }) 
     unreadNotifications?: number;
   }>({});
 
-  const isLoginPage = pathname === "/admin/login";
+  const isLoginPage = pathname === "/admin/login" || pathname === "/admin/login/";
 
   const refreshSessionAndBadges = useCallback(() => {
     try {

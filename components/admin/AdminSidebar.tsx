@@ -135,7 +135,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
 
   // Role-aware navigation: Filter items according to permissions
   const navItems = allNavItems.filter((item) => {
-    if (user.role === "super_admin") return true;
+    if (!user || user.role === "super_admin") return true;
     if (!item.permission) return true;
     if (user.permissions && Array.isArray(user.permissions)) {
       return user.permissions.includes(item.permission);
@@ -275,14 +275,14 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
           <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 space-y-2">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-slate-800 border border-white/10 flex items-center justify-center text-xs font-mono font-bold text-slate-200">
-                {user.avatar}
+                {user?.avatar || user?.fullName?.[0] || "A"}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="text-xs font-semibold text-white truncate">
-                  {user.fullName}
+                  {user?.fullName || "Admin User"}
                 </div>
                 <div className="text-[10px] text-slate-400 font-mono truncate">
-                  {user.email}
+                  {user?.email || "admin@ricoz.io"}
                 </div>
               </div>
             </div>
@@ -290,10 +290,10 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
             <div className="flex items-center justify-between pt-1">
               <span
                 className={`text-[9px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${
-                  roleColors[user.role] || "bg-slate-800 text-slate-400 border-slate-700"
+                  (user?.role && roleColors[user.role as AdminRole]) || "bg-slate-800 text-slate-400 border-slate-700"
                 }`}
               >
-                {roleLabels[user.role]}
+                {(user?.role && roleLabels[user.role as AdminRole]) || user?.role || "Team Member"}
               </span>
 
               <button

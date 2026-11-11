@@ -93,6 +93,12 @@ export function getDemoSession(): AdminUser | null {
   ensureDemoInitialized();
 
   const user = getStorageItem<AdminUser | null>(STORAGE_KEYS.AUTH_SESSION, null);
+  // Auto-heal / discard corrupted session objects in localStorage
+  if (user && (typeof user !== "object" || !user.id || !user.email)) {
+    removeStorageItem(STORAGE_KEYS.AUTH_SESSION);
+    clearDemoCookie();
+    return null;
+  }
   if (user) {
     // Ensure cookie is in sync
     setDemoCookie();

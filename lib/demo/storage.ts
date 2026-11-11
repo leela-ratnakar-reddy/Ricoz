@@ -41,8 +41,10 @@ export function getStorageItem<T>(key: string, defaultValue: T): T {
   if (!isBrowser()) return defaultValue;
   try {
     const raw = window.localStorage.getItem(key);
-    if (raw === null || raw === undefined) return defaultValue;
-    return JSON.parse(raw) as T;
+    if (raw === null || raw === undefined || raw === "undefined") return defaultValue;
+    const parsed = JSON.parse(raw);
+    if (parsed === null || parsed === undefined) return defaultValue;
+    return parsed as T;
   } catch (error) {
     console.warn(`[RICOZ Demo Storage] Failed to parse key "${key}":`, error);
     return defaultValue;

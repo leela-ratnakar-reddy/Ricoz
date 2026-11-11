@@ -294,7 +294,7 @@ export default function AdminDashboardPage() {
                         }`}>
                           {task.priority}
                         </span>
-                        {task.is_escalated === 1 && (
+                        {(task.is_escalated === 1 || task.isEscalated) && (
                           <span className="text-[9px] font-mono font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-red-900/40 text-red-300 border border-red-700/50">
                             Escalated
                           </span>
@@ -302,17 +302,17 @@ export default function AdminDashboardPage() {
                       </div>
 
                       <div className="flex items-center gap-3 text-[10px] font-mono text-slate-400">
-                        <span>{task.department_name}</span>
+                        <span>{task.department_name || task.departmentName || "Operations"}</span>
                         <span>•</span>
-                        <span>Assignee: {task.assignee_name || "Unassigned"}</span>
+                        <span>Assignee: {task.assignee_name || task.assigneeName || "Unassigned"}</span>
                         <span>•</span>
-                        <span className="text-red-400 font-bold">Due: {task.due_date}</span>
+                        <span className="text-red-400 font-bold">Due: {task.due_date || task.dueDate || "ASAP"}</span>
                       </div>
 
-                      {task.blocker_note && (
+                      {(task.blocker_note || task.blockerNote) && (
                         <div className="text-[11px] text-amber-300/90 bg-amber-950/30 border border-amber-900/30 px-2 py-1 rounded mt-1 font-mono">
                           <span className="font-bold text-amber-400">Blocker: </span>
-                          {task.blocker_note}
+                          {task.blocker_note || task.blockerNote}
                         </div>
                       )}
                     </div>
@@ -417,19 +417,21 @@ export default function AdminDashboardPage() {
                     <div className="flex items-start justify-between gap-2">
                       <div>
                         <div className="text-xs font-bold text-white">{ven.name}</div>
-                        <div className="text-[10px] text-slate-400 font-mono mt-0.5">{ven.service_category}</div>
+                        <div className="text-[10px] text-slate-400 font-mono mt-0.5">
+                          {ven.service_category || ven.serviceCategory || "General Vendor"}
+                        </div>
                       </div>
                       <span className={`text-[9px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${
-                        ven.verification_status === "verified"
+                        (ven.verification_status || ven.verificationStatus) === "verified"
                           ? "bg-emerald-950/80 text-emerald-400 border-emerald-800/40"
                           : "bg-amber-950/80 text-amber-400 border-amber-800/40"
                       }`}>
-                        {ven.verification_status.replace("_", " ")}
+                        {String(ven.verification_status || ven.verificationStatus || "pending_review").replace(/_/g, " ")}
                       </span>
                     </div>
 
                     <div className="flex items-center justify-between text-[10px] font-mono text-slate-500 pt-2 mt-2 border-t border-white/5">
-                      <span>Docs: {ven.verified_docs_count}/{ven.total_docs_count} verified</span>
+                      <span>Docs: {ven.verified_docs_count ?? ven.verifiedDocsCount ?? 0}/{ven.total_docs_count ?? ven.totalDocsCount ?? 0} verified</span>
                       <Link
                         href={`/admin/vendors?id=${ven.id}`}
                         className="text-amber-400 hover:text-amber-300 font-bold"
@@ -465,14 +467,14 @@ export default function AdminDashboardPage() {
                 <div key={act.id} className="text-xs space-y-1 pb-2.5 border-b border-white/5 last:border-none last:pb-0">
                   <div className="flex items-center justify-between">
                     <span className="font-semibold text-slate-200">
-                      {act.actor_name}
+                      {act.actor_name || act.actorName || "System Admin"}
                     </span>
                     <span className="text-[10px] font-mono text-slate-500">
-                      {new Date(act.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                      {new Date(act.created_at || act.createdAt || Date.now()).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                     </span>
                   </div>
                   <p className="text-[11px] text-slate-400 leading-relaxed font-mono">
-                    {act.change_summary}
+                    {act.change_summary || act.changeSummary || "Audit event recorded"}
                   </p>
                 </div>
               ))}
