@@ -1,4 +1,4 @@
-import { DatabaseSync } from "node:sqlite";
+import type { DatabaseSync } from "node:sqlite";
 import { migration001, Migration } from "./001_enterprise_rbac_and_departments";
 
 const MIGRATIONS: Migration[] = [migration001];

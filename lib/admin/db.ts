@@ -1,8 +1,19 @@
-import { DatabaseSync } from "node:sqlite";
+import type { DatabaseSync } from "node:sqlite";
 import path from "node:path";
 import fs from "node:fs";
 import crypto from "node:crypto";
 import { runMigrations } from "./migrations/runner";
+
+// Safely resolve DatabaseSync constructor if native node:sqlite is supported in the current Node runtime (Node 22.5+)
+// Fallback gracefully on Node 20 or serverless build environments so next build never crashes
+let DatabaseSyncConstructor: (new (path: string) => DatabaseSync) | null = null;
+try {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const sqlite = require("node:sqlite");
+  DatabaseSyncConstructor = sqlite.DatabaseSync;
+} catch {
+  DatabaseSyncConstructor = null;
+}
 
 let dbInstance: DatabaseSync | null = null;
 
@@ -37,8 +48,15 @@ export function getDb(): DatabaseSync {
     return dbInstance;
   }
 
+  if (!DatabaseSyncConstructor) {
+    throw new Error(
+      "Native SQLite (node:sqlite) is not available in the current runtime environment. " +
+      "The Ricoz Admin Panel is operating in Frontend Demo Mode with in-browser mock services."
+    );
+  }
+
   const dbPath = getDbPath();
-  const db = new DatabaseSync(dbPath);
+  const db = new DatabaseSyncConstructor(dbPath);
 
   // Configure high-performance WAL mode and enforce foreign keys
   db.exec("PRAGMA journal_mode = WAL;");
