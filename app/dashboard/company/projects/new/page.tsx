@@ -103,7 +103,7 @@ export default function CreateProjectPage() {
     if (step > 1) setStep(step - 1);
   };
 
-  const handleFinalSubmit = (e: React.FormEvent) => {
+  const handleFinalSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const projectPayload = {
@@ -124,18 +124,25 @@ export default function CreateProjectPage() {
       availabilityRequirement,
     };
 
-    // 1. Save to local storage cache for instant transition
-    const created = saveProject(projectPayload);
-
-    // 2. Persist to PostgreSQL backend API
-    fetch("/api/user/projects", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(projectPayload),
-    }).catch((err) => {
+    // 1. Persist directly to PostgreSQL backend
+    try {
+      const res = await fetch("/api/user/projects", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(projectPayload),
+      });
+      const data = await res.json();
+      if (data?.success && data?.project?.id) {
+        saveProject({ ...projectPayload, id: data.project.id });
+        router.push(`/dashboard/company/projects/${data.project.id}`);
+        return;
+      }
+    } catch (err) {
       console.warn("Could not sync project to backend API:", err);
-    });
+    }
 
+    // Fallback to local cache if offline or unauthenticated
+    const created = saveProject(projectPayload);
     router.push(`/dashboard/company/projects/${created.id}`);
   };
 

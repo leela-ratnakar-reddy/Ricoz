@@ -414,6 +414,60 @@ export const adminApi = {
     },
   },
 
+  // 9b. Platform Registered Users (Talent & Company Accounts)
+  platformUsers: {
+    async list(filters?: {
+      search?: string;
+      accountType?: string;
+      isVerified?: string;
+      status?: string;
+      page?: number;
+      limit?: number;
+    }) {
+      const query = new URLSearchParams();
+      if (filters?.search) query.set("search", filters.search);
+      if (filters?.accountType) query.set("accountType", filters.accountType);
+      if (filters?.isVerified) query.set("isVerified", filters.isVerified);
+      if (filters?.status) query.set("status", filters.status);
+      if (filters?.page) query.set("page", String(filters.page));
+      if (filters?.limit) query.set("limit", String(filters.limit));
+      return request<{
+        success: boolean;
+        users: any[];
+        total: number;
+        page: number;
+        limit: number;
+        totalPages: number;
+        metrics: {
+          total: number;
+          talent: number;
+          company: number;
+          verified: number;
+          pendingVerification: number;
+          active: number;
+          suspended: number;
+          deactivated: number;
+        };
+      }>(`/api/admin/users?${query.toString()}`);
+    },
+    async get(id: string) {
+      return request<{ success: boolean; user: any }>(`/api/admin/users/${encodeURIComponent(id)}`);
+    },
+    async update(
+      id: string,
+      data: {
+        status?: "active" | "suspended" | "deactivated";
+        isVerified?: boolean;
+        reason?: string;
+      }
+    ) {
+      return request<{ success: boolean; message: string; user: any }>(`/api/admin/users/${encodeURIComponent(id)}`, {
+        method: "PATCH",
+        body: JSON.stringify(data),
+      });
+    },
+  },
+
   // 10. Notifications
   notifications: {
     async list() {

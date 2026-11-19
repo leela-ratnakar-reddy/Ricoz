@@ -109,18 +109,38 @@ export async function POST(req: NextRequest) {
     const applicationId = crypto.randomUUID();
 
     try {
+      // 1. Verify project exists in PostgreSQL
+      const project = (await db.prepare(
+        "SELECT id, company_user_id, title FROM client_projects WHERE id = ?"
+      ).get(projectId)) as { id: string; company_user_id: string; title: string } | undefined;
+
+      if (!project) {
+        return NextResponse.json(
+          { success: false, error: "The selected project mandate does not exist in the database or has been archived." },
+          { status: 404 }
+        );
+      }
+
+      // 2. Prevent duplicate proposals
+      const existingApp = await db.prepare(
+        "SELECT id FROM project_applications WHERE project_id = ? AND talent_user_id = ?"
+      ).get(projectId, session.userId);
+
+      if (existingApp) {
+        return NextResponse.json(
+          { success: false, error: "You have already submitted a proposal for this project mandate." },
+          { status: 409 }
+        );
+      }
+
       await db.prepare(`
         INSERT INTO project_applications (
           id, project_id, talent_user_id, pitch, proposed_rate, status, created_at, updated_at
         ) VALUES (?, ?, ?, ?, ?, 'pending', NOW(), NOW())
       `).run(applicationId, projectId, session.userId, pitch.trim(), String(proposedRate).trim());
 
-      // Notify company user if project exists
-      const project = (await db.prepare(
-        "SELECT company_user_id, title FROM client_projects WHERE id = ?"
-      ).get(projectId)) as { company_user_id: string; title: string } | undefined;
-
-      if (project?.company_user_id) {
+      // 3. Notify company user
+      if (project.company_user_id) {
         await db.prepare(`
           INSERT INTO notifications (id, user_id, title, message, type, link, is_read, created_at)
           VALUES (?, ?, 'New Application Received', ?, 'system', '/dashboard/company/projects', FALSE, NOW())

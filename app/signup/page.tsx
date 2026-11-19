@@ -54,8 +54,8 @@ function SignupForm() {
     e.preventDefault();
     setError(null);
 
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters in length.");
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters in length.");
       return;
     }
 
@@ -392,7 +392,7 @@ function SignupForm() {
             {/* PASSWORD */}
             <div>
               <label className="block text-[11px] font-mono uppercase tracking-wider text-muted mb-1.5 font-medium">
-                Password (min. 6 characters)
+                Password (min. 8 characters)
               </label>
               <div className="relative">
                 <Lock className="w-4 h-4 text-taupe absolute left-3 top-1/2 -translate-y-1/2" />

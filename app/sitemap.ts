@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { TALENT_PROFILES } from "@/data/talentProfiles";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ricoz.io";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ricoz-six.vercel.app";
   const now = new Date();
 
   // 1. Static Core Public Pages

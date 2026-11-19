@@ -17,6 +17,7 @@ import {
   LogOut,
 } from "lucide-react";
 import { getShortlist, getConversations, getCurrentUser, DEFAULT_USER } from "@/lib/storage";
+import { useAuth } from "@/lib/auth/AuthContext";
 
 interface DashboardSidebarProps {
   role?: "company" | "designer";
@@ -24,6 +25,7 @@ interface DashboardSidebarProps {
 
 export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role = "company" }) => {
   const pathname = usePathname();
+  const { user: authUser, profile } = useAuth();
   const [shortlistCount, setShortlistCount] = useState(0);
   const [unreadMsgCount, setUnreadMsgCount] = useState(0);
   const [user, setUser] = useState(DEFAULT_USER);
@@ -86,19 +88,27 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ role = "comp
     <aside className="w-full lg:w-64 bg-[#FFF9F3] border-r border-[#E6D8CF] p-4 lg:p-6 shrink-0 flex flex-col justify-between select-none">
       <div>
         {/* User Card in Sidebar */}
-        <div className="flex items-center gap-3 p-3 mb-6 bg-white border border-[#E6D8CF] rounded-xl shadow-2xs">
-          <div className="w-9 h-9 rounded-lg bg-[#E0CEC3]/40 text-espresso font-serif text-xs flex items-center justify-center font-bold shrink-0 border border-[#E6D8CF]">
-            {role === "company" ? "AV" : "AM"}
-          </div>
-          <div className="min-w-0 flex-1">
-            <p className="text-xs font-semibold text-espresso truncate">
-              {role === "company" ? user.companyName || "Vantage Robotics" : user.name || "Alex Morgan"}
-            </p>
-            <p className="text-[10px] text-muted font-mono truncate">
-              {role === "company" ? "Enterprise Workspace" : "Creative Director Studio"}
-            </p>
-          </div>
-        </div>
+        {(() => {
+          const effectiveName = authUser?.fullName || profile?.full_name || (role === "company" ? user.companyName || "Enterprise Workspace" : user.name || "Alex Morgan");
+          const effectiveInitials = effectiveName.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2) || (role === "company" ? "CO" : "TL");
+          const effectiveSubtitle = role === "company" ? (profile?.companyProfile?.companyName || user.companyName || "Enterprise Workspace") : (profile?.talentProfile?.headline || "Creative Director Studio");
+
+          return (
+            <div className="flex items-center gap-3 p-3 mb-6 bg-white border border-[#E6D8CF] rounded-xl shadow-2xs">
+              <div className="w-9 h-9 rounded-lg bg-[#E0CEC3]/40 text-espresso font-serif text-xs flex items-center justify-center font-bold shrink-0 border border-[#E6D8CF]">
+                {effectiveInitials}
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-xs font-semibold text-espresso truncate">
+                  {effectiveName}
+                </p>
+                <p className="text-[10px] text-muted font-mono truncate">
+                  {effectiveSubtitle}
+                </p>
+              </div>
+            </div>
+          );
+        })()}
 
         {/* Navigation list */}
         <nav className="space-y-1">

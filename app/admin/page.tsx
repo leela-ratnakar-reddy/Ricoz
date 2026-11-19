@@ -281,6 +281,13 @@ export default function AdminDashboardPage() {
             <span className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-slate-300">
               {kpis.activeUsers || 0} Active
             </span>
+            <Link
+              href="/admin/users"
+              className="text-xs font-mono text-emerald-400 hover:text-emerald-300 flex items-center gap-1 transition-colors pl-2"
+            >
+              <span>Manage</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
         </div>
 
@@ -547,6 +554,48 @@ export default function AdminDashboardPage() {
               ))}
             </div>
           </div>
+
+          {/* Recent Registrations Panel */}
+          {data?.recentRegistrations && data.recentRegistrations.length > 0 && (
+            <div className="bg-[#0E1118] border border-white/10 rounded-2xl p-6 shadow-xl">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <Users className="w-4 h-4 text-emerald-400" />
+                  <h3 className="text-sm font-bold text-white tracking-tight">
+                    Recent Platform Registrations
+                  </h3>
+                </div>
+                <Link
+                  href="/admin/users"
+                  className="text-[11px] font-mono text-emerald-400 hover:text-emerald-300 transition-colors"
+                >
+                  All Users &rarr;
+                </Link>
+              </div>
+
+              <div className="space-y-3">
+                {data.recentRegistrations.map((u: any) => (
+                  <div key={u.id} className="text-xs space-y-1 pb-2.5 border-b border-white/5 last:border-none last:pb-0">
+                    <div className="flex items-center justify-between">
+                      <span className="font-semibold text-slate-200">
+                        {u.full_name || "New User"}
+                      </span>
+                      <span className={`text-[9px] font-mono uppercase px-1.5 py-0.5 rounded ${
+                        u.account_type === "talent"
+                          ? "bg-emerald-950/60 border border-emerald-800/40 text-emerald-300"
+                          : "bg-blue-950/60 border border-blue-800/40 text-blue-300"
+                      }`}>
+                        {u.account_type}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-slate-400 font-mono truncate">
+                      {u.email} {u.subtitle ? `• ${u.subtitle}` : ""}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

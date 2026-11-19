@@ -22,7 +22,7 @@ export default function CompanyProjectsListPage() {
     fetch("/api/user/projects")
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
-        if (data?.success && Array.isArray(data.projects) && data.projects.length > 0) {
+        if (data?.success && Array.isArray(data.projects)) {
           const mapped: Project[] = data.projects.map((p: any) => ({
             id: p.id,
             title: p.title,

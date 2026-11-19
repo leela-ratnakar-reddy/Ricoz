@@ -82,7 +82,7 @@ export default function CompanyDashboardPage() {
     fetch("/api/user/projects")
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
-        if (data?.success && Array.isArray(data.projects) && data.projects.length > 0) {
+        if (data?.success && Array.isArray(data.projects)) {
           const mapped: Project[] = data.projects.map((p: any) => ({
             id: p.id,
             title: p.title,
@@ -98,6 +98,10 @@ export default function CompanyDashboardPage() {
             createdAt: p.created_at,
           }));
           setProjects(mapped);
+          if (mapped.length > 0) {
+            const ranked = rankDesignersForProject(mapped[0], allDesigners);
+            setRecommendedTalent(ranked.slice(0, 4));
+          }
         }
       })
       .catch(() => {});

@@ -18,15 +18,15 @@ export async function GET(
       );
     }
 
-    const requestedProfile = await getFullUserProfile(id);
+    const isOwnProfile = session.userId === id;
+    // Client-supplied IDs must NEVER create or modify another user's profile records
+    const requestedProfile = await getFullUserProfile(id, { allowSelfHealing: isOwnProfile });
     if (!requestedProfile) {
       return NextResponse.json(
         { success: false, error: "Profile not found" },
         { status: 404 }
       );
     }
-
-    const isOwnProfile = session.userId === id;
 
     // Cross-Account Privacy Enforcement:
     // 1. If accessing own profile, return full profile details
@@ -56,14 +56,28 @@ export async function GET(
     const publicTalentView = {
       id: requestedProfile.id,
       account_type: requestedProfile.account_type,
+      accountType: requestedProfile.account_type,
       full_name: requestedProfile.full_name,
+      fullName: requestedProfile.full_name,
       avatar_url: requestedProfile.avatar_url,
+      avatarUrl: requestedProfile.avatar_url,
       is_verified: requestedProfile.is_verified,
+      isVerified: requestedProfile.is_verified,
       details: {
         headline: requestedProfile.details?.headline,
         bio: requestedProfile.details?.bio,
         location: requestedProfile.details?.location,
         years_experience: requestedProfile.details?.years_experience,
+        yearsExperience: requestedProfile.details?.years_experience,
+        skills: requestedProfile.details?.skills,
+        availability: requestedProfile.details?.availability,
+      },
+      talentProfile: {
+        headline: requestedProfile.details?.headline,
+        bio: requestedProfile.details?.bio,
+        location: requestedProfile.details?.location,
+        years_experience: requestedProfile.details?.years_experience,
+        yearsExperience: requestedProfile.details?.years_experience,
         skills: requestedProfile.details?.skills,
         availability: requestedProfile.details?.availability,
       },

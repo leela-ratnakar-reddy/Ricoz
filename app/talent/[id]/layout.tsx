@@ -17,7 +17,7 @@ export async function generateMetadata({
     };
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ricoz.io";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ricoz-six.vercel.app";
   const bioSummary = talent.bio?.slice(0, 160) || `Verified case studies and portfolio for ${talent.name}.`;
 
   return {

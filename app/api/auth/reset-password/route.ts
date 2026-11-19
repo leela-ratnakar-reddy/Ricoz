@@ -34,9 +34,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (!newPassword || typeof newPassword !== "string" || newPassword.length < 6) {
+    if (!newPassword || typeof newPassword !== "string" || newPassword.length < 8) {
       return NextResponse.json(
-        { success: false, error: "New password must be at least 6 characters in length." },
+        { success: false, error: "New password must be at least 8 characters in length." },
         { status: 400 }
       );
     }
@@ -50,9 +50,13 @@ export async function POST(req: NextRequest) {
     });
 
     if (exchangeRes.error) {
-      console.warn("Reset code exchange error for", cleanEmail, exchangeRes.error);
+      console.warn("Reset code exchange error for", cleanEmail, exchangeRes.error?.message || "Exchange failed");
+      const isExpired = exchangeRes.error?.message?.toLowerCase().includes("expired");
+      const safeErrorMsg = isExpired
+        ? "Password reset code has expired. Please request a new code."
+        : "Invalid or expired reset code. Please check your email.";
       return NextResponse.json(
-        { success: false, error: exchangeRes.error.message || "Invalid or expired reset code." },
+        { success: false, error: safeErrorMsg },
         { status: 400 }
       );
     }
@@ -66,9 +70,9 @@ export async function POST(req: NextRequest) {
     });
 
     if (resetRes.error) {
-      console.warn("Reset password submission error for", cleanEmail, resetRes.error);
+      console.warn("Reset password submission error for", cleanEmail, resetRes.error?.message || "Reset failed");
       return NextResponse.json(
-        { success: false, error: resetRes.error.message || "Failed to update password." },
+        { success: false, error: "Failed to update password. Please ensure your new password meets requirements and try again." },
         { status: 400 }
       );
     }
@@ -78,9 +82,9 @@ export async function POST(req: NextRequest) {
       message: "Your password has been successfully updated. You may now sign in.",
     });
   } catch (error: any) {
-    console.error("Reset password error:", error);
+    console.error("Reset password error:", error?.message || error);
     return NextResponse.json(
-      { success: false, error: error.message || "Failed to reset password. Please try again." },
+      { success: false, error: "Failed to reset password. Please try again." },
       { status: 500 }
     );
   }

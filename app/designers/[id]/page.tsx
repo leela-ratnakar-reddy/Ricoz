@@ -46,6 +46,45 @@ export default function DesignerProfilePage() {
         setDesigner(found);
         setShortlisted(isShortlisted(found.id));
       }
+
+      // Query PostgreSQL backend API for authoritative profile
+      fetch(`/api/user/profile/${designerId}`)
+        .then((res) => (res.ok ? res.json() : null))
+        .then((data) => {
+          if (data?.success && data?.profile) {
+            const p = data.profile;
+            const details = p.details || p.talentProfile || {};
+            const name = p.fullName || p.full_name || "Creative Specialist";
+            setDesigner((prev) => ({
+              id: p.id,
+              name,
+              avatar: name.slice(0, 2).toUpperCase(),
+              initials: name.slice(0, 2).toUpperCase(),
+              title: details.headline || prev?.title || "Creative Director & Brand Specialist",
+              role: "Creative Director",
+              bio: details.bio || prev?.bio || "",
+              location: details.location || prev?.location || "Remote",
+              yearsExperience: Number(details.years_experience || details.yearsExperience || prev?.yearsExperience || 5),
+              dayRate: details.hourly_rate || details.hourlyRate || prev?.dayRate || "$150/hr",
+              availability: details.availability || prev?.availability || "Available now",
+              skills: Array.isArray(details.skills) ? details.skills : prev?.skills || ["Brand Strategy"],
+              specializations: prev?.specializations || ["Brand Architecture"],
+              industries: prev?.industries || ["Technology"],
+              styles: prev?.styles || ["Minimal"],
+              rating: prev?.rating || 4.9,
+              completedProjectsCount: prev?.completedProjectsCount || 12,
+              matchPercentage: 96,
+              budgetTier: "$$$$",
+              featured: true,
+              verified: Boolean(p.isVerified ?? p.is_verified),
+              previousClients: prev?.previousClients || ["Enterprise"],
+              experience: prev?.experience || [],
+              portfolio: prev?.portfolio || [],
+            }));
+            setShortlisted(isShortlisted(p.id));
+          }
+        })
+        .catch(() => {});
     }
   }, [designerId]);
 
@@ -75,8 +114,18 @@ export default function DesignerProfilePage() {
     e.preventDefault();
     if (!contactMessage.trim()) return;
 
+    // Dual-sync: Initiate conversation in PostgreSQL backend
+    fetch("/api/user/conversations", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        recipientId: designer.id,
+        initialMessage: contactMessage.trim(),
+      }),
+    }).catch(() => {});
+
     const conv = startOrGetConversation(designer);
-    sendMessage(conv.id, contactMessage.trim(), "Alex Vance (Vantage Robotics)");
+    sendMessage(conv.id, contactMessage.trim(), "Enterprise Client");
     setContactModalOpen(false);
     router.push("/dashboard/company/messages");
   };

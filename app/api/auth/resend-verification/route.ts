@@ -33,15 +33,22 @@ export async function POST(req: NextRequest) {
     }
 
     const insforge = getInsforgeClient();
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ricoz.io";
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ricoz-six.vercel.app";
     const res = await insforge.auth.resendVerificationEmail({
       email: cleanEmail,
       redirectTo: `${siteUrl}/login`,
     });
 
     if (res.error) {
+      console.warn("InsForge resendVerification error:", res.error.message);
+      if (res.error.message?.toLowerCase().includes("already verified")) {
+        return NextResponse.json(
+          { success: false, error: "This email address is already verified. Please sign in." },
+          { status: 400 }
+        );
+      }
       return NextResponse.json(
-        { success: false, error: res.error.message || "Could not resend verification email." },
+        { success: false, error: "Unable to resend verification code at this time. Please try again shortly." },
         { status: res.error.statusCode || 400 }
       );
     }
@@ -51,9 +58,9 @@ export async function POST(req: NextRequest) {
       message: "A fresh verification code has been dispatched to your email address.",
     });
   } catch (error: any) {
-    console.error("Resend verification code error:", error);
+    console.error("Resend verification code exception:", error?.message || error);
     return NextResponse.json(
-      { success: false, error: "Failed to resend verification code. Please try again later." },
+      { success: false, error: "Unable to resend verification code. Please try again later." },
       { status: 500 }
     );
   }

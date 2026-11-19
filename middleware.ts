@@ -19,11 +19,18 @@ async function verifyUserSessionCookie(cookieValue: string | undefined): Promise
     const [b64, signature] = parts;
 
     // Cryptographic signature verification using standard Web Crypto API (Edge-compatible)
-    const secret = process.env.INSFORGE_API_KEY || "ricoz-enterprise-auth-secret-key-32ch";
+    // Strictly requires dedicated SESSION_SECRET; never falls back to INSFORGE_API_KEY or hardcoded defaults
+    const secret = process.env.SESSION_SECRET;
+    if (!secret || secret.trim().length === 0) {
+      console.error(
+        "SESSION_SECRET is not configured in middleware runtime. Denying access to protected routes."
+      );
+      return null;
+    }
     const enc = new TextEncoder();
     const key = await crypto.subtle.importKey(
       "raw",
-      enc.encode(secret),
+      enc.encode(secret.trim()),
       { name: "HMAC", hash: "SHA-256" },
       false,
       ["verify"]
@@ -53,7 +60,27 @@ async function verifyUserSessionCookie(cookieValue: string | undefined): Promise
     const payload = JSON.parse(json) as PublicUserToken;
 
     const now = Math.floor(Date.now() / 1000);
-    if (payload.exp && payload.exp < now) {
+
+    // Fail closed: reject missing, null, zero, negative, non-numeric, non-finite, and expired exp values
+    if (
+      typeof payload.exp !== "number" ||
+      !Number.isFinite(payload.exp) ||
+      payload.exp <= 0 ||
+      payload.exp < now
+    ) {
+      return null;
+    }
+
+    // Fail closed: validate required payload fields
+    if (
+      !payload.userId ||
+      typeof payload.userId !== "string" ||
+      payload.userId.trim().length === 0 ||
+      !payload.email ||
+      typeof payload.email !== "string" ||
+      payload.email.trim().length === 0 ||
+      (payload.accountType !== "talent" && payload.accountType !== "company")
+    ) {
       return null;
     }
 

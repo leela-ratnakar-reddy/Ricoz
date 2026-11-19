@@ -127,6 +127,16 @@ export function toggleShortlist(designerId: string): boolean {
   }
   localStorage.setItem(KEYS.SHORTLIST, JSON.stringify(updated));
   window.dispatchEvent(new Event("brandroom_shortlist_updated"));
+
+  // Seamlessly synchronize with PostgreSQL backend
+  try {
+    fetch("/api/user/shortlist", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ talentProfileId: designerId }),
+    }).catch(() => {});
+  } catch {}
+
   return added;
 }
 
@@ -136,6 +146,13 @@ export function removeFromShortlist(designerId: string): void {
   const updated = current.filter((id) => id !== designerId);
   localStorage.setItem(KEYS.SHORTLIST, JSON.stringify(updated));
   window.dispatchEvent(new Event("brandroom_shortlist_updated"));
+
+  // Seamlessly synchronize with PostgreSQL backend
+  try {
+    fetch(`/api/user/shortlist?talentProfileId=${encodeURIComponent(designerId)}`, {
+      method: "DELETE",
+    }).catch(() => {});
+  } catch {}
 }
 
 // ----------------- Designers -----------------

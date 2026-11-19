@@ -65,27 +65,69 @@ export async function POST(req: NextRequest) {
     const user = signInResult.data?.user;
     if (!user) {
       return NextResponse.json(
-        { success: false, error: "Authentication succeeded but user identity was not returned." },
+        { success: false, error: "Unable to complete sign in at this time. Please try again." },
         { status: 500 }
       );
     }
 
-    // Fetch user profile from public.user_profiles
+    // Query existing base profile
     const db = getDb();
-    let profile = await getFullUserProfile(user.id);
+    let baseProfile = (await db.prepare(
+      "SELECT id, account_type, email, full_name, avatar_url, is_verified, status FROM public.user_profiles WHERE id = ?"
+    ).get(user.id)) as {
+      id: string;
+      account_type: "talent" | "company";
+      email: string;
+      full_name: string;
+      avatar_url: string;
+      is_verified: boolean;
+      status: "active" | "suspended" | "deactivated";
+    } | undefined;
 
-    // If profile does not exist yet (e.g. existing user), auto-provision profile record
-    if (!profile) {
-      const defaultAccountType = cleanEmail.includes("designer") || cleanEmail.includes("talent") ? "talent" : "company";
-      const userName = (user as any).profile?.name || cleanEmail.split("@")[0] || "RICOZ Member";
+    // STATE A: No base profile exists
+    if (!baseProfile) {
+      const existingTalent = await db.prepare("SELECT id FROM public.talent_profiles WHERE user_id = ?").get(user.id);
+      const existingCompany = await db.prepare("SELECT id FROM public.company_profiles WHERE user_id = ?").get(user.id);
+
+      let resolvedAccountType: "talent" | "company" | null = null;
+      // Handle single or conflicting/duplicate specialized profiles safely
+      if (existingTalent && !existingCompany) {
+        resolvedAccountType = "talent";
+      } else if (existingCompany && !existingTalent) {
+        resolvedAccountType = "company";
+      } else {
+        // Conflicting or neither specialized profile exists: query authoritative registration metadata from auth.users
+        const authUserRow = (await db.prepare(
+          "SELECT metadata FROM auth.users WHERE id = ?"
+        ).get(user.id)) as { metadata?: any } | undefined;
+
+        const metadataAccountType = authUserRow?.metadata?.account_type;
+        if (metadataAccountType === "talent" || metadataAccountType === "company") {
+          resolvedAccountType = metadataAccountType;
+        }
+      }
+
+      // If account type cannot be established reliably from trusted records or metadata, fail safely
+      if (!resolvedAccountType) {
+        console.error("Sign-in profile recovery failed: unable to establish trusted account type for user", user.id);
+        return NextResponse.json(
+          {
+            success: false,
+            error: "Your account profile setup is incomplete and cannot be resolved automatically. Please contact concierge@ricoz.io for account resolution.",
+          },
+          { status: 403 }
+        );
+      }
+
+      const userName = (user as any).profile?.name || (user as any).name || cleanEmail.split("@")[0] || "RICOZ Member";
 
       await db.prepare(`
         INSERT INTO public.user_profiles (id, account_type, email, full_name, avatar_url, is_verified, status, created_at, updated_at)
         VALUES (?, ?, ?, ?, '', true, 'active', NOW(), NOW())
-        ON CONFLICT (id) DO UPDATE SET is_verified = true
-      `).run(user.id, defaultAccountType, cleanEmail, userName);
+        ON CONFLICT (id) DO NOTHING
+      `).run(user.id, resolvedAccountType, cleanEmail, userName);
 
-      if (defaultAccountType === "talent") {
+      if (resolvedAccountType === "talent") {
         await db.prepare(`
           INSERT INTO public.talent_profiles (id, user_id, headline, bio, location, years_experience, hourly_rate, portfolio_url, skills, availability, created_at, updated_at)
           VALUES (?, ?, 'Creative Director & Brand Specialist', '', '', 5, '$150/hr', '', '[]'::jsonb, 'Available now', NOW(), NOW())
@@ -99,8 +141,78 @@ export async function POST(req: NextRequest) {
         `).run(user.id, user.id, userName, cleanEmail);
       }
 
-      profile = await getFullUserProfile(user.id);
+      baseProfile = (await db.prepare(
+        "SELECT id, account_type, email, full_name, avatar_url, is_verified, status FROM public.user_profiles WHERE id = ?"
+      ).get(user.id)) as typeof baseProfile;
     }
+
+    if (!baseProfile) {
+      console.error("Sign-in failed: base profile still missing after recovery for user", user.id);
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Your account profile setup is incomplete. Please contact concierge@ricoz.io for assistance.",
+        },
+        { status: 500 }
+      );
+    }
+
+    // STATE B & C: Base profile exists; check and recover specialized profile if missing (State B)
+    let details: any = null;
+    if (baseProfile.account_type === "talent") {
+      details = await db.prepare(
+        "SELECT headline, bio, location, years_experience, hourly_rate, portfolio_url, skills, availability FROM public.talent_profiles WHERE user_id = ?"
+      ).get(user.id);
+
+      // State B for talent: base profile exists, specialized talent profile is missing
+      if (!details) {
+        await db.prepare(`
+          INSERT INTO public.talent_profiles (
+            id, user_id, headline, bio, location, years_experience, hourly_rate, portfolio_url, skills, availability, created_at, updated_at
+          ) VALUES (?, ?, 'Creative Director & Brand Specialist', '', '', 5, '$150/hr', '', '[]'::jsonb, 'Available now', NOW(), NOW())
+          ON CONFLICT (id) DO NOTHING
+        `).run(user.id, user.id);
+
+        details = await db.prepare(
+          "SELECT headline, bio, location, years_experience, hourly_rate, portfolio_url, skills, availability FROM public.talent_profiles WHERE user_id = ?"
+        ).get(user.id);
+      }
+    } else if (baseProfile.account_type === "company") {
+      details = await db.prepare(
+        "SELECT company_name, contact_name, business_email, industry, company_size, website_url, billing_country FROM public.company_profiles WHERE user_id = ?"
+      ).get(user.id);
+
+      // State B for company: base profile exists, specialized company profile is missing
+      if (!details) {
+        await db.prepare(`
+          INSERT INTO public.company_profiles (
+            id, user_id, company_name, contact_name, business_email, industry, company_size, website_url, billing_country, created_at, updated_at
+          ) VALUES (?, ?, 'Enterprise Client', ?, ?, 'Technology & Innovation', '10-50', '', '', NOW(), NOW())
+          ON CONFLICT (id) DO NOTHING
+        `).run(user.id, user.id, baseProfile.full_name || "Enterprise Contact", baseProfile.email);
+
+        details = await db.prepare(
+          "SELECT company_name, contact_name, business_email, industry, company_size, website_url, billing_country FROM public.company_profiles WHERE user_id = ?"
+        ).get(user.id);
+      }
+    }
+
+    // Verify the recovered profile before issuing the session
+    if (!details) {
+      console.error("Login recovery failed: unable to verify specialized profile for user", user.id);
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Your account profile could not be fully loaded. Please contact concierge@ricoz.io for assistance.",
+        },
+        { status: 500 }
+      );
+    }
+
+    const profile = {
+      ...baseProfile,
+      details,
+    };
 
     // Verify account status
     if (profile?.status === "suspended") {
@@ -123,7 +235,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const accountType = profile?.account_type || "company";
+    const accountType = profile.account_type;
     const exp = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7; // 7 days
 
     // Set secure user session cookies

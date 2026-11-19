@@ -81,8 +81,12 @@ export async function GET(req: NextRequest) {
     let deactivatedUsers = 0;
     let talentUsers = 0;
     let companyUsers = 0;
+    let verifiedUsers = 0;
+    let pendingVerificationUsers = 0;
+    let totalProjects = 0;
     let totalEnquiries = 0;
     let newEnquiries = 0;
+    let recentRegistrations: any[] = [];
 
     try {
       const totalUsersRow = (await db.prepare("SELECT count(*) as count FROM user_profiles").get()) as { count: string | number } | undefined;
@@ -103,11 +107,30 @@ export async function GET(req: NextRequest) {
       const companyUsersRow = (await db.prepare("SELECT count(*) as count FROM user_profiles WHERE account_type = 'company'").get()) as { count: string | number } | undefined;
       companyUsers = Number(companyUsersRow?.count || 0);
 
+      const verifiedUsersRow = (await db.prepare("SELECT count(*) as count FROM user_profiles WHERE is_verified = TRUE").get()) as { count: string | number } | undefined;
+      verifiedUsers = Number(verifiedUsersRow?.count || 0);
+
+      const pendingVerificationUsersRow = (await db.prepare("SELECT count(*) as count FROM user_profiles WHERE is_verified = FALSE").get()) as { count: string | number } | undefined;
+      pendingVerificationUsers = Number(pendingVerificationUsersRow?.count || 0);
+
+      const totalProjectsRow = (await db.prepare("SELECT count(*) as count FROM client_projects").get()) as { count: string | number } | undefined;
+      totalProjects = Number(totalProjectsRow?.count || 0);
+
       const totalEnquiriesRow = (await db.prepare("SELECT count(*) as count FROM website_enquiries").get()) as { count: string | number } | undefined;
       totalEnquiries = Number(totalEnquiriesRow?.count || 0);
 
       const newEnquiriesRow = (await db.prepare("SELECT count(*) as count FROM website_enquiries WHERE status = 'new'").get()) as { count: string | number } | undefined;
       newEnquiries = Number(newEnquiriesRow?.count || 0);
+
+      recentRegistrations = (await db.prepare(`
+        SELECT u.id, u.full_name, u.email, u.account_type, u.is_verified, u.status, u.created_at,
+               COALESCE(t.headline, c.company_name, '') as subtitle
+        FROM user_profiles u
+        LEFT JOIN talent_profiles t ON u.id = t.user_id AND u.account_type = 'talent'
+        LEFT JOIN company_profiles c ON u.id = c.user_id AND u.account_type = 'company'
+        ORDER BY u.created_at DESC
+        LIMIT 5
+      `).all()) as any[];
     } catch (metricErr) {
       console.warn("Could not load user_profiles or website_enquiries metrics:", metricErr);
     }
@@ -185,6 +208,9 @@ export async function GET(req: NextRequest) {
       companyUsers,
       totalEnquiries,
       newEnquiries,
+      verifiedUsers,
+      pendingVerificationUsers,
+      totalProjects,
     };
 
     return NextResponse.json({
@@ -197,6 +223,7 @@ export async function GET(req: NextRequest) {
         pendingVendorList,
         deptWorkloads,
         recentActivity,
+        recentRegistrations,
       },
     });
   } catch (error) {

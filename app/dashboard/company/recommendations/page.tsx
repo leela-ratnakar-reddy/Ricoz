@@ -27,6 +27,33 @@ export default function RecommendationsPage() {
       const ranked = rankDesignersForProject(projs[0], designers);
       setMatches(ranked);
     }
+
+    // Load real projects from PostgreSQL
+    fetch("/api/user/projects")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.success && Array.isArray(data.projects) && data.projects.length > 0) {
+          const mapped: Project[] = data.projects.map((p: any) => ({
+            id: p.id,
+            title: p.title,
+            companyId: p.company_user_id || "comp-user",
+            companyName: p.company_name,
+            industry: p.industry,
+            status: p.status,
+            timeline: p.timeline,
+            budgetRange: p.budget_range,
+            budgetTier: p.budget_tier,
+            rebrandingGoals: p.rebranding_goals || [],
+            requiredServices: p.required_services || [],
+            createdAt: p.created_at,
+          }));
+          setProjects(mapped);
+          setSelectedProjectId(mapped[0].id);
+          const designers = getDesigners();
+          setMatches(rankDesignersForProject(mapped[0], designers));
+        }
+      })
+      .catch(() => {});
   }, []);
 
   const handleProjectChange = (projId: string) => {

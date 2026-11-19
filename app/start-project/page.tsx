@@ -160,6 +160,24 @@ export default function StartProjectPage() {
         console.warn("Could not sync project mandate to backend PostgreSQL:", err);
       });
 
+    // If authenticated as an enterprise company, also register in client_projects table
+    fetch("/api/user/projects", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title,
+        companyName: effectiveCompany,
+        industry,
+        timeline,
+        budgetRange,
+        budgetTier,
+        rebrandingGoals: selectedGoals,
+        targetAudience,
+        requiredServices: selectedRoles,
+        projectBrief: `Goals: ${selectedGoals.join(", ")}. Required Services: ${selectedRoles.join(", ")}. Target Audience: ${targetAudience}. Industry: ${industry}.`,
+      }),
+    }).catch(() => {});
+
     // Compute top matching talent from TALENT_PROFILES based on selected roles
     const matches = TALENT_PROFILES.filter((t) =>
       selectedRoles.some(

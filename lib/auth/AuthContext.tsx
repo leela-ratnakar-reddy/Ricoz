@@ -13,12 +13,18 @@ export interface AuthenticatedUser {
 export interface UserProfileDetails {
   id: string;
   account_type: "talent" | "company";
+  accountType?: "talent" | "company";
   email: string;
   full_name: string;
+  fullName?: string;
   avatar_url?: string;
+  avatarUrl?: string;
   is_verified: boolean;
+  isVerified?: boolean;
   status?: "active" | "suspended" | "deactivated";
   details?: any;
+  talentProfile?: any;
+  companyProfile?: any;
 }
 
 interface AuthContextType {

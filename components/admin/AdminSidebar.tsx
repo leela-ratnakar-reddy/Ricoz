@@ -21,6 +21,7 @@ import {
   UserCheck,
   X,
   Globe,
+  Users,
 } from "lucide-react";
 import { AdminUser, AdminRole } from "@/lib/admin/types";
 import { adminApi } from "@/lib/admin/apiClient";
@@ -90,6 +91,12 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
       badge: badgeCounts.pendingVendors && badgeCounts.pendingVendors > 0 ? `${badgeCounts.pendingVendors} pending` : undefined,
       badgeVariant: "warning",
       permission: "vendors.view",
+    },
+    {
+      label: "Platform Users",
+      href: "/admin/users",
+      icon: Users,
+      permission: "users.view",
     },
     {
       label: "Teams & Access",

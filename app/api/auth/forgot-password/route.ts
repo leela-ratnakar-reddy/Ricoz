@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
     }
 
     const insforge = getInsforgeClient();
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ricoz.io";
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ricoz-six.vercel.app";
 
     // Call InsForge SDK sendResetPasswordEmail
     await insforge.auth.sendResetPasswordEmail({
@@ -45,11 +45,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       success: true,
       message: "If an account is associated with this email, a 6-digit password reset code has been dispatched.",
-      email: cleanEmail,
     });
   } catch (error: any) {
-    console.error("Forgot password error:", error);
-    // Even on error, return safe message
+    console.error("Forgot password exception:", error?.message || error);
+    // Even on error, return safe uniform message to mitigate account enumeration
     return NextResponse.json({
       success: true,
       message: "If an account is associated with this email, a 6-digit password reset code has been dispatched.",

@@ -31,6 +31,29 @@ export default function MessagesPage() {
     } else if (activeConvId) {
       setMessages(getMessages(activeConvId));
     }
+
+    // Authoritative fetch from PostgreSQL backend
+    fetch("/api/user/conversations")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.success && Array.isArray(data.conversations) && data.conversations.length > 0) {
+          const mapped: Conversation[] = data.conversations.map((c: any) => ({
+            id: c.id,
+            designerId: c.peer_id,
+            designerName: c.peer_name || "Creative Director",
+            designerAvatar: c.peer_avatar || (c.peer_name ? c.peer_name.slice(0, 2).toUpperCase() : "CD"),
+            designerRole: c.peer_role || "Talent",
+            lastMessage: c.last_message_preview || "Conversation started",
+            lastMessageTime: c.last_message_at || new Date().toISOString(),
+            unreadCount: c.unread_count || 0,
+          }));
+          setConversations(mapped);
+          if (!activeConvId && mapped.length > 0) {
+            setActiveConvId(mapped[0].id);
+          }
+        }
+      })
+      .catch(() => {});
   };
 
   useEffect(() => {
@@ -42,6 +65,23 @@ export default function MessagesPage() {
   useEffect(() => {
     if (activeConvId) {
       setMessages(getMessages(activeConvId));
+      fetch(`/api/user/conversations/${activeConvId}/messages`)
+        .then((res) => (res.ok ? res.json() : null))
+        .then((data) => {
+          if (data?.success && Array.isArray(data.messages) && data.messages.length > 0) {
+            const mappedMsgs: Message[] = data.messages.map((m: any) => ({
+              id: m.id,
+              conversationId: m.conversation_id,
+              senderId: m.sender_id,
+              senderName: m.sender_name || "User",
+              text: m.content,
+              timestamp: m.created_at,
+              read: m.is_read,
+            }));
+            setMessages(mappedMsgs);
+          }
+        })
+        .catch(() => {});
     }
   }, [activeConvId]);
 

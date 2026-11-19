@@ -51,14 +51,43 @@ export default function DesignerProfileEditorPage() {
         if (data?.success && data?.profile) {
           const p = data.profile;
           const details = p.details || {};
-          if (p.full_name) setName(p.full_name);
+          const loadedName = p.full_name || p.fullName;
+          if (loadedName) setName(loadedName);
           if (details.headline) setTitle(details.headline);
-          if (details.bio) setBio(details.bio);
-          if (details.location) setLocation(details.location);
+          if (details.bio !== undefined) setBio(details.bio);
+          if (details.location !== undefined) setLocation(details.location);
           if (details.years_experience) setYearsExperience(Number(details.years_experience));
           if (details.hourly_rate) setDayRate(details.hourly_rate);
           if (details.availability) setAvailability(details.availability as AvailabilityStatus);
           if (Array.isArray(details.skills)) setSkills(details.skills);
+
+          setDesigner((prev) => ({
+            ...(prev || {}),
+            id: p.id,
+            name: loadedName || prev?.name || "Creative Director",
+            avatar: loadedName ? loadedName.slice(0, 2).toUpperCase() : "CD",
+            initials: loadedName ? loadedName.slice(0, 2).toUpperCase() : "CD",
+            title: details.headline || prev?.title || "Creative Director & Brand Specialist",
+            role: "Creative Director",
+            bio: details.bio || prev?.bio || "",
+            location: details.location || prev?.location || "Remote",
+            yearsExperience: Number(details.years_experience || prev?.yearsExperience || 5),
+            dayRate: details.hourly_rate || prev?.dayRate || "$150/hr",
+            availability: (details.availability as AvailabilityStatus) || prev?.availability || "Available now",
+            skills: Array.isArray(details.skills) ? details.skills : prev?.skills || [],
+            specializations: prev?.specializations || ["Brand Architecture"],
+            industries: prev?.industries || ["Technology"],
+            styles: prev?.styles || ["Minimal"],
+            rating: prev?.rating || 5.0,
+            completedProjectsCount: prev?.completedProjectsCount || 0,
+            matchPercentage: 98,
+            budgetTier: "$$$$",
+            featured: true,
+            verified: Boolean(p.is_verified ?? p.isVerified),
+            previousClients: prev?.previousClients || [],
+            experience: prev?.experience || [],
+            portfolio: prev?.portfolio || [],
+          }));
         }
       })
       .catch(() => {});
