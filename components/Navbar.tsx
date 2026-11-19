@@ -81,7 +81,7 @@ export const Navbar: React.FC = () => {
     ? {
         name: authUser.fullName || profile?.full_name || authUser.email,
         email: authUser.email,
-        role: (accountType || "company") as "talent" | "company",
+        role: (accountType || "company") as "talent" | "company" | "admin",
         isReal: true,
       }
     : null;
@@ -169,10 +169,12 @@ export const Navbar: React.FC = () => {
                         className={`px-1.5 py-0.5 rounded-md text-[9px] font-mono font-bold tracking-wider uppercase ${
                           activeUser.role === "talent"
                             ? "bg-[#541719]/10 text-[#541719]"
+                            : activeUser.role === "admin"
+                            ? "bg-purple-100 text-purple-800"
                             : "bg-emerald-50 text-emerald-800"
                         }`}
                       >
-                        {activeUser.role === "talent" ? "Talent" : "Company"}
+                        {activeUser.role === "talent" ? "Talent" : activeUser.role === "admin" ? "Admin" : "Company"}
                       </span>
                     </div>
 
@@ -196,21 +198,43 @@ export const Navbar: React.FC = () => {
                       </div>
 
                       <div className="py-1">
-                        <Link
-                          href={
-                            activeUser.role === "talent"
-                              ? "/dashboard/designer"
-                              : "/dashboard/company"
-                          }
-                          onClick={() => setAccountDropdownOpen(false)}
-                          className="flex items-center gap-2.5 px-4 py-2 text-xs font-sans text-espresso hover:bg-[#FFF9F3] hover:text-accent transition-colors"
-                        >
-                          <LayoutDashboard className="w-3.5 h-3.5 text-accent" />
-                          <span>Workspace Dashboard</span>
-                        </Link>
-
-                        {activeUser.role === "company" ? (
+                        {activeUser.role === "admin" ? (
                           <>
+                            <Link
+                              href="/admin"
+                              onClick={() => setAccountDropdownOpen(false)}
+                              className="flex items-center gap-2.5 px-4 py-2 text-xs font-sans text-espresso hover:bg-[#FFF9F3] hover:text-accent transition-colors font-medium"
+                            >
+                              <LayoutDashboard className="w-3.5 h-3.5 text-accent" />
+                              <span>Operations Command Center</span>
+                            </Link>
+                            <Link
+                              href="/admin/analytics"
+                              onClick={() => setAccountDropdownOpen(false)}
+                              className="flex items-center gap-2.5 px-4 py-2 text-xs font-sans text-espresso hover:bg-[#FFF9F3] hover:text-accent transition-colors"
+                            >
+                              <Sparkles className="w-3.5 h-3.5 text-taupe" />
+                              <span>Platform Analytics</span>
+                            </Link>
+                            <Link
+                              href="/admin/users"
+                              onClick={() => setAccountDropdownOpen(false)}
+                              className="flex items-center gap-2.5 px-4 py-2 text-xs font-sans text-espresso hover:bg-[#FFF9F3] hover:text-accent transition-colors"
+                            >
+                              <User className="w-3.5 h-3.5 text-taupe" />
+                              <span>User Directory</span>
+                            </Link>
+                          </>
+                        ) : activeUser.role === "company" ? (
+                          <>
+                            <Link
+                              href="/dashboard/company"
+                              onClick={() => setAccountDropdownOpen(false)}
+                              className="flex items-center gap-2.5 px-4 py-2 text-xs font-sans text-espresso hover:bg-[#FFF9F3] hover:text-accent transition-colors"
+                            >
+                              <LayoutDashboard className="w-3.5 h-3.5 text-accent" />
+                              <span>Workspace Dashboard</span>
+                            </Link>
                             <Link
                               href="/dashboard/company/projects"
                               onClick={() => setAccountDropdownOpen(false)}
@@ -230,6 +254,14 @@ export const Navbar: React.FC = () => {
                           </>
                         ) : (
                           <>
+                            <Link
+                              href="/dashboard/designer"
+                              onClick={() => setAccountDropdownOpen(false)}
+                              className="flex items-center gap-2.5 px-4 py-2 text-xs font-sans text-espresso hover:bg-[#FFF9F3] hover:text-accent transition-colors"
+                            >
+                              <LayoutDashboard className="w-3.5 h-3.5 text-accent" />
+                              <span>Workspace Dashboard</span>
+                            </Link>
                             <Link
                               href="/dashboard/designer/portfolio"
                               onClick={() => setAccountDropdownOpen(false)}
@@ -383,14 +415,20 @@ export const Navbar: React.FC = () => {
               {activeUser ? (
                 <Link
                   href={
-                    activeUser.role === "talent"
+                    activeUser.role === "admin"
+                      ? "/admin"
+                      : activeUser.role === "talent"
                       ? "/dashboard/designer"
                       : "/dashboard/company"
                   }
                   className="flex items-center justify-center gap-2 w-full py-2.5 text-xs tracking-wider font-semibold border border-[#E6D8CF] rounded-full bg-white text-[#38241F]"
                 >
                   <LayoutDashboard className="w-4 h-4 text-[#541719]" />
-                  <span>Go to Workspace Dashboard</span>
+                  <span>
+                    {activeUser.role === "admin"
+                      ? "Go to Operations Command Center"
+                      : "Go to Workspace Dashboard"}
+                  </span>
                 </Link>
               ) : (
                 <div className="grid grid-cols-2 gap-2">

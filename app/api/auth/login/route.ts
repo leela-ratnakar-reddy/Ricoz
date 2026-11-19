@@ -3,6 +3,8 @@ import { getInsforgeClient } from "@/lib/insforge";
 import { getDb } from "@/lib/admin/db";
 import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
 import { setUserSessionCookies, getFullUserProfile } from "@/lib/auth/userAuth";
+import { createAdminSession, SESSION_COOKIE_NAME, SESSION_MAX_LIFETIME_HOURS } from "@/lib/admin/auth";
+import { recordAuditLog } from "@/lib/admin/audit";
 
 export async function POST(req: NextRequest) {
   try {
@@ -72,6 +74,85 @@ export async function POST(req: NextRequest) {
 
     // Query existing base profile
     const db = getDb();
+
+    // Check if the authenticated user is an authorized Admin account in PostgreSQL admin_users
+    const adminUserRow = (await db.prepare(
+      "SELECT id, email, full_name, role, status FROM admin_users WHERE (id = ? OR LOWER(email) = ?) AND status = 'active'"
+    ).get(user.id, cleanEmail)) as {
+      id: string;
+      email: string;
+      full_name: string;
+      role: string;
+      status: string;
+    } | undefined;
+
+    if (adminUserRow) {
+      const userAgent = req.headers.get("user-agent") || "browser";
+      const { token: adminToken } = await createAdminSession(adminUserRow.id, clientIp, userAgent);
+
+      await recordAuditLog({
+        actor: {
+          id: adminUserRow.id,
+          email: adminUserRow.email,
+          fullName: adminUserRow.full_name,
+          role: adminUserRow.role as any,
+        } as any,
+        action: "USER_LOGIN",
+        entityType: "admin_user",
+        entityId: adminUserRow.id,
+        changeSummary: `Admin ${adminUserRow.full_name} (${adminUserRow.role}) signed in via public login.`,
+        ipAddress: clientIp,
+      });
+
+      // If they also have a base profile, issue user session cookies as well
+      const baseProfile = (await db.prepare(
+        "SELECT id, account_type, email, full_name, avatar_url, is_verified, status FROM public.user_profiles WHERE id = ?"
+      ).get(user.id)) as any;
+
+      if (baseProfile) {
+        const exp = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7;
+        await setUserSessionCookies(
+          {
+            userId: user.id,
+            email: cleanEmail,
+            accountType: baseProfile.account_type,
+            fullName: baseProfile.full_name || cleanEmail,
+            avatarUrl: baseProfile.avatar_url || "",
+            exp,
+          },
+          signInResult.data?.accessToken,
+          null
+        );
+      }
+
+      const response = NextResponse.json({
+        success: true,
+        message: "Successfully signed in as administrator.",
+        user: {
+          id: adminUserRow.id,
+          email: cleanEmail,
+          fullName: adminUserRow.full_name,
+          role: adminUserRow.role,
+        },
+        profile: baseProfile || null,
+        accountType: "admin",
+        isAdmin: true,
+        redirectUrl: "/admin",
+      });
+
+      response.cookies.set({
+        name: SESSION_COOKIE_NAME,
+        value: adminToken,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: SESSION_MAX_LIFETIME_HOURS * 3600,
+        path: "/",
+      });
+
+      return response;
+    }
+
     let baseProfile = (await db.prepare(
       "SELECT id, account_type, email, full_name, avatar_url, is_verified, status FROM public.user_profiles WHERE id = ?"
     ).get(user.id)) as {

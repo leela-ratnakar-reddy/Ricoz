@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getCurrentUserSession, getFullUserProfile } from "@/lib/auth/userAuth";
+import { getCurrentAdminUser } from "@/lib/admin/auth";
 
 export const dynamic = "force-dynamic";
 
@@ -8,6 +9,35 @@ export async function GET() {
     const session = await getCurrentUserSession();
 
     if (!session) {
+      // Check if an authorized Admin session exists
+      const admin = await getCurrentAdminUser();
+      if (admin) {
+        return NextResponse.json({
+          authenticated: true,
+          isAdmin: true,
+          user: {
+            id: admin.id,
+            email: admin.email,
+            fullName: admin.fullName,
+            accountType: "admin",
+            role: admin.role,
+          },
+          profile: {
+            id: admin.id,
+            email: admin.email,
+            full_name: admin.fullName,
+            fullName: admin.fullName,
+            account_type: "admin",
+            accountType: "admin",
+            role: admin.role,
+            is_verified: true,
+            isVerified: true,
+            status: "active",
+          },
+          accountType: "admin",
+        });
+      }
+
       return NextResponse.json({
         authenticated: false,
         user: null,

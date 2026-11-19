@@ -3,50 +3,40 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import {
-  CheckSquare,
-  AlertTriangle,
+  Users,
   Building2,
-  Handshake,
+  Briefcase,
+  Sparkles,
   LifeBuoy,
+  ShieldCheck,
   ShieldAlert,
   ArrowRight,
   Clock,
   CheckCircle2,
   RefreshCw,
-  Filter,
-  Users,
-  FileCheck2,
   TrendingUp,
-  AlertCircle,
+  Award,
+  Users2,
+  FileCheck2,
+  ChevronRight,
   ExternalLink,
 } from "lucide-react";
-import { Department } from "@/lib/admin/types";
 import { adminApi } from "@/lib/admin/apiClient";
 
 export default function AdminDashboardPage() {
   const [data, setData] = useState<any>(null);
-  const [departments, setDepartments] = useState<Department[]>([]);
-  const [selectedDept, setSelectedDept] = useState<string>("");
-  const [selectedRange, setSelectedRange] = useState<string>("30d");
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
   const fetchData = async () => {
     try {
       setRefreshing(true);
-      const [dashRes, deptRes] = await Promise.allSettled([
-        adminApi.dashboard.getStats(selectedDept || undefined, selectedRange),
-        adminApi.departments.list(),
-      ]);
-
-      if (dashRes.status === "fulfilled" && dashRes.value.success && dashRes.value.data) {
-        setData(dashRes.value.data);
-      }
-      if (deptRes.status === "fulfilled" && deptRes.value.success && deptRes.value.departments) {
-        setDepartments(deptRes.value.departments);
+      const res = await adminApi.dashboard.getStats();
+      if (res.success && res.data) {
+        setData(res.data);
       }
     } catch (err) {
-      console.error("Error loading live dashboard:", err);
+      console.error("Error loading platform command center:", err);
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -55,14 +45,14 @@ export default function AdminDashboardPage() {
 
   useEffect(() => {
     fetchData();
-  }, [selectedDept, selectedRange]);
+  }, []);
 
   if (loading) {
     return (
       <div className="space-y-6">
         <div className="h-10 w-64 bg-white/[0.04] rounded-lg animate-pulse" />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {[1, 2, 3, 4].map((i) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
             <div key={i} className="h-32 bg-white/[0.03] border border-white/5 rounded-2xl animate-pulse" />
           ))}
         </div>
@@ -71,167 +61,183 @@ export default function AdminDashboardPage() {
   }
 
   const kpis = data?.kpis || {};
-  const urgentTasks = data?.urgentTasks || [];
-  const pendingVendors = data?.pendingVendorList || [];
-  const deptWorkloads = data?.deptWorkloads || [];
+  const recentUsers = data?.recentUsers || [];
+  const recentOpportunities = data?.recentOpportunities || [];
+  const recentApplications = data?.recentApplications || [];
   const recentActivity = data?.recentActivity || [];
 
   return (
     <div className="space-y-8 pb-12">
-      {/* 1. HEADER & CONTROLS STRIP */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2 border-b border-white/10">
+      {/* 1. HEADER & ACTIONS STRIP */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/10">
         <div>
           <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-950/70 border border-red-800/40 text-red-400 text-[10px] font-mono font-bold uppercase tracking-wider mb-2">
             <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-            <span>OPERATIONS SUITE v1.0</span>
+            <span>PLATFORM COMMAND CENTER</span>
           </div>
-          <h2 className="text-2xl font-black tracking-tight text-white font-sans">
-            Platform Command Center
-          </h2>
-          <p className="text-xs text-slate-400 mt-0.5">
-            Cross-department coordination, workflow bottlenecks, and verified operational health.
+          <h1 className="text-3xl font-light text-white tracking-tight">Platform Operations & Governance</h1>
+          <p className="text-xs text-neutral-400 mt-1">
+            Real-time telemetry and management across creative specialists, enterprise clients, and project mandates.
           </p>
         </div>
 
-        {/* Filters & Actions */}
-        <div className="flex items-center gap-2.5 flex-wrap">
-          <div className="flex items-center gap-1.5 bg-white/[0.04] border border-white/10 rounded-xl px-2.5 py-1.5">
-            <Filter className="w-3.5 h-3.5 text-slate-500" />
-            <select
-              value={selectedDept}
-              onChange={(e) => setSelectedDept(e.target.value)}
-              className="bg-transparent text-xs text-slate-200 focus:outline-none font-mono cursor-pointer"
-            >
-              <option value="" className="bg-[#0A0D14]">All Departments</option>
-              {departments.map((d) => (
-                <option key={d.id} value={d.id} className="bg-[#0A0D14]">{d.name}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className="flex items-center bg-white/[0.04] border border-white/10 rounded-xl p-0.5 font-mono text-[11px]">
-            {["7d", "30d", "90d"].map((r) => (
-              <button
-                key={r}
-                onClick={() => setSelectedRange(r)}
-                className={`px-2.5 py-1 rounded-lg transition-colors ${
-                  selectedRange === r
-                    ? "bg-red-600 text-white font-bold"
-                    : "text-slate-400 hover:text-slate-200"
-                }`}
-              >
-                {r.toUpperCase()}
-              </button>
-            ))}
-          </div>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/admin/analytics"
+            className="flex items-center gap-2 px-4 py-2 bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white text-xs font-mono uppercase tracking-wider rounded border border-white/10 transition-colors"
+          >
+            <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Advanced Analytics</span>
+          </Link>
 
           <button
             onClick={fetchData}
             disabled={refreshing}
-            className="p-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-slate-300 transition-colors disabled:opacity-50"
-            title="Refresh Metrics"
+            className="flex items-center gap-2 px-4 py-2 bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white text-xs font-mono uppercase tracking-wider rounded border border-white/10 transition-colors disabled:opacity-50"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? "animate-spin text-red-400" : ""}`} />
+            <span>Sync</span>
           </button>
         </div>
       </div>
 
-      {/* 2. REAL DATABASE-BACKED KPI CARDS */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Card 1: Task Health */}
-        <div className="bg-[#0E1118] border border-white/10 rounded-2xl p-5 shadow-lg relative overflow-hidden group">
-          <div className="flex items-center justify-between mb-3">
-            <div className="w-9 h-9 rounded-xl bg-red-950/60 border border-red-800/40 text-red-400 flex items-center justify-center">
-              <CheckSquare className="w-4 h-4" />
-            </div>
-            <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-semibold">
-              Tasks
-            </span>
-          </div>
-
-          <div className="flex items-baseline gap-2">
-            <div className="text-3xl font-black text-white font-mono tracking-tight">
-              {kpis.pendingTasks || 0}
-            </div>
-            <span className="text-xs text-slate-400">active</span>
-          </div>
-
-          <div className="mt-3 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] font-mono">
-            <span className={`${kpis.overdueTasks > 0 ? "text-red-400 font-bold" : "text-slate-400"}`}>
-              {kpis.overdueTasks || 0} overdue
-            </span>
-            <span className={`${kpis.blockedTasks > 0 ? "text-amber-400 font-bold" : "text-slate-500"}`}>
-              {kpis.blockedTasks || 0} blocked
-            </span>
-            <span className="text-emerald-400">
-              {kpis.completedTasks || 0} done
-            </span>
-          </div>
-        </div>
-
-        {/* Card 2: Enterprise Clients */}
+      {/* 2. REAL POSTGRESQL PLATFORM KPI CARDS */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/* Card 1: Total Platform Users */}
         <div className="bg-[#0E1118] border border-white/10 rounded-2xl p-5 shadow-lg relative overflow-hidden group">
           <div className="flex items-center justify-between mb-3">
             <div className="w-9 h-9 rounded-xl bg-blue-950/60 border border-blue-800/40 text-blue-400 flex items-center justify-center">
-              <Building2 className="w-4 h-4" />
+              <Users className="w-4 h-4" />
             </div>
-            <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-semibold">
-              Clients
+            <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider font-semibold">
+              Platform Accounts
             </span>
           </div>
 
           <div className="flex items-baseline gap-2">
             <div className="text-3xl font-black text-white font-mono tracking-tight">
-              {kpis.activeClients || 0}
+              {kpis.totalUsers || 0}
             </div>
-            <span className="text-xs text-slate-400">active mandates</span>
+            <span className="text-xs text-neutral-400 font-sans">registered users</span>
           </div>
 
           <div className="mt-3 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] font-mono">
-            <span className="text-blue-400">
-              {kpis.onboardingClients || 0} onboarding
-            </span>
-            <span className="text-slate-500">
-              {kpis.totalClients || 0} total accounts
-            </span>
+            <span className="text-emerald-400">{kpis.talentUsers || 0} Talent</span>
+            <span className="text-blue-400">{kpis.companyUsers || 0} Companies</span>
+            <span className="text-neutral-400">{kpis.activeUsers || 0} Active</span>
           </div>
         </div>
 
-        {/* Card 3: Creative Vendor Network */}
+        {/* Card 2: User Signups Growth */}
         <div className="bg-[#0E1118] border border-white/10 rounded-2xl p-5 shadow-lg relative overflow-hidden group">
           <div className="flex items-center justify-between mb-3">
-            <div className="w-9 h-9 rounded-xl bg-amber-950/60 border border-amber-800/40 text-amber-400 flex items-center justify-center">
-              <Handshake className="w-4 h-4" />
+            <div className="w-9 h-9 rounded-xl bg-emerald-950/60 border border-emerald-800/40 text-emerald-400 flex items-center justify-center">
+              <TrendingUp className="w-4 h-4" />
             </div>
-            <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-semibold">
-              Vendors
+            <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider font-semibold">
+              Signup Velocity
             </span>
           </div>
 
           <div className="flex items-baseline gap-2">
-            <div className="text-3xl font-black text-white font-mono tracking-tight">
-              {kpis.verifiedVendors || 0}
+            <div className="text-3xl font-black text-emerald-400 font-mono tracking-tight">
+              {kpis.newThisWeek || 0}
             </div>
-            <span className="text-xs text-slate-400">verified partners</span>
+            <span className="text-xs text-neutral-400 font-sans">new this week</span>
           </div>
 
           <div className="mt-3 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] font-mono">
-            <span className={`${kpis.pendingVendors > 0 ? "text-amber-400 font-bold" : "text-slate-500"}`}>
-              {kpis.pendingVendors || 0} pending review
-            </span>
-            <span className="text-slate-500">
-              {kpis.totalVendors || 0} partners
-            </span>
+            <span className="text-neutral-300">{kpis.newToday || 0} today</span>
+            <span className="text-neutral-400">{kpis.newThisMonth || 0} this month</span>
+            <span className="text-emerald-400">Real Database</span>
           </div>
         </div>
 
-        {/* Card 4: Support & Complaints SLA */}
+        {/* Card 3: Account Verification & Health */}
         <div className="bg-[#0E1118] border border-white/10 rounded-2xl p-5 shadow-lg relative overflow-hidden group">
           <div className="flex items-center justify-between mb-3">
             <div className="w-9 h-9 rounded-xl bg-purple-950/60 border border-purple-800/40 text-purple-400 flex items-center justify-center">
+              <ShieldCheck className="w-4 h-4" />
+            </div>
+            <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider font-semibold">
+              Roster Vetting
+            </span>
+          </div>
+
+          <div className="flex items-baseline gap-2">
+            <div className="text-3xl font-black text-white font-mono tracking-tight">
+              {kpis.verifiedUsers || 0}
+            </div>
+            <span className="text-xs text-neutral-400 font-sans">verified entities</span>
+          </div>
+
+          <div className="mt-3 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] font-mono">
+            <span className="text-emerald-400 font-semibold">
+              {kpis.totalUsers > 0 ? Math.round((kpis.verifiedUsers / kpis.totalUsers) * 100) : 0}% vetted
+            </span>
+            <span className={kpis.suspendedUsers > 0 ? "text-red-400 font-bold" : "text-neutral-500"}>
+              {kpis.suspendedUsers || 0} suspended
+            </span>
+          </div>
+        </div>
+
+        {/* Card 4: Opportunities & Mandates */}
+        <div className="bg-[#0E1118] border border-white/10 rounded-2xl p-5 shadow-lg relative overflow-hidden group">
+          <div className="flex items-center justify-between mb-3">
+            <div className="w-9 h-9 rounded-xl bg-amber-950/60 border border-amber-800/40 text-amber-400 flex items-center justify-center">
+              <Briefcase className="w-4 h-4" />
+            </div>
+            <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider font-semibold">
+              Project Mandates
+            </span>
+          </div>
+
+          <div className="flex items-baseline gap-2">
+            <div className="text-3xl font-black text-white font-mono tracking-tight">
+              {kpis.totalOpportunities || 0}
+            </div>
+            <span className="text-xs text-neutral-400 font-sans">published briefs</span>
+          </div>
+
+          <div className="mt-3 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] font-mono">
+            <span className="text-blue-400">{kpis.matchingOpportunities || 0} matching</span>
+            <span className="text-emerald-400">{kpis.activeOpportunities || 0} active</span>
+            <span className="text-neutral-500">{kpis.closedOpportunities || 0} closed</span>
+          </div>
+        </div>
+
+        {/* Card 5: Proposals & Conversion */}
+        <div className="bg-[#0E1118] border border-white/10 rounded-2xl p-5 shadow-lg relative overflow-hidden group">
+          <div className="flex items-center justify-between mb-3">
+            <div className="w-9 h-9 rounded-xl bg-rose-950/60 border border-rose-800/40 text-rose-400 flex items-center justify-center">
+              <Sparkles className="w-4 h-4" />
+            </div>
+            <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider font-semibold">
+              Proposals Pipeline
+            </span>
+          </div>
+
+          <div className="flex items-baseline gap-2">
+            <div className="text-3xl font-black text-white font-mono tracking-tight">
+              {kpis.totalApplications || 0}
+            </div>
+            <span className="text-xs text-neutral-400 font-sans">proposals received</span>
+          </div>
+
+          <div className="mt-3 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] font-mono">
+            <span className="text-amber-400">{kpis.pendingApplications || 0} pending</span>
+            <span className="text-emerald-400 font-bold">{kpis.acceptedApplications || 0} awarded</span>
+            <span className="text-neutral-400">${kpis.avgProposedRate || 0} avg</span>
+          </div>
+        </div>
+
+        {/* Card 6: Support Tickets & SLA */}
+        <div className="bg-[#0E1118] border border-white/10 rounded-2xl p-5 shadow-lg relative overflow-hidden group">
+          <div className="flex items-center justify-between mb-3">
+            <div className="w-9 h-9 rounded-xl bg-neutral-900 border border-white/15 text-neutral-300 flex items-center justify-center">
               <LifeBuoy className="w-4 h-4" />
             </div>
-            <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-semibold">
+            <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider font-semibold">
               Support & SLA
             </span>
           </div>
@@ -240,278 +246,245 @@ export default function AdminDashboardPage() {
             <div className="text-3xl font-black text-white font-mono tracking-tight">
               {kpis.openTickets || 0}
             </div>
-            <span className="text-xs text-slate-400">open tickets</span>
+            <span className="text-xs text-neutral-400 font-sans">open issues</span>
           </div>
 
           <div className="mt-3 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] font-mono">
-            <span className={`${kpis.criticalTickets > 0 ? "text-red-400 font-bold" : "text-slate-500"}`}>
+            <span className={kpis.criticalTickets > 0 ? "text-red-400 font-bold" : "text-neutral-500"}>
               {kpis.criticalTickets || 0} critical
             </span>
-            <span className="text-emerald-400 font-semibold">
-              {kpis.resolvedTicketsRate || 100}% SLA rate
-            </span>
+            <span className="text-emerald-400">{kpis.resolvedTicketsRate || 100}% SLA rate</span>
+            <span className="text-neutral-400">{kpis.newEnquiries || 0} enquiries</span>
           </div>
         </div>
       </div>
 
-      {/* 2b. PLATFORM COMMUNITY & CONCIERGE INQUIRIES METRICS */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="bg-[#0E1118] border border-white/10 rounded-2xl p-5 shadow-lg flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-xl bg-emerald-950/60 border border-emerald-800/40 text-emerald-400 flex items-center justify-center">
-              <Users className="w-5 h-5" />
-            </div>
-            <div>
-              <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-semibold block">
-                Platform User Community
-              </span>
-              <div className="flex items-baseline gap-2 mt-0.5">
-                <span className="text-2xl font-black text-white font-mono">{kpis.totalUsers || 0}</span>
-                <span className="text-xs text-slate-400">registered accounts</span>
-              </div>
-            </div>
+      {/* 3. PLATFORM MANAGEMENT DIRECT SHORTCUTS */}
+      <div className="bg-[#0E1118] border border-white/10 rounded-2xl p-5 shadow-lg">
+        <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/5">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-500" />
+            <h2 className="text-sm font-bold text-white tracking-tight">Marketplace Operations Management</h2>
           </div>
-          <div className="flex items-center gap-3 text-xs font-mono">
-            <span className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-emerald-400">
-              {kpis.talentUsers || 0} Talent
-            </span>
-            <span className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-blue-400">
-              {kpis.companyUsers || 0} Companies
-            </span>
-            <span className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-slate-300">
-              {kpis.activeUsers || 0} Active
-            </span>
-            <Link
-              href="/admin/users"
-              className="text-xs font-mono text-emerald-400 hover:text-emerald-300 flex items-center gap-1 transition-colors pl-2"
-            >
-              <span>Manage</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
+          <span className="text-xs font-mono text-neutral-500">PostgreSQL Synchronized</span>
         </div>
 
-        <div className="bg-[#0E1118] border border-white/10 rounded-2xl p-5 shadow-lg flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-xl bg-amber-950/60 border border-amber-800/40 text-amber-400 flex items-center justify-center">
-              <FileCheck2 className="w-5 h-5" />
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+          <Link
+            href="/admin/users"
+            className="p-3 bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 hover:border-white/15 rounded-xl transition-all group"
+          >
+            <div className="w-7 h-7 rounded-lg bg-blue-950/60 border border-blue-800/40 text-blue-400 flex items-center justify-center mb-2">
+              <Users className="w-3.5 h-3.5" />
             </div>
-            <div>
-              <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-semibold block">
-                Concierge Briefing Inquiries
-              </span>
-              <div className="flex items-baseline gap-2 mt-0.5">
-                <span className="text-2xl font-black text-white font-mono">{kpis.totalEnquiries || 0}</span>
-                <span className="text-xs text-slate-400">mandate submissions</span>
-              </div>
+            <div className="text-xs font-medium text-white group-hover:text-blue-400 transition-colors">Users Directory</div>
+            <div className="text-[10px] text-neutral-500 font-mono mt-0.5">{kpis.totalUsers || 0} accounts</div>
+          </Link>
+
+          <Link
+            href="/admin/talent"
+            className="p-3 bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 hover:border-white/15 rounded-xl transition-all group"
+          >
+            <div className="w-7 h-7 rounded-lg bg-purple-950/60 border border-purple-800/40 text-purple-400 flex items-center justify-center mb-2">
+              <Users2 className="w-3.5 h-3.5" />
             </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <span className={`px-2.5 py-1 rounded-lg text-xs font-mono font-semibold ${kpis.newEnquiries > 0 ? "bg-amber-500/20 text-amber-400 border border-amber-500/30" : "bg-white/5 text-slate-400"}`}>
-              {kpis.newEnquiries || 0} New Pending
-            </span>
-            <Link
-              href="/admin/website?tab=enquiries"
-              className="text-xs font-mono text-amber-400 hover:text-amber-300 flex items-center gap-1 transition-colors"
-            >
-              <span>Review</span>
-              <ArrowRight className="w-3 h-3" />
-            </Link>
-          </div>
+            <div className="text-xs font-medium text-white group-hover:text-purple-400 transition-colors">Talent Roster</div>
+            <div className="text-[10px] text-neutral-500 font-mono mt-0.5">{kpis.talentUsers || 0} specialists</div>
+          </Link>
+
+          <Link
+            href="/admin/companies"
+            className="p-3 bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 hover:border-white/15 rounded-xl transition-all group"
+          >
+            <div className="w-7 h-7 rounded-lg bg-indigo-950/60 border border-indigo-800/40 text-indigo-400 flex items-center justify-center mb-2">
+              <Building2 className="w-3.5 h-3.5" />
+            </div>
+            <div className="text-xs font-medium text-white group-hover:text-indigo-400 transition-colors">Enterprise Clients</div>
+            <div className="text-[10px] text-neutral-500 font-mono mt-0.5">{kpis.companyUsers || 0} enterprises</div>
+          </Link>
+
+          <Link
+            href="/admin/opportunities"
+            className="p-3 bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 hover:border-white/15 rounded-xl transition-all group"
+          >
+            <div className="w-7 h-7 rounded-lg bg-amber-950/60 border border-amber-800/40 text-amber-400 flex items-center justify-center mb-2">
+              <Briefcase className="w-3.5 h-3.5" />
+            </div>
+            <div className="text-xs font-medium text-white group-hover:text-amber-400 transition-colors">Mandates & Briefs</div>
+            <div className="text-[10px] text-neutral-500 font-mono mt-0.5">{kpis.totalOpportunities || 0} briefs</div>
+          </Link>
+
+          <Link
+            href="/admin/applications"
+            className="p-3 bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 hover:border-white/15 rounded-xl transition-all group"
+          >
+            <div className="w-7 h-7 rounded-lg bg-rose-950/60 border border-rose-800/40 text-rose-400 flex items-center justify-center mb-2">
+              <Sparkles className="w-3.5 h-3.5" />
+            </div>
+            <div className="text-xs font-medium text-white group-hover:text-rose-400 transition-colors">Proposals Pipeline</div>
+            <div className="text-[10px] text-neutral-500 font-mono mt-0.5">{kpis.totalApplications || 0} pitches</div>
+          </Link>
+
+          <Link
+            href="/admin/analytics"
+            className="p-3 bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 hover:border-white/15 rounded-xl transition-all group"
+          >
+            <div className="w-7 h-7 rounded-lg bg-emerald-950/60 border border-emerald-800/40 text-emerald-400 flex items-center justify-center mb-2">
+              <TrendingUp className="w-3.5 h-3.5" />
+            </div>
+            <div className="text-xs font-medium text-white group-hover:text-emerald-400 transition-colors">Analytics & Funnel</div>
+            <div className="text-[10px] text-neutral-500 font-mono mt-0.5">Telemetry Charts</div>
+          </Link>
         </div>
       </div>
 
-      {/* 3. OPERATIONAL BOTTLENECKS & CRITICAL ISSUES */}
+      {/* 4. REAL DATABASE RECORDS & RECENT ACTIVITY FEED */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Left Column (7 cols): Overdue Tasks & Department Workloads */}
+        {/* Left Column (7 cols): Recent Users & Project Mandates */}
         <div className="lg:col-span-7 space-y-6">
-          {/* Overdue / Blocked Tasks Panel */}
+          {/* Panel A: Recent Registrations */}
           <div className="bg-[#0E1118] border border-white/10 rounded-2xl p-6 shadow-xl">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4 text-red-500" />
-                <h3 className="text-sm font-bold text-white tracking-tight">
-                  Critical Workflows & Overdue Mandates
-                </h3>
+                <Users className="w-4 h-4 text-blue-400" />
+                <h3 className="text-sm font-bold text-white tracking-tight">Recent Platform Registrations</h3>
               </div>
               <Link
-                href="/admin/tasks?status=blocked"
-                className="text-[11px] font-mono text-red-400 hover:text-red-300 inline-flex items-center gap-1 transition-colors"
+                href="/admin/users"
+                className="text-xs font-mono text-blue-400 hover:text-blue-300 inline-flex items-center gap-1 transition-colors"
               >
-                <span>View All Tasks</span>
-                <ArrowRight className="w-3 h-3" />
+                <span>View All ({kpis.totalUsers || 0})</span>
+                <ChevronRight className="w-3.5 h-3.5" />
               </Link>
             </div>
 
-            {urgentTasks.length === 0 ? (
-              <div className="p-8 text-center rounded-xl bg-white/[0.02] border border-white/5">
-                <CheckCircle2 className="w-8 h-8 text-emerald-400 mx-auto mb-2" />
-                <p className="text-xs font-semibold text-slate-300">All Workflows On Schedule</p>
-                <p className="text-[11px] text-slate-500 mt-1">Zero blocked or overdue tasks currently recorded.</p>
+            {recentUsers.length === 0 ? (
+              <div className="p-8 text-center text-xs font-mono text-neutral-500 bg-neutral-950/40 rounded-xl border border-white/5">
+                No platform registrations recorded yet.
               </div>
             ) : (
-              <div className="space-y-2.5">
-                {urgentTasks.map((task: any) => (
-                  <div
-                    key={task.id}
-                    className="p-3.5 rounded-xl bg-white/[0.02] hover:bg-white/[0.04] border border-white/5 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3"
-                  >
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-xs font-bold text-white">
-                          {task.title}
-                        </span>
-                        <span className={`text-[9px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${
-                          task.priority === "urgent"
-                            ? "bg-red-950/80 text-red-400 border-red-800/60"
-                            : "bg-amber-950/80 text-amber-400 border-amber-800/60"
-                        }`}>
-                          {task.priority}
-                        </span>
-                        {(task.is_escalated === 1 || task.isEscalated) && (
-                          <span className="text-[9px] font-mono font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-red-900/40 text-red-300 border border-red-700/50">
-                            Escalated
-                          </span>
-                        )}
+              <div className="divide-y divide-white/5">
+                {recentUsers.map((u: any) => (
+                  <div key={u.id} className="py-3 flex items-center justify-between first:pt-0 last:pb-0">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-neutral-800 border border-white/10 flex items-center justify-center text-xs font-mono font-bold text-white overflow-hidden shrink-0">
+                        {u.full_name?.charAt(0)?.toUpperCase() || "U"}
                       </div>
-
-                      <div className="flex items-center gap-3 text-[10px] font-mono text-slate-400">
-                        <span>{task.department_name || task.departmentName || "Operations"}</span>
-                        <span>•</span>
-                        <span>Assignee: {task.assignee_name || task.assigneeName || "Unassigned"}</span>
-                        <span>•</span>
-                        <span className="text-red-400 font-bold">Due: {task.due_date || task.dueDate || "ASAP"}</span>
-                      </div>
-
-                      {(task.blocker_note || task.blockerNote) && (
-                        <div className="text-[11px] text-amber-300/90 bg-amber-950/30 border border-amber-900/30 px-2 py-1 rounded mt-1 font-mono">
-                          <span className="font-bold text-amber-400">Blocker: </span>
-                          {task.blocker_note || task.blockerNote}
-                        </div>
-                      )}
-                    </div>
-
-                    <Link
-                      href={`/admin/tasks?id=${task.id}`}
-                      className="shrink-0 text-xs font-mono px-3 py-1.5 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 text-slate-300 hover:text-white transition-all text-center"
-                    >
-                      Resolve &rarr;
-                    </Link>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Department Workload Distribution */}
-          <div className="bg-[#0E1118] border border-white/10 rounded-2xl p-6 shadow-xl">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <Users className="w-4 h-4 text-slate-400" />
-                <h3 className="text-sm font-bold text-white tracking-tight">
-                  Cross-Department Workload & Velocity
-                </h3>
-              </div>
-              <Link
-                href="/admin/departments"
-                className="text-[11px] font-mono text-slate-400 hover:text-white transition-colors"
-              >
-                Manage Teams &rarr;
-              </Link>
-            </div>
-
-            <div className="space-y-4">
-              {deptWorkloads.map((dept: any) => {
-                const total = (dept.active_tasks || 0) + (dept.completed_tasks || 0);
-                const pct = total > 0 ? Math.round(((dept.completed_tasks || 0) / total) * 100) : 100;
-                return (
-                  <div key={dept.id} className="space-y-1.5">
-                    <div className="flex items-center justify-between text-xs">
-                      <div className="flex items-center gap-2">
-                        <span className="font-semibold text-white">{dept.name}</span>
-                        <span className="text-[10px] font-mono text-slate-500">
-                          ({dept.member_count} team members)
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-3 text-[11px] font-mono">
-                        <span className="text-slate-400">{dept.active_tasks} active</span>
-                        {dept.overdue_tasks > 0 && (
-                          <span className="text-red-400 font-bold">{dept.overdue_tasks} overdue</span>
-                        )}
-                        <span className="text-emerald-400 font-semibold">{pct}% done</span>
-                      </div>
-                    </div>
-
-                    {/* Progress Bar */}
-                    <div className="w-full h-2 rounded-full bg-white/[0.06] overflow-hidden flex">
-                      <div
-                        className="h-full bg-emerald-500 rounded-full transition-all duration-500"
-                        style={{ width: `${pct}%` }}
-                      />
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        {/* Right Column (5 cols): Pending Vendors & Live Activity Stream */}
-        <div className="lg:col-span-5 space-y-6">
-          {/* Pending Vendor Approvals */}
-          <div className="bg-[#0E1118] border border-white/10 rounded-2xl p-6 shadow-xl">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <FileCheck2 className="w-4 h-4 text-amber-500" />
-                <h3 className="text-sm font-bold text-white tracking-tight">
-                  Vendor Onboarding Approvals
-                </h3>
-              </div>
-              <Link
-                href="/admin/vendors"
-                className="text-[11px] font-mono text-amber-400 hover:text-amber-300 transition-colors"
-              >
-                Vetting Portal &rarr;
-              </Link>
-            </div>
-
-            {pendingVendors.length === 0 ? (
-              <div className="p-6 text-center rounded-xl bg-white/[0.02] border border-white/5">
-                <CheckCircle2 className="w-6 h-6 text-emerald-400 mx-auto mb-1.5" />
-                <p className="text-xs text-slate-300">All Vendors Vetted</p>
-                <p className="text-[10px] text-slate-500">No pending document reviews in queue.</p>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {pendingVendors.map((ven: any) => (
-                  <div
-                    key={ven.id}
-                    className="p-3 rounded-xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-colors"
-                  >
-                    <div className="flex items-start justify-between gap-2">
                       <div>
-                        <div className="text-xs font-bold text-white">{ven.name}</div>
-                        <div className="text-[10px] text-slate-400 font-mono mt-0.5">
-                          {ven.service_category || ven.serviceCategory || "General Vendor"}
+                        <div className="text-xs font-medium text-white flex items-center gap-1.5">
+                          {u.full_name}
+                          {u.is_verified && <ShieldCheck className="w-3 h-3 text-emerald-400" />}
                         </div>
+                        <div className="text-[11px] text-neutral-400 font-mono">{u.email}</div>
                       </div>
-                      <span className={`text-[9px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${
-                        (ven.verification_status || ven.verificationStatus) === "verified"
-                          ? "bg-emerald-950/80 text-emerald-400 border-emerald-800/40"
-                          : "bg-amber-950/80 text-amber-400 border-amber-800/40"
-                      }`}>
-                        {String(ven.verification_status || ven.verificationStatus || "pending_review").replace(/_/g, " ")}
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <span
+                        className={`px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider ${
+                          u.account_type === "talent"
+                            ? "bg-purple-500/10 text-purple-400 border border-purple-500/20"
+                            : "bg-blue-500/10 text-blue-400 border border-blue-500/20"
+                        }`}
+                      >
+                        {u.account_type}
+                      </span>
+                      <span className="text-[11px] font-mono text-neutral-500 hidden sm:inline">
+                        {u.created_at ? new Date(u.created_at).toLocaleDateString() : ""}
                       </span>
                     </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
 
-                    <div className="flex items-center justify-between text-[10px] font-mono text-slate-500 pt-2 mt-2 border-t border-white/5">
-                      <span>Docs: {ven.verified_docs_count ?? ven.verifiedDocsCount ?? 0}/{ven.total_docs_count ?? ven.totalDocsCount ?? 0} verified</span>
-                      <Link
-                        href={`/admin/vendors?id=${ven.id}`}
-                        className="text-amber-400 hover:text-amber-300 font-bold"
-                      >
-                        Review Docs &rarr;
-                      </Link>
+          {/* Panel B: Recent Opportunities / Mandates */}
+          <div className="bg-[#0E1118] border border-white/10 rounded-2xl p-6 shadow-xl">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <Briefcase className="w-4 h-4 text-amber-400" />
+                <h3 className="text-sm font-bold text-white tracking-tight">Recent Opportunities & Mandates</h3>
+              </div>
+              <Link
+                href="/admin/opportunities"
+                className="text-xs font-mono text-amber-400 hover:text-amber-300 inline-flex items-center gap-1 transition-colors"
+              >
+                <span>View All ({kpis.totalOpportunities || 0})</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+
+            {recentOpportunities.length === 0 ? (
+              <div className="p-8 text-center text-xs font-mono text-neutral-500 bg-neutral-950/40 rounded-xl border border-white/5">
+                No project mandates published yet.
+              </div>
+            ) : (
+              <div className="divide-y divide-white/5">
+                {recentOpportunities.map((opp: any) => (
+                  <div key={opp.id} className="py-3 flex items-center justify-between first:pt-0 last:pb-0">
+                    <div>
+                      <div className="text-xs font-medium text-white">{opp.title}</div>
+                      <div className="text-[11px] text-neutral-400 font-mono mt-0.5">
+                        {opp.company_name} • {opp.budget_tier || "Standard"}
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <span className="text-[11px] font-mono text-neutral-400">
+                        {opp.applications_count || 0} proposals
+                      </span>
+                      <span className="px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider bg-neutral-800 text-neutral-300 border border-white/10">
+                        {opp.status}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Right Column (5 cols): Proposals & Live Audit Activity */}
+        <div className="lg:col-span-5 space-y-6">
+          {/* Panel C: Recent Proposals */}
+          <div className="bg-[#0E1118] border border-white/10 rounded-2xl p-6 shadow-xl">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-rose-400" />
+                <h3 className="text-sm font-bold text-white tracking-tight">Recent Proposals</h3>
+              </div>
+              <Link
+                href="/admin/applications"
+                className="text-xs font-mono text-rose-400 hover:text-rose-300 inline-flex items-center gap-1 transition-colors"
+              >
+                <span>View All ({kpis.totalApplications || 0})</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+
+            {recentApplications.length === 0 ? (
+              <div className="p-8 text-center text-xs font-mono text-neutral-500 bg-neutral-950/40 rounded-xl border border-white/5">
+                No specialist proposals submitted yet.
+              </div>
+            ) : (
+              <div className="divide-y divide-white/5">
+                {recentApplications.map((app: any) => (
+                  <div key={app.id} className="py-3 flex items-center justify-between first:pt-0 last:pb-0">
+                    <div>
+                      <div className="text-xs font-medium text-white">{app.talent_name || "Specialist"}</div>
+                      <div className="text-[11px] text-neutral-400 font-mono mt-0.5 truncate max-w-[180px]">
+                        for {app.project_title || "Project"}
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-mono text-emerald-400">
+                        ${app.proposed_rate || "—"}
+                      </span>
+                      <span className="px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider bg-neutral-800 text-neutral-300 border border-white/10">
+                        {app.status}
+                      </span>
                     </div>
                   </div>
                 ))}
@@ -519,83 +492,49 @@ export default function AdminDashboardPage() {
             )}
           </div>
 
-          {/* Recent Operational Activity Stream */}
+          {/* Panel D: Live Platform Activity Stream */}
           <div className="bg-[#0E1118] border border-white/10 rounded-2xl p-6 shadow-xl">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <TrendingUp className="w-4 h-4 text-slate-400" />
-                <h3 className="text-sm font-bold text-white tracking-tight">
-                  Audit Activity Stream
-                </h3>
+                <ShieldAlert className="w-4 h-4 text-neutral-400" />
+                <h3 className="text-sm font-bold text-white tracking-tight">Platform Audit Trail</h3>
               </div>
               <Link
                 href="/admin/audit-log"
-                className="text-[11px] font-mono text-slate-400 hover:text-white transition-colors"
+                className="text-xs font-mono text-neutral-400 hover:text-white inline-flex items-center gap-1 transition-colors"
               >
-                Full Trail &rarr;
+                <span>Full Trail</span>
+                <ChevronRight className="w-3.5 h-3.5" />
               </Link>
             </div>
 
-            <div className="space-y-3">
-              {recentActivity.map((act: any) => (
-                <div key={act.id} className="text-xs space-y-1 pb-2.5 border-b border-white/5 last:border-none last:pb-0">
-                  <div className="flex items-center justify-between">
-                    <span className="font-semibold text-slate-200">
-                      {act.actor_name || act.actorName || "System Admin"}
-                    </span>
-                    <span className="text-[10px] font-mono text-slate-500">
-                      {new Date(act.created_at || act.createdAt || Date.now()).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-slate-400 leading-relaxed font-mono">
-                    {act.change_summary || act.changeSummary || "Audit event recorded"}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Recent Registrations Panel */}
-          {data?.recentRegistrations && data.recentRegistrations.length > 0 && (
-            <div className="bg-[#0E1118] border border-white/10 rounded-2xl p-6 shadow-xl">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2">
-                  <Users className="w-4 h-4 text-emerald-400" />
-                  <h3 className="text-sm font-bold text-white tracking-tight">
-                    Recent Platform Registrations
-                  </h3>
-                </div>
-                <Link
-                  href="/admin/users"
-                  className="text-[11px] font-mono text-emerald-400 hover:text-emerald-300 transition-colors"
-                >
-                  All Users &rarr;
-                </Link>
+            {recentActivity.length === 0 ? (
+              <div className="p-8 text-center text-xs font-mono text-neutral-500 bg-neutral-950/40 rounded-xl border border-white/5">
+                No activity available yet.
               </div>
-
+            ) : (
               <div className="space-y-3">
-                {data.recentRegistrations.map((u: any) => (
-                  <div key={u.id} className="text-xs space-y-1 pb-2.5 border-b border-white/5 last:border-none last:pb-0">
-                    <div className="flex items-center justify-between">
-                      <span className="font-semibold text-slate-200">
-                        {u.full_name || "New User"}
+                {recentActivity.slice(0, 6).map((item: any) => (
+                  <div key={item.id} className="p-3 bg-neutral-950/40 rounded-xl border border-white/5 text-xs">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="font-mono text-[10px] uppercase font-bold text-red-400 tracking-wider">
+                        {item.action}
                       </span>
-                      <span className={`text-[9px] font-mono uppercase px-1.5 py-0.5 rounded ${
-                        u.account_type === "talent"
-                          ? "bg-emerald-950/60 border border-emerald-800/40 text-emerald-300"
-                          : "bg-blue-950/60 border border-blue-800/40 text-blue-300"
-                      }`}>
-                        {u.account_type}
+                      <span className="text-[10px] text-neutral-500 font-mono">
+                        {item.created_at ? new Date(item.created_at).toLocaleTimeString() : ""}
                       </span>
                     </div>
-                    <p className="text-[11px] text-slate-400 font-mono truncate">
-                      {u.email} {u.subtitle ? `• ${u.subtitle}` : ""}
+                    <p className="text-neutral-300 text-xs line-clamp-1 leading-snug">
+                      {item.change_summary || "System action performed."}
                     </p>
+                    <div className="text-[10px] text-neutral-500 font-mono mt-1">
+                      By {item.actor_name || "System"} ({item.actor_role || "automated"})
+                    </div>
                   </div>
                 ))}
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </div>

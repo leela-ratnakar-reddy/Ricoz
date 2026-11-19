@@ -17,12 +17,49 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { EditorialStar, ContourFlourish } from "@/components/ui/EditorialDecorations";
-import { AUTH_CHANGE_EVENT } from "@/lib/auth/AuthContext";
+import { AUTH_CHANGE_EVENT, useAuth } from "@/lib/auth/AuthContext";
+
+function resolveTargetDestination(
+  fromParam: string | null,
+  accountType?: string | null,
+  fallbackUrl?: string | null
+): string {
+  // 1. If a valid, safe 'from' parameter was provided
+  if (
+    fromParam &&
+    fromParam.startsWith("/") &&
+    !fromParam.startsWith("//") &&
+    !fromParam.startsWith("/login") &&
+    !fromParam.startsWith("/signup") &&
+    !fromParam.startsWith("/forgot-password") &&
+    !fromParam.startsWith("/reset-password")
+  ) {
+    // Prevent cross-role workspace redirection loops
+    if (accountType === "talent" && fromParam.startsWith("/dashboard/company")) {
+      return "/dashboard/designer";
+    }
+    if (accountType === "company" && fromParam.startsWith("/dashboard/designer")) {
+      return "/dashboard/company";
+    }
+    if (accountType === "admin") {
+      return fromParam.startsWith("/admin") ? fromParam : "/admin";
+    }
+    return fromParam;
+  }
+
+  // 2. Role-specific authoritative destination
+  if (accountType === "admin") return "/admin";
+  if (accountType === "talent") return "/dashboard/designer";
+  if (accountType === "company") return "/dashboard/company";
+
+  return fallbackUrl || "/dashboard/company";
+}
 
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const from = searchParams.get("from");
+  const { user: authUser, accountType: authAccountType, loading: authLoading } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,6 +67,14 @@ function LoginForm() {
   const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // If already authenticated with a valid session, navigate directly to dashboard
+  React.useEffect(() => {
+    if (!authLoading && authUser) {
+      const destination = resolveTargetDestination(from, authUser.accountType || authAccountType);
+      window.location.href = destination;
+    }
+  }, [authLoading, authUser, authAccountType, from]);
 
   // If email verification is required on login (HTTP 403)
   const [needsVerification, setNeedsVerification] = useState(false);
@@ -39,6 +84,7 @@ function LoginForm() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading) return;
     setError(null);
 
     const cleanEmail = email.trim().toLowerCase();
@@ -69,20 +115,20 @@ function LoginForm() {
         return;
       }
 
-      // Notify AuthContext and redirect
+      // Notify AuthContext and execute definitive browser navigation
       window.dispatchEvent(new CustomEvent(AUTH_CHANGE_EVENT));
-      const targetUrl = from || data.redirectUrl || "/dashboard/company";
-      router.push(targetUrl);
+      const targetUrl = resolveTargetDestination(from, data.accountType, data.redirectUrl);
+      window.location.href = targetUrl;
     } catch (err: any) {
       console.error("Sign-in request failed:", err);
       setError("Network error while connecting to authentication service. Please try again.");
-    } finally {
       setLoading(false);
     }
   };
 
   const handleVerifyOtp = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (verifying) return;
     setError(null);
 
     const cleanOtp = otpCode.trim();
@@ -111,12 +157,11 @@ function LoginForm() {
       }
 
       window.dispatchEvent(new CustomEvent(AUTH_CHANGE_EVENT));
-      const targetUrl = from || data.redirectUrl || "/dashboard/company";
-      router.push(targetUrl);
+      const targetUrl = resolveTargetDestination(from, data.accountType, data.redirectUrl);
+      window.location.href = targetUrl;
     } catch (err) {
       console.error("Verification submit error:", err);
       setError("Failed to verify code. Please check your connection.");
-    } finally {
       setVerifying(false);
     }
   };

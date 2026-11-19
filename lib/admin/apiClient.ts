@@ -468,6 +468,224 @@ export const adminApi = {
     },
   },
 
+  // 9c. Creative Talent Specialists
+  talent: {
+    async list(filters?: {
+      search?: string;
+      skill?: string;
+      location?: string;
+      isVerified?: string;
+      status?: string;
+      availability?: string;
+      minExp?: number;
+      page?: number;
+      limit?: number;
+    }) {
+      const query = new URLSearchParams();
+      if (filters?.search) query.set("search", filters.search);
+      if (filters?.skill) query.set("skill", filters.skill);
+      if (filters?.location) query.set("location", filters.location);
+      if (filters?.isVerified) query.set("isVerified", filters.isVerified);
+      if (filters?.status) query.set("status", filters.status);
+      if (filters?.availability) query.set("availability", filters.availability);
+      if (filters?.minExp) query.set("minExp", String(filters.minExp));
+      if (filters?.page) query.set("page", String(filters.page));
+      if (filters?.limit) query.set("limit", String(filters.limit));
+      return request<{
+        success: boolean;
+        talent: any[];
+        total: number;
+        page: number;
+        limit: number;
+        totalPages: number;
+        metrics: {
+          total: number;
+          verified: number;
+          active: number;
+          suspended: number;
+          completedProfiles: number;
+        };
+      }>(`/api/admin/talent?${query.toString()}`);
+    },
+    async get(id: string) {
+      return request<{ success: boolean; talent: any }>(`/api/admin/talent/${encodeURIComponent(id)}`);
+    },
+    async update(
+      id: string,
+      data: {
+        status?: "active" | "suspended" | "deactivated";
+        is_verified?: boolean;
+        hourly_rate?: number;
+        availability?: string;
+      }
+    ) {
+      return request<{ success: boolean; message: string; changes: string[] }>(`/api/admin/talent/${encodeURIComponent(id)}`, {
+        method: "PATCH",
+        body: JSON.stringify(data),
+      });
+    },
+  },
+
+  // 9d. Enterprise Company Clients
+  companies: {
+    async list(filters?: {
+      search?: string;
+      industry?: string;
+      companySize?: string;
+      isVerified?: string;
+      status?: string;
+      page?: number;
+      limit?: number;
+    }) {
+      const query = new URLSearchParams();
+      if (filters?.search) query.set("search", filters.search);
+      if (filters?.industry) query.set("industry", filters.industry);
+      if (filters?.companySize) query.set("companySize", filters.companySize);
+      if (filters?.isVerified) query.set("isVerified", filters.isVerified);
+      if (filters?.status) query.set("status", filters.status);
+      if (filters?.page) query.set("page", String(filters.page));
+      if (filters?.limit) query.set("limit", String(filters.limit));
+      return request<{
+        success: boolean;
+        companies: any[];
+        total: number;
+        page: number;
+        limit: number;
+        totalPages: number;
+        metrics: {
+          total: number;
+          verified: number;
+          active: number;
+          suspended: number;
+          companiesWithProjects: number;
+        };
+      }>(`/api/admin/companies?${query.toString()}`);
+    },
+    async get(id: string) {
+      return request<{ success: boolean; company: any }>(`/api/admin/companies/${encodeURIComponent(id)}`);
+    },
+    async update(
+      id: string,
+      data: {
+        status?: "active" | "suspended" | "deactivated";
+        is_verified?: boolean;
+        company_name?: string;
+        industry?: string;
+        company_size?: string;
+        website_url?: string;
+      }
+    ) {
+      return request<{ success: boolean; message: string; changes: string[] }>(`/api/admin/companies/${encodeURIComponent(id)}`, {
+        method: "PATCH",
+        body: JSON.stringify(data),
+      });
+    },
+  },
+
+  // 9e. Platform Opportunities & Mandates
+  opportunities: {
+    async list(filters?: {
+      search?: string;
+      status?: string;
+      budgetTier?: string;
+      companyId?: string;
+      page?: number;
+      limit?: number;
+    }) {
+      const query = new URLSearchParams();
+      if (filters?.search) query.set("search", filters.search);
+      if (filters?.status) query.set("status", filters.status);
+      if (filters?.budgetTier) query.set("budgetTier", filters.budgetTier);
+      if (filters?.companyId) query.set("companyId", filters.companyId);
+      if (filters?.page) query.set("page", String(filters.page));
+      if (filters?.limit) query.set("limit", String(filters.limit));
+      return request<{
+        success: boolean;
+        opportunities: any[];
+        total: number;
+        page: number;
+        limit: number;
+        totalPages: number;
+        metrics: {
+          total: number;
+          discovery: number;
+          matching: number;
+          active: number;
+          closed: number;
+          totalApplications: number;
+        };
+      }>(`/api/admin/opportunities?${query.toString()}`);
+    },
+    async get(id: string) {
+      return request<{ success: boolean; opportunity: any }>(`/api/admin/opportunities/${encodeURIComponent(id)}`);
+    },
+    async update(
+      id: string,
+      data: {
+        status?: string;
+        budget_tier?: string;
+        timeline?: string;
+      }
+    ) {
+      return request<{ success: boolean; message: string; changes: string[] }>(`/api/admin/opportunities/${encodeURIComponent(id)}`, {
+        method: "PATCH",
+        body: JSON.stringify(data),
+      });
+    },
+  },
+
+  // 9f. Project Proposals & Applications
+  applications: {
+    async list(filters?: {
+      search?: string;
+      status?: string;
+      projectId?: string;
+      talentUserId?: string;
+      page?: number;
+      limit?: number;
+    }) {
+      const query = new URLSearchParams();
+      if (filters?.search) query.set("search", filters.search);
+      if (filters?.status) query.set("status", filters.status);
+      if (filters?.projectId) query.set("projectId", filters.projectId);
+      if (filters?.talentUserId) query.set("talentUserId", filters.talentUserId);
+      if (filters?.page) query.set("page", String(filters.page));
+      if (filters?.limit) query.set("limit", String(filters.limit));
+      return request<{
+        success: boolean;
+        applications: any[];
+        total: number;
+        page: number;
+        limit: number;
+        totalPages: number;
+        metrics: {
+          total: number;
+          pending: number;
+          reviewed: number;
+          shortlisted: number;
+          accepted: number;
+          declined: number;
+          avgProposedRate: number;
+        };
+      }>(`/api/admin/applications?${query.toString()}`);
+    },
+    async get(id: string) {
+      return request<{ success: boolean; application: any }>(`/api/admin/applications/${encodeURIComponent(id)}`);
+    },
+    async update(
+      id: string,
+      data: {
+        status?: "pending" | "reviewed" | "shortlisted" | "accepted" | "declined";
+        proposed_rate?: number;
+      }
+    ) {
+      return request<{ success: boolean; message: string; changes: string[] }>(`/api/admin/applications/${encodeURIComponent(id)}`, {
+        method: "PATCH",
+        body: JSON.stringify(data),
+      });
+    },
+  },
+
   // 10. Notifications
   notifications: {
     async list() {
@@ -512,6 +730,32 @@ export const adminApi = {
       return request<{ success: boolean; reports: any }>(`/api/admin/reports?${query.toString()}`);
     },
     exportUrl(type = "tasks") {
+      return `/api/admin/reports/export?type=${encodeURIComponent(type)}`;
+    },
+  },
+
+  // 12b. Advanced Platform Analytics
+  analytics: {
+    async getOverview(params?: { range?: string; startDate?: string; endDate?: string }) {
+      const query = new URLSearchParams();
+      if (params?.range) query.set("range", params.range);
+      if (params?.startDate) query.set("startDate", params.startDate);
+      if (params?.endDate) query.set("endDate", params.endDate);
+      return request<{
+        success: boolean;
+        range: string;
+        startDate: string;
+        endDate: string;
+        overview: any;
+        userGrowth: any[];
+        talentAnalytics: any;
+        companyAnalytics: any;
+        opportunityAnalytics: any;
+        applicationAnalytics: any;
+        recentActivity: any[];
+      }>(`/api/admin/analytics/overview?${query.toString()}`);
+    },
+    exportUrl(type = "analytics") {
       return `/api/admin/reports/export?type=${encodeURIComponent(type)}`;
     },
   },

@@ -120,7 +120,9 @@ export async function middleware(req: NextRequest) {
   if (pathname.startsWith("/admin")) {
     if (!hasValidAdminCookie) {
       const loginUrl = new URL("/admin/login", req.url);
-      loginUrl.searchParams.set("from", pathname);
+      if (pathname !== "/admin/login" && pathname !== "/admin/login/") {
+        loginUrl.searchParams.set("from", pathname);
+      }
       return NextResponse.redirect(loginUrl);
     }
   }
@@ -144,10 +146,17 @@ export async function middleware(req: NextRequest) {
     const userCookie = req.cookies.get(USER_SESSION_COOKIE);
     const userToken = await verifyUserSessionCookie(userCookie?.value);
 
+    // If no regular user token but authorized admin session exists, direct to admin
+    if (!userToken && hasValidAdminCookie) {
+      return NextResponse.redirect(new URL("/admin", req.url));
+    }
+
     // If unauthenticated or token signature invalid / expired, redirect to public login
     if (!userToken) {
       const loginUrl = new URL("/login", req.url);
-      loginUrl.searchParams.set("from", pathname);
+      if (pathname !== "/login" && pathname !== "/login/") {
+        loginUrl.searchParams.set("from", pathname);
+      }
       return NextResponse.redirect(loginUrl);
     }
 

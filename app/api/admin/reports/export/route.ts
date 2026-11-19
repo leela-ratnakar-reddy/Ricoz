@@ -117,6 +117,162 @@ export async function GET(req: NextRequest) {
         escapeCSV(r.resolved_at || ""),
         escapeCSV(r.created_at),
       ].join(",")).join("\n");
+    } else if (type === "users") {
+      const rows = (await db.prepare(`
+        SELECT id, email, full_name, account_type, is_verified, status, created_at, updated_at
+        FROM user_profiles
+        ORDER BY created_at DESC
+      `).all()) as Record<string, unknown>[];
+
+      const headers = ["ID", "Email", "FullName", "AccountType", "IsVerified", "Status", "CreatedAt", "UpdatedAt"];
+      csvData = headers.join(",") + "\n" + rows.map((r) => [
+        escapeCSV(r.id),
+        escapeCSV(r.email),
+        escapeCSV(r.full_name),
+        escapeCSV(r.account_type),
+        escapeCSV(r.is_verified ? "Verified" : "Unverified"),
+        escapeCSV(r.status),
+        escapeCSV(r.created_at),
+        escapeCSV(r.updated_at || ""),
+      ].join(",")).join("\n");
+    } else if (type === "talent") {
+      const rows = (await db.prepare(`
+        SELECT 
+          u.id, u.email, u.full_name, t.headline, t.location, t.hourly_rate,
+          t.years_experience, t.availability, t.skills, u.is_verified, u.status, u.created_at
+        FROM user_profiles u
+        JOIN talent_profiles t ON u.id = t.user_id
+        WHERE u.account_type = 'talent'
+        ORDER BY u.created_at DESC
+      `).all()) as Record<string, unknown>[];
+
+      const headers = ["ID", "Email", "FullName", "Headline", "Location", "HourlyRate", "YearsExperience", "Availability", "Skills", "IsVerified", "Status", "CreatedAt"];
+      csvData = headers.join(",") + "\n" + rows.map((r) => [
+        escapeCSV(r.id),
+        escapeCSV(r.email),
+        escapeCSV(r.full_name),
+        escapeCSV(r.headline || ""),
+        escapeCSV(r.location || ""),
+        escapeCSV(r.hourly_rate || ""),
+        escapeCSV(r.years_experience ?? ""),
+        escapeCSV(r.availability || ""),
+        escapeCSV(Array.isArray(r.skills) ? (r.skills as string[]).join("; ") : ""),
+        escapeCSV(r.is_verified ? "Verified" : "Unverified"),
+        escapeCSV(r.status),
+        escapeCSV(r.created_at),
+      ].join(",")).join("\n");
+    } else if (type === "companies") {
+      const rows = (await db.prepare(`
+        SELECT 
+          u.id, u.email, u.full_name, c.company_name, c.contact_name, c.business_email,
+          c.industry, c.company_size, c.website_url, c.billing_country, u.is_verified, u.status, u.created_at
+        FROM user_profiles u
+        JOIN company_profiles c ON u.id = c.user_id
+        WHERE u.account_type = 'company'
+        ORDER BY u.created_at DESC
+      `).all()) as Record<string, unknown>[];
+
+      const headers = ["ID", "AccountEmail", "AccountName", "CompanyName", "ContactName", "BusinessEmail", "Industry", "CompanySize", "WebsiteUrl", "BillingCountry", "IsVerified", "Status", "CreatedAt"];
+      csvData = headers.join(",") + "\n" + rows.map((r) => [
+        escapeCSV(r.id),
+        escapeCSV(r.email),
+        escapeCSV(r.full_name),
+        escapeCSV(r.company_name || ""),
+        escapeCSV(r.contact_name || ""),
+        escapeCSV(r.business_email || ""),
+        escapeCSV(r.industry || ""),
+        escapeCSV(r.company_size || ""),
+        escapeCSV(r.website_url || ""),
+        escapeCSV(r.billing_country || ""),
+        escapeCSV(r.is_verified ? "Verified" : "Unverified"),
+        escapeCSV(r.status),
+        escapeCSV(r.created_at),
+      ].join(",")).join("\n");
+    } else if (type === "opportunities" || type === "projects") {
+      const rows = (await db.prepare(`
+        SELECT 
+          p.id, p.title, p.company_name, p.industry, p.status, p.timeline,
+          p.budget_range, p.budget_tier, p.required_services, p.created_at,
+          (SELECT count(*) FROM project_applications a WHERE a.project_id = p.id) as applications_count
+        FROM client_projects p
+        ORDER BY p.created_at DESC
+      `).all()) as Record<string, unknown>[];
+
+      const headers = ["ID", "Title", "CompanyName", "Industry", "Status", "Timeline", "BudgetRange", "BudgetTier", "RequiredServices", "ApplicationsCount", "CreatedAt"];
+      csvData = headers.join(",") + "\n" + rows.map((r) => [
+        escapeCSV(r.id),
+        escapeCSV(r.title),
+        escapeCSV(r.company_name),
+        escapeCSV(r.industry),
+        escapeCSV(r.status),
+        escapeCSV(r.timeline),
+        escapeCSV(r.budget_range),
+        escapeCSV(r.budget_tier),
+        escapeCSV(Array.isArray(r.required_services) ? (r.required_services as string[]).join("; ") : ""),
+        escapeCSV(r.applications_count ?? 0),
+        escapeCSV(r.created_at),
+      ].join(",")).join("\n");
+    } else if (type === "applications") {
+      const rows = (await db.prepare(`
+        SELECT 
+          a.id, p.title as project_title, p.company_name, u.full_name as talent_name,
+          u.email as talent_email, a.proposed_rate, a.status, a.pitch, a.created_at
+        FROM project_applications a
+        JOIN client_projects p ON a.project_id = p.id
+        JOIN user_profiles u ON a.talent_user_id = u.id
+        ORDER BY a.created_at DESC
+      `).all()) as Record<string, unknown>[];
+
+      const headers = ["ApplicationID", "ProjectTitle", "CompanyName", "TalentName", "TalentEmail", "ProposedRate", "Status", "Pitch", "CreatedAt"];
+      csvData = headers.join(",") + "\n" + rows.map((r) => [
+        escapeCSV(r.id),
+        escapeCSV(r.project_title),
+        escapeCSV(r.company_name),
+        escapeCSV(r.talent_name),
+        escapeCSV(r.talent_email),
+        escapeCSV(r.proposed_rate),
+        escapeCSV(r.status),
+        escapeCSV(r.pitch),
+        escapeCSV(r.created_at),
+      ].join(",")).join("\n");
+    } else if (type === "analytics") {
+      const userMetrics = (await db.prepare(`
+        SELECT 
+          count(*) as total_users,
+          count(*) FILTER (WHERE account_type = 'talent') as talent_users,
+          count(*) FILTER (WHERE account_type = 'company') as company_users,
+          count(*) FILTER (WHERE is_verified = TRUE) as verified_users,
+          count(*) FILTER (WHERE is_verified = FALSE) as unverified_users,
+          count(*) FILTER (WHERE status = 'active') as active_users,
+          count(*) FILTER (WHERE status = 'suspended') as suspended_users
+        FROM user_profiles
+      `).get()) as any;
+
+      const oppMetrics = (await db.prepare(`
+        SELECT count(*) as total_opps, count(*) FILTER (WHERE status = 'Active') as active_opps FROM client_projects
+      `).get()) as any;
+
+      const appMetrics = (await db.prepare(`
+        SELECT count(*) as total_apps, count(*) FILTER (WHERE status = 'accepted') as accepted_apps FROM project_applications
+      `).get()) as any;
+
+      const headers = ["Metric", "Value"];
+      const rows = [
+        ["Total Registered Users", userMetrics?.total_users || 0],
+        ["Talent Accounts", userMetrics?.talent_users || 0],
+        ["Enterprise Companies", userMetrics?.company_users || 0],
+        ["Verified Accounts", userMetrics?.verified_users || 0],
+        ["Unverified Accounts", userMetrics?.unverified_users || 0],
+        ["Active Accounts", userMetrics?.active_users || 0],
+        ["Suspended Accounts", userMetrics?.suspended_users || 0],
+        ["Total Opportunities", oppMetrics?.total_opps || 0],
+        ["Active Opportunities", oppMetrics?.active_opps || 0],
+        ["Total Applications", appMetrics?.total_apps || 0],
+        ["Accepted Applications", appMetrics?.accepted_apps || 0],
+        ["Export Generated At", new Date().toISOString()],
+      ];
+
+      csvData = headers.join(",") + "\n" + rows.map(([k, v]) => `${escapeCSV(k)},${escapeCSV(v)}`).join("\n");
     } else {
       return NextResponse.json({ success: false, error: "Invalid export type" }, { status: 400 });
     }

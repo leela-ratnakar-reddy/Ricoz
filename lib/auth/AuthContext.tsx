@@ -7,13 +7,14 @@ export interface AuthenticatedUser {
   id: string;
   email: string;
   fullName: string;
-  accountType: "talent" | "company";
+  accountType: "talent" | "company" | "admin";
+  role?: string;
 }
 
 export interface UserProfileDetails {
   id: string;
-  account_type: "talent" | "company";
-  accountType?: "talent" | "company";
+  account_type: "talent" | "company" | "admin";
+  accountType?: "talent" | "company" | "admin";
   email: string;
   full_name: string;
   fullName?: string;
@@ -22,6 +23,7 @@ export interface UserProfileDetails {
   is_verified: boolean;
   isVerified?: boolean;
   status?: "active" | "suspended" | "deactivated";
+  role?: string;
   details?: any;
   talentProfile?: any;
   companyProfile?: any;
@@ -30,7 +32,7 @@ export interface UserProfileDetails {
 interface AuthContextType {
   user: AuthenticatedUser | null;
   profile: UserProfileDetails | null;
-  accountType: "talent" | "company" | null;
+  accountType: "talent" | "company" | "admin" | null;
   loading: boolean;
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
