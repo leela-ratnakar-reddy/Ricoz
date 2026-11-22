@@ -865,4 +865,128 @@ export const adminApi = {
       });
     },
   },
+
+  // 15. AI Operations Intelligence System (V4.2)
+  aiStudio: {
+    async queryAssistant(query: string) {
+      return request<{
+        success: boolean;
+        answer: string;
+        source: "gemini" | "openrouter" | "heuristic";
+        providerConfigured: boolean;
+        intent: string;
+        supportingData: any;
+        suggestedFollowUps: string[];
+      }>("/api/admin/ai-studio", {
+        method: "POST",
+        body: JSON.stringify({ tool: "assistant_query", inputData: { query } }),
+      });
+    },
+    async getBusinessIntelligence(range: string = "30d") {
+      return request<{
+        success: boolean;
+        insights: any[];
+        summary: string;
+        metrics: any;
+        providerConfigured: boolean;
+      }>("/api/admin/ai-studio", {
+        method: "POST",
+        body: JSON.stringify({ tool: "business_intelligence", inputData: { range } }),
+      });
+    },
+    async runSpecialistAgent(agentType: string, inputData?: any) {
+      return request<{
+        success: boolean;
+        agentType: string;
+        agentName: string;
+        agentPurpose: string;
+        available: boolean;
+        result: any;
+        providerConfigured: boolean;
+      }>("/api/admin/ai-studio", {
+        method: "POST",
+        body: JSON.stringify({ tool: "specialist_agent", inputData: { agentType, ...inputData } }),
+      });
+    },
+    async runTaskCopilot(action: "breakdown" | "summarize" | "recommendations", taskData?: any) {
+      return request<{
+        success: boolean;
+        action: string;
+        [key: string]: any;
+      }>("/api/admin/ai-studio", {
+        method: "POST",
+        body: JSON.stringify({ tool: "task_copilot", inputData: { action, ...taskData } }),
+      });
+    },
+    async getSupportIntelligence(data: { ticketId?: string; subject?: string; description?: string }) {
+      return request<{
+        success: boolean;
+        output: any;
+        evaluatedCategory: string;
+        suggestedPriority: string;
+        draftResponse: string;
+        recommendedNextAction: string;
+        providerConfigured: boolean;
+      }>("/api/admin/ai-studio", {
+        method: "POST",
+        body: JSON.stringify({ tool: "support_intelligence", inputData: data }),
+      });
+    },
+    async getUserCompanyInsights(type: "talent" | "company", id: string) {
+      return request<{
+        success: boolean;
+        type: string;
+        id: string;
+        name: string;
+        email: string;
+        isVerified: boolean;
+        completenessScore: number;
+        fieldsChecklist: Array<{ name: string; present: boolean }>;
+        administrativeObservations: string;
+        [key: string]: any;
+      }>("/api/admin/ai-studio", {
+        method: "POST",
+        body: JSON.stringify({ tool: "user_company_insights", inputData: { type, id } }),
+      });
+    },
+    async generateReport(reportType: string, dateRange: string = "30d") {
+      return request<{
+        success: boolean;
+        output: string;
+        report: {
+          reportType: string;
+          title: string;
+          dateRange: string;
+          generatedAt: string;
+          content: string;
+          csvData: any[];
+        };
+        source: string;
+        providerConfigured: boolean;
+      }>("/api/admin/ai-studio", {
+        method: "POST",
+        body: JSON.stringify({ tool: "generate_report", inputData: { reportType, dateRange } }),
+      });
+    },
+    async getRecommendations() {
+      return request<{
+        success: boolean;
+        suggestions: any[];
+        providerConfigured: boolean;
+      }>("/api/admin/ai-studio", {
+        method: "POST",
+        body: JSON.stringify({ tool: "recommendations" }),
+      });
+    },
+    async getUsageHistory(limit: number = 20) {
+      return request<{
+        success: boolean;
+        history: any[];
+        providerConfigured: boolean;
+      }>("/api/admin/ai-studio", {
+        method: "POST",
+        body: JSON.stringify({ tool: "usage_history", inputData: { limit } }),
+      });
+    },
+  },
 };

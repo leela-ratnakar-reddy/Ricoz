@@ -49,6 +49,22 @@ export default function AdminTasksPage() {
   const [isBlockerComment, setIsBlockerComment] = useState(false);
   const [actionLoading, setActionLoading] = useState(false);
 
+  // Edit Task State
+  const [isEditingTask, setIsEditingTask] = useState(false);
+  const [editTitle, setEditTitle] = useState("");
+  const [editDesc, setEditDesc] = useState("");
+  const [editPriority, setEditPriority] = useState<TaskPriority>("medium");
+  const [editAssignee, setEditAssignee] = useState("");
+  const [editDueDate, setEditDueDate] = useState("");
+  const [editBlocker, setEditBlocker] = useState("");
+  const [editEscalated, setEditEscalated] = useState(false);
+
+  // AI Assistance State
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiSuggestion, setAiSuggestion] = useState<string | null>(null);
+  const [aiAction, setAiAction] = useState<string | null>(null);
+  const [aiProviderConfigured, setAiProviderConfigured] = useState(false);
+
   // New Task Form State
   const [newTitle, setNewTitle] = useState("");
   const [newDesc, setNewDesc] = useState("");
@@ -111,15 +127,108 @@ export default function AdminTasksPage() {
 
   const openTaskDetail = async (task: Task) => {
     setSelectedTask(task);
+    setIsEditingTask(false);
+    setAiSuggestion(null);
+    setEditTitle(task.title || "");
+    setEditDesc(task.description || "");
+    setEditPriority((task.priority as TaskPriority) || "medium");
+    setEditAssignee(task.assignee_id || "");
+    setEditDueDate(task.due_date ? task.due_date.split("T")[0] : "");
+    setEditBlocker(task.blocker_note || "");
+    setEditEscalated(Boolean(task.is_escalated));
+
     try {
       const res = await adminApi.tasks.get(task.id);
       if (res.success && res.task) {
         setSelectedTask(res.task);
+        setEditTitle(res.task.title || "");
+        setEditDesc(res.task.description || "");
+        setEditPriority((res.task.priority as TaskPriority) || "medium");
+        setEditAssignee(res.task.assignee_id || "");
+        setEditDueDate(res.task.due_date ? res.task.due_date.split("T")[0] : "");
+        setEditBlocker(res.task.blocker_note || "");
+        setEditEscalated(Boolean(res.task.is_escalated));
         setTaskComments((res.comments || []) as any);
       }
     } catch (err) {
       console.error("Error loading task details:", err);
     }
+  };
+
+  const handleSaveTaskEdit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedTask) return;
+    try {
+      setActionLoading(true);
+      const res = await adminApi.tasks.update(selectedTask.id, {
+        title: editTitle.trim(),
+        description: editDesc.trim(),
+        priority: editPriority,
+        assigneeId: editAssignee || null,
+        dueDate: editDueDate,
+        blockerNote: editBlocker.trim() || null,
+        isEscalated: editEscalated,
+      });
+      if (res.success) {
+        setIsEditingTask(false);
+        await openTaskDetail({
+          ...selectedTask,
+          title: editTitle,
+          description: editDesc,
+          priority: editPriority,
+          due_date: editDueDate,
+          blocker_note: editBlocker,
+          is_escalated: editEscalated,
+        });
+        await fetchTasks();
+      }
+    } catch (err) {
+      console.error("Task edit error:", err);
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleRunAiAssist = async (actionType: "subtasks" | "summarize" | "dependencies") => {
+    if (!selectedTask) return;
+    try {
+      setAiLoading(true);
+      setAiAction(actionType);
+      const res = await fetch("/api/admin/tasks/ai-assist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          taskId: selectedTask.id,
+          action: actionType,
+          title: selectedTask.title,
+          description: selectedTask.description,
+          priority: selectedTask.priority,
+          dueDate: selectedTask.due_date,
+          blockerNote: selectedTask.blocker_note,
+        }),
+      });
+      const json = await res.json();
+      if (json.success && json.suggestion) {
+        setAiSuggestion(json.suggestion);
+        setAiProviderConfigured(Boolean(json.providerConfigured));
+      }
+    } catch (err) {
+      console.error("AI assist error:", err);
+    } finally {
+      setAiLoading(false);
+    }
+  };
+
+  const handleApplyAiSuggestionToDesc = () => {
+    if (!aiSuggestion || !selectedTask) return;
+    const updatedDesc = selectedTask.description
+      ? `${selectedTask.description}\n\n--- AI Operational Guidance ---\n${aiSuggestion}`
+      : aiSuggestion;
+    setEditDesc(updatedDesc);
+    adminApi.tasks.update(selectedTask.id, { description: updatedDesc }).then(() => {
+      openTaskDetail({ ...selectedTask, description: updatedDesc });
+      setAiSuggestion(null);
+    });
   };
 
   const handleCreateTask = async (e: React.FormEvent) => {
@@ -702,13 +811,118 @@ export default function AdminTasksPage() {
                 </h3>
               </div>
 
-              <button
-                onClick={() => setSelectedTask(null)}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-white"
-              >
-                <X className="w-5 h-5" />
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setIsEditingTask(!isEditingTask)}
+                  className="px-2.5 py-1 rounded-lg bg-white/[0.06] hover:bg-white/[0.1] text-xs font-mono text-slate-300 transition-colors"
+                >
+                  {isEditingTask ? "Cancel Edit" : "Edit Task"}
+                </button>
+                <button
+                  onClick={() => setSelectedTask(null)}
+                  className="p-1.5 rounded-lg text-slate-400 hover:text-white"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
             </div>
+
+            {/* Edit Form or Normal View */}
+            {isEditingTask ? (
+              <form onSubmit={handleSaveTaskEdit} className="space-y-3 p-4 rounded-xl bg-white/[0.02] border border-white/10">
+                <div className="text-xs font-bold font-mono text-white uppercase tracking-wider mb-2">
+                  Edit Task Properties
+                </div>
+                <div>
+                  <label className="block text-[11px] font-mono text-slate-400 mb-1">Title</label>
+                  <input
+                    type="text"
+                    required
+                    value={editTitle}
+                    onChange={(e) => setEditTitle(e.target.value)}
+                    className="w-full px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 text-xs text-white font-mono focus:outline-none focus:border-red-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-mono text-slate-400 mb-1">Description</label>
+                  <textarea
+                    rows={3}
+                    value={editDesc}
+                    onChange={(e) => setEditDesc(e.target.value)}
+                    className="w-full px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 text-xs text-white font-mono focus:outline-none focus:border-red-500"
+                  />
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div>
+                    <label className="block text-[11px] font-mono text-slate-400 mb-1">Priority</label>
+                    <select
+                      value={editPriority}
+                      onChange={(e) => setEditPriority(e.target.value as TaskPriority)}
+                      className="w-full px-2 py-1.5 rounded-lg bg-[#0A0D14] border border-white/10 text-xs text-white font-mono focus:outline-none"
+                    >
+                      <option value="low">Low</option>
+                      <option value="medium">Medium</option>
+                      <option value="high">High</option>
+                      <option value="urgent">Urgent</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-mono text-slate-400 mb-1">Due Date</label>
+                    <input
+                      type="date"
+                      value={editDueDate}
+                      onChange={(e) => setEditDueDate(e.target.value)}
+                      className="w-full px-2 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 text-xs text-white font-mono focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-mono text-slate-400 mb-1">Assignee</label>
+                    <select
+                      value={editAssignee}
+                      onChange={(e) => setEditAssignee(e.target.value)}
+                      className="w-full px-2 py-1.5 rounded-lg bg-[#0A0D14] border border-white/10 text-xs text-white font-mono focus:outline-none"
+                    >
+                      <option value="">Unassigned</option>
+                      {teamMembers.map((m) => (
+                        <option key={m.id} value={m.id}>{m.fullName}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-[11px] font-mono text-slate-400 mb-1">Blocker Note</label>
+                  <input
+                    type="text"
+                    value={editBlocker}
+                    onChange={(e) => setEditBlocker(e.target.value)}
+                    placeholder="None"
+                    className="w-full px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 text-xs text-white font-mono focus:outline-none"
+                  />
+                </div>
+                <div className="flex items-center justify-between pt-2">
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      id="edit-escalated-check"
+                      checked={editEscalated}
+                      onChange={(e) => setEditEscalated(e.target.checked)}
+                      className="rounded border-white/10 text-red-600 focus:ring-red-500"
+                    />
+                    <label htmlFor="edit-escalated-check" className="text-xs text-slate-300 font-mono">
+                      Escalated incident
+                    </label>
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={actionLoading}
+                    className="px-4 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-mono font-bold uppercase tracking-wider disabled:opacity-50"
+                  >
+                    {actionLoading ? "Saving..." : "Save Changes"}
+                  </button>
+                </div>
+              </form>
+            ) : null}
 
             {/* Status Control Strip */}
             <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 flex flex-wrap items-center justify-between gap-3">
@@ -739,7 +953,7 @@ export default function AdminTasksPage() {
                 <div className="text-[10px] font-mono uppercase tracking-wider text-slate-500">
                   Deliverable Description
                 </div>
-                <p className="text-xs text-slate-300 leading-relaxed font-sans bg-white/[0.01] p-3 rounded-lg border border-white/5">
+                <p className="text-xs text-slate-300 leading-relaxed font-sans bg-white/[0.01] p-3 rounded-lg border border-white/5 whitespace-pre-wrap">
                   {selectedTask.description}
                 </p>
               </div>
@@ -755,6 +969,80 @@ export default function AdminTasksPage() {
                 <p>{selectedTask.blocker_note}</p>
               </div>
             )}
+
+            {/* AI Operational Assistant Section */}
+            <div className="p-3.5 rounded-xl bg-gradient-to-br from-purple-950/20 to-slate-900 border border-purple-800/30 space-y-2.5">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <ShieldAlert className="w-4 h-4 text-purple-400" />
+                  <span className="text-xs font-bold text-white font-mono uppercase tracking-wider">
+                    AI Operational Assistant
+                  </span>
+                </div>
+                <span className="text-[9px] font-mono text-slate-400">
+                  Human-in-the-loop advisory
+                </span>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2 pt-1">
+                <button
+                  type="button"
+                  onClick={() => handleRunAiAssist("subtasks")}
+                  disabled={aiLoading}
+                  className="px-2.5 py-1 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-[11px] font-mono text-purple-300 transition-colors disabled:opacity-50"
+                >
+                  {aiLoading && aiAction === "subtasks" ? "Analyzing..." : "Suggest Subtasks"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleRunAiAssist("summarize")}
+                  disabled={aiLoading}
+                  className="px-2.5 py-1 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-[11px] font-mono text-purple-300 transition-colors disabled:opacity-50"
+                >
+                  {aiLoading && aiAction === "summarize" ? "Summarizing..." : "Summarize Task"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleRunAiAssist("dependencies")}
+                  disabled={aiLoading}
+                  className="px-2.5 py-1 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-[11px] font-mono text-purple-300 transition-colors disabled:opacity-50"
+                >
+                  {aiLoading && aiAction === "dependencies" ? "Evaluating..." : "Risk & Dependencies"}
+                </button>
+              </div>
+
+              {aiSuggestion && (
+                <div className="p-3 rounded-lg bg-black/40 border border-purple-800/40 space-y-2 mt-2">
+                  <div className="flex items-center justify-between text-[10px] font-mono">
+                    <span className="text-purple-400 font-bold uppercase">
+                      Suggested Operational Guidance:
+                    </span>
+                    <span className="text-slate-500">
+                      {aiProviderConfigured ? "Generated by Gemini API" : "Heuristic Rule-Engine"}
+                    </span>
+                  </div>
+                  <pre className="text-xs text-slate-200 font-mono whitespace-pre-wrap leading-relaxed">
+                    {aiSuggestion}
+                  </pre>
+                  <div className="flex items-center justify-end gap-2 pt-1 border-t border-white/5">
+                    <button
+                      type="button"
+                      onClick={() => setAiSuggestion(null)}
+                      className="px-2 py-1 text-[11px] font-mono text-slate-400 hover:text-white"
+                    >
+                      Dismiss
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleApplyAiSuggestionToDesc}
+                      className="px-3 py-1 rounded-lg bg-purple-600 hover:bg-purple-700 text-white text-[11px] font-mono font-bold uppercase tracking-wider"
+                    >
+                      Apply to Description
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* Comment & Activity Thread */}
             <div className="space-y-3 pt-2">

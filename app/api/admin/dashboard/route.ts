@@ -6,14 +6,17 @@ export const dynamic = "force-dynamic";
 
 /**
  * GET /api/admin/dashboard
- * Returns real platform metrics, recent registrations, recent opportunities,
- * proposal submissions, and audit activity from InsForge PostgreSQL.
+ * Returns real platform metrics, tactical action queues, recent registrations,
+ * opportunity mandates, proposal submissions, and audit activity from InsForge PostgreSQL.
  * Completely free of mock or hardcoded statistics.
  */
 export async function GET(req: NextRequest) {
   try {
     const auth = await requirePermission("dashboard.view", req);
     if ("errorResponse" in auth) return auth.errorResponse;
+
+    const { searchParams } = new URL(req.url);
+    const range = searchParams.get("range") || "all"; // "all" | "30d" | "7d" | "today"
 
     const db = getDb();
 
@@ -24,6 +27,7 @@ export async function GET(req: NextRequest) {
         count(*) FILTER (WHERE account_type = 'talent') as talent_count,
         count(*) FILTER (WHERE account_type = 'company') as company_count,
         count(*) FILTER (WHERE is_verified = TRUE) as verified_count,
+        count(*) FILTER (WHERE is_verified = FALSE) as unverified_count,
         count(*) FILTER (WHERE status = 'active') as active_count,
         count(*) FILTER (WHERE status = 'suspended') as suspended_count,
         count(*) FILTER (WHERE created_at >= CURRENT_DATE) as new_today,
@@ -59,9 +63,9 @@ export async function GET(req: NextRequest) {
     const ticketStats = (await db.prepare(`
       SELECT 
         count(*) as total,
-        count(*) FILTER (WHERE status IN ('open', 'pending')) as open_count,
-        count(*) FILTER (WHERE priority = 'critical' AND status != 'resolved') as critical_count,
-        count(*) FILTER (WHERE status = 'resolved') as resolved_count
+        count(*) FILTER (WHERE status IN ('open', 'pending', 'in_progress')) as open_count,
+        count(*) FILTER (WHERE priority = 'critical' AND status != 'resolved' AND status != 'closed') as critical_count,
+        count(*) FILTER (WHERE status = 'resolved' OR status = 'closed') as resolved_count
       FROM support_tickets
     `).get()) as any;
 
@@ -73,25 +77,47 @@ export async function GET(req: NextRequest) {
       FROM website_enquiries
     `).get()) as any;
 
-    // 6. Recent Registrations
+    // 6. Operational Tasks KPIs
+    const taskStats = (await db.prepare(`
+      SELECT 
+        count(*) as total,
+        count(*) FILTER (WHERE status != 'completed') as active_count,
+        count(*) FILTER (WHERE status = 'blocked' OR is_escalated = TRUE) as blocked_or_escalated_count,
+        count(*) FILTER (WHERE due_date < NOW() AND status != 'completed') as overdue_count
+      FROM tasks
+    `).get()) as any;
+
+    // Date range filter clause for recent items
+    let dateFilterClause = "";
+    if (range === "today") {
+      dateFilterClause = "AND created_at >= CURRENT_DATE";
+    } else if (range === "7d") {
+      dateFilterClause = "AND created_at >= NOW() - INTERVAL '7 days'";
+    } else if (range === "30d") {
+      dateFilterClause = "AND created_at >= NOW() - INTERVAL '30 days'";
+    }
+
+    // 7. Recent Registrations
     const recentUsers = (await db.prepare(`
       SELECT id, full_name, email, account_type, is_verified, status, created_at
       FROM user_profiles
+      WHERE 1=1 ${dateFilterClause}
       ORDER BY created_at DESC
-      LIMIT 5
+      LIMIT 6
     `).all()) as any[];
 
-    // 7. Recent Mandates / Opportunities
+    // 8. Recent Mandates / Opportunities
     const recentOpportunities = (await db.prepare(`
       SELECT 
         cp.id, cp.title, cp.company_name, cp.industry, cp.budget_tier, cp.status, cp.created_at,
         (SELECT count(*) FROM project_applications pa WHERE pa.project_id = cp.id) as applications_count
       FROM client_projects cp
+      WHERE 1=1 ${dateFilterClause}
       ORDER BY cp.created_at DESC
-      LIMIT 5
+      LIMIT 6
     `).all()) as any[];
 
-    // 8. Recent Proposals Submitted
+    // 9. Recent Proposals Submitted
     const recentApplications = (await db.prepare(`
       SELECT 
         pa.id, pa.status, pa.proposed_rate, pa.created_at,
@@ -100,17 +126,92 @@ export async function GET(req: NextRequest) {
       FROM project_applications pa
       LEFT JOIN client_projects cp ON pa.project_id = cp.id
       LEFT JOIN user_profiles u ON pa.talent_user_id = u.id
+      WHERE 1=1 ${dateFilterClause ? `AND pa.created_at >= NOW() - INTERVAL '30 days'` : ""}
       ORDER BY pa.created_at DESC
-      LIMIT 5
+      LIMIT 6
     `).all()) as any[];
 
-    // 9. Recent Administrative & Platform Activity (from audit_logs)
+    // 10. Recent Administrative & Platform Activity (from audit_logs)
     const recentActivity = (await db.prepare(`
       SELECT id, actor_name, actor_role, action, entity_type, entity_id, change_summary, ip_address, created_at
       FROM audit_logs
       ORDER BY created_at DESC
-      LIMIT 10
+      LIMIT 8
     `).all()) as any[];
+
+    // 11. Tactical Queue: Pending Verifications
+    const pendingVerifications = (await db.prepare(`
+      SELECT id, full_name, email, account_type, is_verified, status, created_at
+      FROM user_profiles
+      WHERE is_verified = FALSE AND status = 'active'
+      ORDER BY created_at DESC
+      LIMIT 5
+    `).all()) as any[];
+
+    // 12. Tactical Queue: Actionable Support Tickets
+    const actionTickets = (await db.prepare(`
+      SELECT id, ticket_ref, customer_name, customer_email, category, priority, status, created_at
+      FROM support_tickets
+      WHERE status IN ('open', 'in_progress', 'pending')
+      ORDER BY CASE WHEN priority = 'critical' THEN 1 WHEN priority = 'high' THEN 2 ELSE 3 END, created_at ASC
+      LIMIT 5
+    `).all()) as any[];
+
+    // 13. Tactical Queue: Tasks Needing Attention (Overdue or Blocked)
+    const attentionTasks = (await db.prepare(`
+      SELECT id, title, priority, status, blocker_note, is_escalated, due_date, created_at
+      FROM tasks
+      WHERE (due_date < NOW() AND status != 'completed') OR status = 'blocked' OR is_escalated = TRUE
+      ORDER BY is_escalated DESC, due_date ASC
+      LIMIT 5
+    `).all()) as any[];
+
+    // 14. Operational Alerts
+    const operationalAlerts = [];
+    const blockedCount = Number(taskStats?.blocked_or_escalated_count || 0);
+    const criticalCount = Number(ticketStats?.critical_count || 0);
+    const overdueCount = Number(taskStats?.overdue_count || 0);
+    const unverifiedCount = Number(userStats?.unverified_count || 0);
+
+    if (blockedCount > 0) {
+      operationalAlerts.push({
+        id: "blocked_tasks",
+        severity: "critical",
+        title: `${blockedCount} Blocked or Escalated Task(s)`,
+        message: "Tasks flagged with operational blockers require immediate administrative triage.",
+        href: "/admin/tasks?status=blocked",
+      });
+    }
+
+    if (criticalCount > 0) {
+      operationalAlerts.push({
+        id: "critical_tickets",
+        severity: "critical",
+        title: `${criticalCount} Critical Priority Support Ticket(s)`,
+        message: "Customer or enterprise partner issues escalated to critical severity.",
+        href: "/admin/support?priority=critical",
+      });
+    }
+
+    if (overdueCount > 0) {
+      operationalAlerts.push({
+        id: "overdue_tasks",
+        severity: "warning",
+        title: `${overdueCount} Task(s) Overdue`,
+        message: "Internal operational deliverables past deadline require reassignment or updated dates.",
+        href: "/admin/tasks",
+      });
+    }
+
+    if (unverifiedCount > 0) {
+      operationalAlerts.push({
+        id: "pending_verifications",
+        severity: "info",
+        title: `${unverifiedCount} Unverified Account(s)`,
+        message: "Talent and client registrations awaiting administrative vetting and approval.",
+        href: "/admin/talent?verification=pending",
+      });
+    }
 
     const totalTickets = Number(ticketStats?.total || 0);
     const resolvedTickets = Number(ticketStats?.resolved_count || 0);
@@ -125,6 +226,7 @@ export async function GET(req: NextRequest) {
           talentUsers: Number(userStats?.talent_count || 0),
           companyUsers: Number(userStats?.company_count || 0),
           verifiedUsers: Number(userStats?.verified_count || 0),
+          unverifiedUsers: unverifiedCount,
           activeUsers: Number(userStats?.active_count || 0),
           suspendedUsers: Number(userStats?.suspended_count || 0),
           newToday: Number(userStats?.new_today || 0),
@@ -146,9 +248,15 @@ export async function GET(req: NextRequest) {
           declinedApplications: Number(appStats?.declined_count || 0),
           avgProposedRate: Number(appStats?.avg_rate || 0),
 
+          // Tasks
+          totalTasks: Number(taskStats?.total || 0),
+          activeTasks: Number(taskStats?.active_count || 0),
+          blockedTasks: blockedCount,
+          overdueTasks: overdueCount,
+
           // Support & Enquiries
           openTickets: Number(ticketStats?.open_count || 0),
-          criticalTickets: Number(ticketStats?.critical_count || 0),
+          criticalTickets: criticalCount,
           resolvedTicketsRate: resolvedRate,
           totalEnquiries: Number(enquiryStats?.total || 0),
           newEnquiries: Number(enquiryStats?.new_count || 0),
@@ -157,6 +265,12 @@ export async function GET(req: NextRequest) {
         recentOpportunities,
         recentApplications,
         recentActivity,
+        tacticalQueues: {
+          pendingVerifications,
+          actionTickets,
+          attentionTasks,
+        },
+        operationalAlerts,
       },
     });
   } catch (error: any) {
